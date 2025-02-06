@@ -1,0 +1,29 @@
+{
+  "$GMProject":"",
+  "%Name":"spr_basic_floor_tileset",
+  "AudioGroups":[
+    {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
+  ],
+  "configs":{
+    "children":[],
+    "name":"Default",
+  },
+  "defaultScriptType":2,
+  "Folders":[],
+  "IncludedFiles":[],
+  "isEcma":false,
+  "LibraryEmitters":[],
+  "MetaData":{},
+  "name":"spr_basic_floor_tileset",
+  "resources":[
+    {"id":{"name":"sprite_spr_basic_floor_tileset","path":"sprites/sprite_spr_basic_floor_tileset/sprite_spr_basic_floor_tileset.yy",},},
+    {"id":{"name":"tileset_spr_basic_floor_tileset","path":"tilesets/tileset_spr_basic_floor_tileset/tileset_spr_basic_floor_tileset.yy",},},
+  ],
+  "resourceType":"GMProject",
+  "resourceVersion":"2.0",
+  "RoomOrderNodes":[],
+  "templateType":null,
+  "TextureGroups":[
+    {"$GMTextureGroup":"","%Name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"Default","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
+  ],
+}
