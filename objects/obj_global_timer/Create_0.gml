@@ -7,5 +7,3 @@ global.delta_multiplier = actual_delta/target_delta;
 delta = 0;
 timer = 0;
 
-player_gun_cooldown = 30;
-player_gun_timer = player_gun_cooldown;

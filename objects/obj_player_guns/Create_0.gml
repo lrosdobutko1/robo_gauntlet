@@ -8,6 +8,9 @@ firing = false;
 firing_angle = image_angle;
 firing_offset = 0;
 
+player_gun_cooldown = 60;
+player_gun_timer = player_gun_cooldown;
+
 function ShootBullets(_obj, _layer,)
 {
 	
@@ -127,6 +130,5 @@ function EjectCasing(_obj, _layer,)
 	}
 	
 	firing_delay = 2;
-	
 }
 

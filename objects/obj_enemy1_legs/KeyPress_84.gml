@@ -1,1 +1,0 @@
-walk_right = !walk_right;
