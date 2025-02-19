@@ -36,6 +36,9 @@
     "name":"spr_player_torso",
     "path":"sprites/spr_player_torso/spr_player_torso.yy",
   },
-  "spriteMaskId":null,
+  "spriteMaskId":{
+    "name":"spr_player_torso",
+    "path":"sprites/spr_player_torso/spr_player_torso.yy",
+  },
   "visible":true,
 }

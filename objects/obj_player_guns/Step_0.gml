@@ -26,6 +26,7 @@ else
 
 if (firing and player_gun_timer == 0)
 {
-	ShootBullets(obj_player_bullet, "player_bullets");
+	ShootBullets(obj_player_bullets, "player_bullets");
 	player_gun_timer = player_gun_cooldown;
 }
+show_debug_message(global.delta_multiplier);

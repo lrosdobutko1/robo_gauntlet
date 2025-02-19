@@ -1,7 +1,9 @@
 {
   "$GMObject":"",
   "%Name":"obj_wall_parent",
-  "eventList":[],
+  "eventList":[
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":{"name":"obj_player_bullets","path":"objects/obj_player_bullets/obj_player_bullets.yy",},"eventNum":0,"eventType":4,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+  ],
   "managed":true,
   "name":"obj_wall_parent",
   "overriddenProperties":[],

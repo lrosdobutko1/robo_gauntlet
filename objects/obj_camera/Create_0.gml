@@ -1,7 +1,8 @@
 camWidth = 1024;
 camHeight = 768;
 
-follow = obj_player_torso;
+follow = obj_player_collision;
+//follow = obj_player_torso;
 
 xTo = x;
 yTo = y;

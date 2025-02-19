@@ -1,7 +1,5 @@
 
-creator = other.object_index;
-
-lifetime = 5;
+lifetime = 50;
 
 function sparks(number_of_sparks, lower_angle, upper_angle, spark_speed)
 {

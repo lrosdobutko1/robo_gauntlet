@@ -1,20 +1,55 @@
+
 image_scale = obj_player_legs.image_scale;
 image_xscale = image_scale;
 image_yscale = image_scale;
 image_index = 0;
 image_speed = 0;
 
+player_gun_cooldown = 0;
+enum GUN_TYPE
+{
+	NONE,
+	BULLET,
+	GRENADE,
+	MISSILE,
+	SHOTGUN,
+	LASER,
+}
+
+type = GUN_TYPE.LASER;
+switch (type)
+{
+	case GUN_TYPE.BULLET:
+		player_gun_cooldown = 80;
+		break;
+		
+	case GUN_TYPE.GRENADE:
+		player_gun_cooldown = 500;
+		break;
+		
+	case GUN_TYPE.SHOTGUN:
+		player_gun_cooldown = 200;
+		break;
+		
+	case GUN_TYPE.LASER:
+		player_gun_cooldown = 100;
+		break;
+		
+	default:
+		player_gun_cooldown = 0;
+}
+
 firing = false;
 firing_angle = image_angle;
 firing_offset = 0;
 
-player_gun_cooldown = 60;
+
 player_gun_timer = player_gun_cooldown;
 
-function ShootBullets(_obj, _layer,)
+
+function ShootBullets(_obj, _layer, )
 {
 	
-	bullet_speed = 15;	
 	firing_offset ++;
 
 	if (firing_offset > game_get_speed(gamespeed_fps))
@@ -52,7 +87,6 @@ function ShootBullets(_obj, _layer,)
 		//fire bullets
 		with(instance_create_layer(x1,y1,_layer,_obj))
 		{
-			speed = obj_player_guns.bullet_speed;
 			direction = other.image_angle+90 + random_range(-1,1);
 			image_angle = direction-90;
 		}
@@ -69,7 +103,7 @@ function ShootBullets(_obj, _layer,)
 		//fire bullets
 		with(instance_create_layer(x2,y2,_layer,_obj))
 		{
-			speed = obj_player_guns.bullet_speed;
+
 			direction = other.image_angle+90  + random_range(-1,1);
 			image_angle = direction-90;
 		}

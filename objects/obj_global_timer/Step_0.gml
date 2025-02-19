@@ -1,14 +1,11 @@
 
-target_delta = 1/game_get_speed(gamespeed_fps);
+target_delta = 1/120;
 
 actual_delta = delta_time/1000000;
+
+//multiplier by which to multiply all timed effects like movement and cooldowns
 global.delta_multiplier = actual_delta/target_delta;
 
 delta = (delta_time/1000);
 
 timer += delta;	
-
-//player gun timing
-//player_gun_timer -= delta;
-//if (player_gun_timer < 0) player_gun_timer = 0;
-
