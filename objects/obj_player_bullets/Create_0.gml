@@ -1,55 +1,42 @@
 
 life_timer = 200;
 
-muzzle_flash = random_range(0,3);
 image_scale = 1;
-image_index = muzzle_flash;
 image_xscale = image_scale;
 image_yscale = image_scale;
+image_speed = 0;
 
+switch (bullet_type) {
+    case 0: // Machinegun
+        speed = 10;
+        damage = 5;
+        break;
+        
+    case 1: // Shotgun
+        speed = 8;
+        damage = 15;
+        break;
 
-enum BULLET_TYPE 
-{
-	NONE,
-	BULLET,
-	GRENADE,
-	MISSILE,
-	SHOTGUN,
-	LASER,
+    case 2: // Grenade
+        speed = 6;
+        damage = 30;
+        break;
+
+    case 3: // Blaster
+        speed = 12;
+        damage = 10;
+        break;
+
+    default:
+        speed = 5;
+        damage = 1;
+        break;
 }
 
-type = BULLET_TYPE.BULLET;
-use_image_index = 3 + type;
+use_image_index = bullet_type;
 max_damage = 10;
 damage = 1;
-
-switch (type)
-{
-	case BULLET_TYPE.BULLET:
-		bullet_speed = 15;
-		break;
-	
-	case BULLET_TYPE.GRENADE:
-		bullet_speed = 8;
-		break;
-		
-	case BULLET_TYPE.MISSILE:
-		bullet_speed = 2;
-		break;
-		
-	case BULLET_TYPE.SHOTGUN:
-		bullet_speed = 12;
-		break;
-		
-	case BULLET_TYPE.LASER:
-		image_index = use_image_index;
-		image_speed = 0;
-		bullet_speed = 20;
-		break;
-	
-	default:
-		bullet_speed = 0;
-		break;
-}
+bullet_speed = 15;
 
 speed = bullet_speed * global.delta_multiplier;
+
