@@ -1,3 +1,4 @@
+image_angle = gun_parent.image_angle;
 if (instance_exists(gun_parent)) {
     if (is_left) {
         x = gun_parent.left_gun_barrel[0];

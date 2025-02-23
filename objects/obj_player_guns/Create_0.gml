@@ -21,24 +21,33 @@ firing_offset = 0;
 
 player_gun_timer = player_gun_cooldown;
 
-gun_barrels = find_gun_create_coordinates(25, 65);
+gun_barrels = array_create(4);
 left_gun_barrel = array_create(2);
 right_gun_barrel = array_create(2);
-array_copy(left_gun_barrel,0,gun_barrels,2,2)
-array_copy(right_gun_barrel,0,gun_barrels,0,2)
 
+/* 
+right gun barrel x = gun_barrels[0]
+right gun barrel y = gun_barrels[1]
+left gun barrel x = gun_barrels[2]
+left gun barrel y = gun_barrels[3]
+*/
+find_gun_create_coordinates(gun_barrels, 25, 65);
 
-function find_gun_create_coordinates(radius, spread_angle)
+right_gun_barrel[0] = gun_barrels[0];
+right_gun_barrel[1] = gun_barrels[1];
+left_gun_barrel[0] = gun_barrels[2];
+left_gun_barrel[1] = gun_barrels[3];
+
+function find_gun_create_coordinates(coords, radius, spread_angle)
 {
 	
-	var coords = [];
 	//find the coordinates to create bullets at by calculating isoscoles triangle
 	var x_fixed = x;
 	var y_fixed = y;
 
 	// Triangle parameters
-	 radius = radius * image_scale; // Distance from the fixed point to the other two points
-	 spread_angle = spread_angle; // Spread angle between the two equal points (in degrees)
+	radius = radius * image_scale; // Distance from the fixed point to the other two points
+	spread_angle = spread_angle; // Spread angle between the two equal points (in degrees)
 
 	// Direction to the mouse
 	var angle_to_mouse = point_direction(x_fixed, y_fixed, mouse_x, mouse_y);
@@ -47,20 +56,12 @@ function find_gun_create_coordinates(radius, spread_angle)
 	var angle1 = angle_to_mouse - spread_angle / 2; // First point's angle
 	var angle2 = angle_to_mouse + spread_angle / 2; // Second point's angle
 
-	var x1 = x_fixed + lengthdir_x(radius, angle1);
-	var y1 = y_fixed + lengthdir_y(radius, angle1);
-	var x2 = x_fixed + lengthdir_x(radius, angle2);
-	var y2 = y_fixed + lengthdir_y(radius, angle2);
+	coords[0] = x_fixed + lengthdir_x(radius, angle1);
+	coords[1] = y_fixed + lengthdir_y(radius, angle1);
+	coords[2] = x_fixed + lengthdir_x(radius, angle2);
+	coords[3] = y_fixed + lengthdir_y(radius, angle2);
 	
-	coords[0] = x1;
-	coords[1] = y1;
-	coords[2] = x2;
-	coords[3] = y2;
-	
-	return coords;
 }
-
-
 
 
 function muzzle_flash( 
@@ -71,7 +72,6 @@ left_barrel_x,
 left_barrel_y
 )
 {
-
 	var creator = id;
 	//right gun
 	var right_muzzle_flash = instance_create_layer(
@@ -111,7 +111,7 @@ left_barrel_y
 )
 {
 	
-	coords_create_shell_casings = find_gun_create_coordinates(8,45);
+	coords_create_shell_casings = find_gun_create_coordinates(coords,8,45);
 	//eject casings
 	with(instance_create_layer(
 	coords_create_shell_casings[0],
