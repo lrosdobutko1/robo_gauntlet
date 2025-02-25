@@ -73,8 +73,6 @@ if (place_meeting(x,y+v_speed,obj_wall_parent))
 	v_speed = 0;
 }
 
-
-
 x += h_speed;
 y += v_speed;
 

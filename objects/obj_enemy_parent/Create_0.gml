@@ -37,6 +37,7 @@ starting_damage = 2;
 hp = (starting_hp * level) + power(level,level);
 damage = starting_damage * power(level,2);
 shields = hp/2;
+alive = true;
 
 colors = [c_white, c_green, c_blue, c_yellow, c_red, c_purple];
 sprite_color = colors[level];

@@ -48,7 +48,10 @@ else
 	image_speed = 0;
 }
 
-if (hp <= 0)
+if (hp <= 0) alive = false;
+if (!alive)
 {
+	instance_create_layer(x,y,layer,obj_explosions);
 	instance_destroy();
+	
 }

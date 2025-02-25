@@ -1,42 +1,5 @@
 
-//key_left = keyboard_check(ord("A"));
-//key_right = keyboard_check(ord("D"));
-//key_up = keyboard_check(ord("W"));
-//key_down = keyboard_check(ord("S"));
 moving = false;
-
-//if (key_right)
-//{
-//	facing = directions.right;
-//}
-//else if (key_up)
-//{
-//	facing = directions.up;
-//}
-//else if (key_left)
-//{
-//	facing = directions.left;
-//}
-//else if (key_down)
-//{
-//	facing = directions.down;
-//}
-
-////
-
-
-//// Calculate horizontal and vertical movement
-//var h_move = key_right - key_left;
-//var v_move = key_down - key_up;
-
-//// Calculate the length of the movement vector
-//var diag_mov = sqrt(h_move * h_move + v_move * v_move);
-
-//// Normalize the movement vector if it isn't zero
-//if (diag_mov > 0) {
-//    h_move /= diag_mov;
-//    v_move /= diag_mov;
-//}
 
 h_speed = obj_player_collision.h_speed * global.delta_multiplier;
 v_speed = obj_player_collision.v_speed * global.delta_multiplier;
