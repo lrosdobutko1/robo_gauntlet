@@ -1,2 +1,2 @@
 
-//mp_grid_draw(grid);
+mp_grid_draw(grid);

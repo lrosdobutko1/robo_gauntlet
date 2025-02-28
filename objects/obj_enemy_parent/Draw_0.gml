@@ -10,6 +10,15 @@ if (alive)
 {
 	draw_self();
 	draw_sprite_ext(torso, 0, x, y, image_scale, image_scale, rotation_angle, sprite_color, 1);
+	
+	if (flash > 0)
+	{
+		flash --;
+		shader_set(sh_white);
+		draw_self();
+		draw_sprite_ext(torso, 0, x, y, image_scale, image_scale, rotation_angle, sprite_color, 1);
+		shader_reset();
+	}
 }
 
 

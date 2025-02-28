@@ -1,6 +1,6 @@
 
 //sprite info
-image_scale = 2;
+image_scale = 1;
 image_speed = 0;
 image_xscale = image_scale;
 image_yscale = image_scale;
@@ -41,6 +41,7 @@ alive = true;
 
 colors = [c_white, c_green, c_blue, c_yellow, c_red, c_purple];
 sprite_color = colors[level];
+flash = 0;
 
 image_scale = obj_enemy_1.image_scale;
 image_xscale = image_scale;

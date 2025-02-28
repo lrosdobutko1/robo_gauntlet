@@ -1,0 +1,1 @@
+draw_sprite_ext(spr_explode1,15,x,y, scale, scale, rotation,c_white,alpha);

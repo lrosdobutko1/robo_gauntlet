@@ -51,7 +51,7 @@ else
 if (hp <= 0) alive = false;
 if (!alive)
 {
-	instance_create_layer(x,y,layer,obj_explosions);
+	instance_create_layer(x,y,"explosions",obj_explosions);
+	instance_create_layer(x,y,"scorch_marks",obj_scorch_mark);
 	instance_destroy();
-	
 }

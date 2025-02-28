@@ -1,5 +1,5 @@
-camWidth = 1024;
-camHeight = 768;
+camWidth = 1280;
+camHeight = 540;
 
 follow = obj_player_collision;
 //follow = obj_player_torso;

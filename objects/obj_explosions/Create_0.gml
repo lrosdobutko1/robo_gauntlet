@@ -1,6 +1,9 @@
-image_scale = 4;
+image_scale = 5;
+alpha = 1;
+rotation = 0;
 image_xscale = image_scale;
 image_yscale = image_scale;
-image_speed = 0.5;
+image_speed = 0.65;
 sprites = [spr_explode1, spr_explode2];
-sprite = sprites[1];
+sprite = sprites[round(random_range(0,1))];
+shake_timer = 15;
