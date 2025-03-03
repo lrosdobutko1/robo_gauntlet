@@ -74,4 +74,3 @@ if (firing and player_gun_timer == 0)
 	
 	player_gun_timer = player_gun_cooldown;
 }
-show_debug_message(player_rocket_timer);

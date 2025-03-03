@@ -1,6 +1,6 @@
 
 //sprite info
-image_scale = 1;
+image_scale = 1.25;
 image_speed = 0;
 image_xscale = image_scale;
 image_yscale = image_scale;
@@ -18,6 +18,9 @@ tile_map = layer_tilemap_get_id("level_tiles");
 moving = false;
 
 walk_speed = 1.1;
+
+avoid_distance = 26;
+avoid_speed = .75;
 
 pathfinding_cooldown = 120;
 pathfinding_timer = 0;

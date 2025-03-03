@@ -22,7 +22,7 @@ if (alive)
 }
 
 
-
+draw_path(path,x,y,true);
 
 //draw other elements
 //draw_triangle(x, y, sight_cone[0], sight_cone[1], sight_cone[2], sight_cone[3], 4);

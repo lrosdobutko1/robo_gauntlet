@@ -1,4 +1,4 @@
-image_scale = 1.5;
+image_scale = 1;
 
 image_speed = 0;
 image_xscale = image_scale;

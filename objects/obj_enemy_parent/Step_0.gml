@@ -11,22 +11,27 @@ else
 previous_x = x;
 previous_y = y;
 
-pathfinding_timer = pathfinding_timer - (1 * global.delta_multiplier);
+pathfinding_timer -= global.delta_multiplier;
 
+/// Step Event of Moving Object
+var grid = global.grid; // Assuming you have a shared grid
+var self_x = x div 26;
+var self_y = y div 26;
 
 if (pathfinding_timer <= 0)
 {
+	
 	path_delete(path);
 	path = path_add();
 
 	target_x = obj_player_torso.x;
 	target_y = obj_player_torso.y;
 
-	mp_grid_path(obj_pathfinding.grid, path, x, y, target_x, target_y, true);
+	mp_grid_path(global.grid, path, x, y, target_x, target_y, true);
 
 	path_start(path, walk_speed*global.delta_multiplier, path_action_stop, true);
 	
-	pathfinding_timer = pathfinding_cooldown;
+	pathfinding_timer = irandom_range(pathfinding_cooldown/2, pathfinding_cooldown);
 }
 
 var next_x = path_get_x(path, 1); // Get the next node's X position

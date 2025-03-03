@@ -23,7 +23,7 @@ if (tile !=0)
 {
 	
 	image_scale += scale_direction *0.24;
-	if (image_scale >= 2)
+	if (image_scale >= 1.5)
 	{
 		scale_direction = -1;
 	}
