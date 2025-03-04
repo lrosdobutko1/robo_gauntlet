@@ -22,9 +22,12 @@ if (alive)
 }
 
 
-draw_path(path,x,y,true);
+//draw_path(path,x,y,true);
 
 //draw other elements
 //draw_triangle(x, y, sight_cone[0], sight_cone[1], sight_cone[2], sight_cone[3], 4);
 //draw_line(x,y,facing_x, facing_y);
 
+draw_text(x-100, y-32, string(id));
+
+draw_circle(x,y, 26,3);

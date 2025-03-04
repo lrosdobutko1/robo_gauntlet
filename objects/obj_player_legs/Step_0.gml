@@ -56,3 +56,5 @@ else
 
 x = obj_player_collision.x;
 y = obj_player_collision.y;
+
+var nearest_enemy = instance_nearest(x,y,obj_enemy_1);

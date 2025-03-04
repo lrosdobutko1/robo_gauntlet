@@ -5,7 +5,7 @@ image_yscale = image_scale;
 image_index = 0;
 image_speed = 0;
 
-player_gun_cooldown = 80;
+player_gun_cooldown = 120;
 player_rocket_cooldown = 600;
 gun_type = [
 0,		//machinegun

@@ -17,12 +17,12 @@ tile_map = layer_tilemap_get_id("level_tiles");
 
 moving = false;
 
-walk_speed = 1.1;
+walk_speed = 0.8;
 
-avoid_distance = 26;
-avoid_speed = .75;
+nearest_ally = noone;
+min_dist = 99999999; // Start with a large number
 
-pathfinding_cooldown = 120;
+pathfinding_cooldown = 60;
 pathfinding_timer = 0;
 path = path_add();
 
