@@ -22,12 +22,19 @@ walk_speed = 0.8;
 nearest_ally = noone;
 min_dist = 99999999; // Start with a large number
 
+player_previous_x = obj_player_legs.x;
+player_previous_y = obj_player_legs.y;
+
+initial_path = true;
 pathfinding_cooldown = 60;
 pathfinding_timer = 0;
 path = path_add();
 
 target_x = obj_player_torso.x;
 target_y = obj_player_torso.y;
+
+ally_list = ds_list_create();
+previous_list_size = 0;
 
 //determine if legs remain after destruction
 random_legs = random_range(0,10);
@@ -77,4 +84,19 @@ function get_sight_cone(rotation_angle)
 function scanning()
 {
 	
+}
+
+with (obj_enemy_parent) {
+    if (id != other.id) { // Exclude itself
+        var dist = point_distance(other.x, other.y, x, y);
+        if (dist < min_dist) {
+            min_dist = dist;
+            nearest_ally = id;
+        }
+    }
+}
+
+if (nearest_ally != noone) 
+{
+	show_debug_message(nearest_ally);
 }

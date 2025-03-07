@@ -36,6 +36,7 @@
   "resources":[
     {"id":{"name":"obj_bullet_casing","path":"objects/obj_bullet_casing/obj_bullet_casing.yy",},},
     {"id":{"name":"obj_camera","path":"objects/obj_camera/obj_camera.yy",},},
+    {"id":{"name":"obj_create_enemies_at_mouse","path":"objects/obj_create_enemies_at_mouse/obj_create_enemies_at_mouse.yy",},},
     {"id":{"name":"obj_enemy_1","path":"objects/obj_enemy_1/obj_enemy_1.yy",},},
     {"id":{"name":"obj_enemy_parent","path":"objects/obj_enemy_parent/obj_enemy_parent.yy",},},
     {"id":{"name":"obj_explosions","path":"objects/obj_explosions/obj_explosions.yy",},},
