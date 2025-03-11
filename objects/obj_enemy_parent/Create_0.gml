@@ -13,20 +13,19 @@ sight_cone = get_sight_cone(rotation_angle);
 previous_x = x;
 previous_y = y;
 
-tile_map = layer_tilemap_get_id("level_tiles");
-
 moving = false;
 
 walk_speed = 0.8;
-
+current_list_size = 0;
 nearest_ally = noone;
 min_dist = 99999999; // Start with a large number
 
 player_previous_x = obj_player_legs.x;
 player_previous_y = obj_player_legs.y;
 
+//pathfinding
 initial_path = true;
-pathfinding_cooldown = 60;
+pathfinding_cooldown = 600;
 pathfinding_timer = 0;
 path = path_add();
 
@@ -35,6 +34,16 @@ target_y = obj_player_torso.y;
 
 ally_list = ds_list_create();
 previous_list_size = 0;
+
+// drawa a line away from nearby allies
+distance = 0;
+dir_away = 0;
+line_length = 0;
+
+point_x = 0;
+point_y = 0;
+
+min_distance_to_ally = 50;
 
 //determine if legs remain after destruction
 random_legs = random_range(0,10);
@@ -52,10 +61,6 @@ alive = true;
 colors = [c_white, c_green, c_blue, c_yellow, c_red, c_purple];
 sprite_color = colors[level];
 flash = 0;
-
-image_scale = obj_enemy_1.image_scale;
-image_xscale = image_scale;
-image_yscale = image_scale;
 
 //line of sight
 function get_sight_cone(rotation_angle)
@@ -86,17 +91,3 @@ function scanning()
 	
 }
 
-with (obj_enemy_parent) {
-    if (id != other.id) { // Exclude itself
-        var dist = point_distance(other.x, other.y, x, y);
-        if (dist < min_dist) {
-            min_dist = dist;
-            nearest_ally = id;
-        }
-    }
-}
-
-if (nearest_ally != noone) 
-{
-	show_debug_message(nearest_ally);
-}

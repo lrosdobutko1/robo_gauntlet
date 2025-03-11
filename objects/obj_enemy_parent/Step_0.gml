@@ -13,56 +13,62 @@ previous_y = y;
 
 pathfinding_timer -= global.delta_multiplier;
 
-var nearest_ally = noone;
-var min_dist = 999999;
-
+//make a list of all allies, and check to see which is closest
 ds_list_clear(ally_list);
-var current_list_size = 0;
+current_list_size = 0;
+nearest_ally = noone;
+min_dist = 999999; // Start with a large number
+
 
 with (obj_enemy_parent) 
 {
     if (id != other.id) 
     {
         ds_list_add(other.ally_list, id);
-        current_list_size++;
-
-        var dist = point_distance(other.x, other.y, x, y);
-        if (dist < min_dist) 
-        {
-            min_dist = dist;
-            nearest_ally = id;
-        }
     }
 }
+
+current_list_size = ds_list_size(ally_list);
 
 //only check if the list size has changed
 if (current_list_size != previous_list_size) 
 {
-    if (id == 100009) 
+    for (var i = 0; i < ds_list_size(ally_list); i++) 
     {
-        for (var i = 0; i < ds_list_size(ally_list); i++) 
-        {
-            var output = ds_list_find_value(ally_list, i);
-            show_debug_message("index: " + string(i) + " value: " + string(output));
-        }
+        var output = ds_list_find_value(ally_list, i);
     }
 }
 
-//update previous size AFTER checking
+for (var i = 0; i < ds_list_find_value(ally_list, i); i ++)
+{
+		var ally_id = ds_list_find_value(ally_list, i);
+		var ally_instance = instance_exists(ally_id) ? ally_id : noone;
+		
+		if (ally_instance != noone)
+		{
+			var dist = point_distance(x,y, ally_instance.x, ally_instance.y);
+			if (dist < min_dist)
+			{
+				min_dist = dist;
+				nearest_ally = ally_instance;
+			}
+		}
+}
+
 previous_list_size = current_list_size;
 
 //check the nearest ally, and plot a vector away from that ally
 if (nearest_ally != noone) 
 {
-    var distance = point_distance(x, y, nearest_ally.x, nearest_ally.y);
-    var dir_away = point_direction(x, y, nearest_ally.x, nearest_ally.y) + 180;
+    distance = point_distance(x, y, nearest_ally.x, nearest_ally.y);
+    dir_away = point_direction(x, y, nearest_ally.x, nearest_ally.y) + 180;
 
+    line_length = clamp(min_distance_to_ally - distance, 0, min_distance_to_ally);
 
-    var line_length = clamp(50 - distance, 0, 50);
-
-    var point_x = x + lengthdir_x(line_length, dir_away);
-    var point_y = y + lengthdir_y(line_length, dir_away);
+    point_x = x + lengthdir_x(line_length, dir_away);
+    point_y = y + lengthdir_y(line_length, dir_away);
 }
+
 
 if (pathfinding_timer <= 0)
 {
@@ -111,7 +117,7 @@ if (pathfinding_timer <= 0)
     path = path_add();
 
     mp_grid_path(global.grid, path, x, y, target_x, target_y, true);
-	path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
+	  path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
 	
     //update previous position only after pathfinding check
     player_previous_x = obj_player_legs.x;
@@ -120,6 +126,18 @@ if (pathfinding_timer <= 0)
     pathfinding_timer = irandom_range(pathfinding_cooldown / 2, pathfinding_cooldown);
 	initial_path = false;
 }
+
+//path = path_add();
+//path_add_point(path,x,y,walk_speed);
+//path_add_point(path,x-50,y,walk_speed);
+//path_add_point(path,x-50,y-50,walk_speed);
+if (id == 100009) 
+{
+	path_insert_point(path,3,9999,9999,walk_speed*global.delta_multiplier);
+	show_debug_message(path_get_number(path));
+	
+}
+
 
 //movement animation
 var next_x = path_get_x(path, 1); // Get the next node's X position
