@@ -6,8 +6,34 @@ image_xscale = image_scale;
 image_yscale = image_scale;
 
 torso = spr_enemy1_torso;
-rotation_angle = point_direction(x,y, obj_player_torso.x,obj_player_torso.y);
-sight_cone = get_sight_cone(rotation_angle);
+rotation_angle = image_angle;
+
+//line of sight
+sight_line_length = get_sight_line(x,y,rotation_angle,obj_obstacle);
+sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle+90);
+
+spotted = false;
+
+last_known_player_x = 0;
+last_known_player_y = 0;
+
+//behavior
+enum movement_state 
+{
+	NONE,
+	GUARDING,
+	PATROLLING,
+	CHASING,
+	DODGING,
+}
+
+enum attack_behavior
+{
+	NONE,
+	ATTACKING,
+	TARGETING,
+	SCANNING,
+}
 
 //movement info
 previous_x = x;
@@ -25,7 +51,7 @@ player_previous_y = obj_player_legs.y;
 
 //pathfinding
 initial_path = true;
-pathfinding_cooldown = 600;
+pathfinding_cooldown = 120;
 pathfinding_timer = 0;
 path = path_add();
 
@@ -62,31 +88,51 @@ colors = [c_white, c_green, c_blue, c_yellow, c_red, c_purple];
 sprite_color = colors[level];
 flash = 0;
 
-//line of sight
-function get_sight_cone(rotation_angle)
-{
-	coords = [];
-
-	radius = 300 * image_scale; // Distance from the fixed point to the other two points
-	spread_angle = 60; // Spread angle between the two equal points (in degrees)
-
-	facing_x = x + lengthdir_x(500, image_angle+90);
-	facing_y = y + lengthdir_y(500, image_angle+90);
-	vision_direction = rotation_angle;//point_direction(x, y, facing_x, facing_y);
-
-	// Calculate the positions of the two equal points
-	angle1 = vision_direction - spread_angle / 2; // First point's angle
-	angle2 = vision_direction + spread_angle / 2; // Second point's angle
-
-	coords[0] = x + lengthdir_x(radius, angle1);
-	coords[1] = y + lengthdir_y(radius, angle1);
-	coords[2] = x + lengthdir_x(radius, angle2);
-	coords[3] = y + lengthdir_y(radius, angle2);
-	
-	return coords;	
+/// Draw an infinitely long line that stops on collision
+function get_sight_line(x_start, y_start, angle, target_object) {
+    var max_distance = 10000; // Large value to simulate infinity
+    var step_size = 1;        // How fine the collision check is
+    
+    var x_end = x_start;
+    var y_end = y_start;
+	var line_length = max_distance;
+    
+    for (var i = 0; i < max_distance; i += step_size) {
+        x_end = x_start + lengthdir_x(i, angle);
+        y_end = y_start + lengthdir_y(i, angle);
+        
+        // Pixel-perfect collision check
+        if (position_meeting(x_end, y_end, target_object)) {
+			line_length = i;
+            break; // Stop when collision is detected
+        }
+    }
+    draw_line(x_start,y_start,x_end,y_end);
+	return line_length;
 }
 
-function scanning()
+
+function get_sight_cone(xA, yA, spread_angle, height, direction) {
+    var half_angle = spread_angle / 2;
+    
+    // Calculate half the base length using the tangent function
+    var base_half = height * tan(degtorad(half_angle));
+    
+    // Find the midpoint of the base at the given height
+    var x_mid = xA + lengthdir_x(height, direction);
+    var y_mid = yA + lengthdir_y(height, direction);
+    
+    // Calculate the base endpoints (B and C)
+    var xB = x_mid + lengthdir_x(base_half, direction - 90);
+    var yB = y_mid + lengthdir_y(base_half, direction - 90);
+    
+    var xC = x_mid + lengthdir_x(-base_half, direction - 90);
+    var yC = y_mid + lengthdir_y(-base_half, direction - 90);
+    
+    return [xB, yB, xC, yC];
+}
+
+function scan_area()
 {
 	
 }
