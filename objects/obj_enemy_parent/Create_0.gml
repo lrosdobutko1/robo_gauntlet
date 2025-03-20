@@ -55,8 +55,8 @@ pathfinding_cooldown = 120;
 pathfinding_timer = 0;
 path = path_add();
 
-target_x = obj_player_torso.x;
-target_y = obj_player_torso.y;
+target_x = obj_player_legs.x;
+target_y = obj_player_legs.y;
 
 ally_list = ds_list_create();
 previous_list_size = 0;

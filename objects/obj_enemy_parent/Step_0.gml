@@ -2,7 +2,7 @@
 sight_line_length = get_sight_line(x,y, rotation_angle+90,obj_obstacle);
 sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle+90);
 spotted = point_in_triangle(obj_player_legs.x,obj_player_legs.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
-show_debug_message(sight_line_length);
+
 if (spotted)
 {
 	last_known_player_x = obj_player_legs.x;

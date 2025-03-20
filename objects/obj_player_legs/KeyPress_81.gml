@@ -1,1 +1,0 @@
-instance_create_layer(x+100,y,layer,obj_player_muzzle_flash);

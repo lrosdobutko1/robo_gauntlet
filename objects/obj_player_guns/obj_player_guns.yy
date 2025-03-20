@@ -36,5 +36,5 @@
     "path":"sprites/spr_player_guns/spr_player_guns.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

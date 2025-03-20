@@ -40,5 +40,5 @@
     "name":"spr_player_torso",
     "path":"sprites/spr_player_torso/spr_player_torso.yy",
   },
-  "visible":true,
+  "visible":false,
 }

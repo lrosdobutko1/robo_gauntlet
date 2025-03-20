@@ -30,6 +30,3 @@ draw_path(path,x,y,true);
 
 get_sight_line(x,y, rotation_angle+90,obj_obstacle);
 draw_triangle(x, y, sight_cone[0], sight_cone[1], sight_cone[2], sight_cone[3], 4);
-
-
-
