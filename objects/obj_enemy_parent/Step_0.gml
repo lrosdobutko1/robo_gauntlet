@@ -1,13 +1,30 @@
 
-sight_line_length = get_sight_line(x,y, rotation_angle+90,obj_obstacle);
+sight_line_length = get_sight_line(x,y, rotation_angle+90, vis_dist, obj_obstacle);
 sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle+90);
-spotted = point_in_triangle(obj_player_legs.x,obj_player_legs.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
+spotted_player = point_in_triangle(obj_player_legs.x,obj_player_legs.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
 
-if (spotted)
+if (spotted_player)
 {
 	last_known_player_x = obj_player_legs.x;
 	last_known_player_y = obj_player_legs.y;
+	movement = movement_state.CHASING;
 }
+else movement = movement_state.NONE;
+
+switch (movement)
+{
+	case movement_state.NONE:	
+		break;
+	
+	case movement_state.CHASING:
+	if (pathfinding_timer <= 0)
+	{
+		chase_player();
+		show_debug_message("chasing");
+	}
+}
+
+
 
 if (previous_x != x || previous_y != y) 
 {
@@ -80,64 +97,12 @@ if (nearest_ally != noone)
 }
 
 /* path finding */
-if (spotted)
+if (spotted_player)
 {
-//	if (pathfinding_timer <= 0)
-//	{
-//	    var player_moved = (player_previous_x != obj_player_legs.x || player_previous_y != obj_player_legs.y);
-
-//	    if (initial_path || player_moved)
-//	    {
-//			//while far from the player
-//	        if (distance_to_object(obj_player_legs) >= 104)
-//	        {
-//	            var change_target_x = obj_player_legs.x + irandom_range(-50, 50);
-//	            var change_target_y = obj_player_legs.y + irandom_range(-50, 50);
-
-//	            while (!mp_grid_path(global.grid, path, x, y, change_target_x, change_target_y, true))
-//	            {
-//	                change_target_x = obj_player_torso.x + irandom_range(-50, 50);
-//	                change_target_y = obj_player_torso.y + irandom_range(-50, 50);
-//	            }
-
-//	            target_x = change_target_x;
-//	            target_y = change_target_y;
-//	        }
-//	        else
-//	        {
-//	            target_x = last_known_player_x;
-//	            target_y = last_known_player_y;
-//	        }
-
-//	        //delete and create a new path only when updating
-//	        path_delete(path);
-//	        path = path_add();
-
-//	        mp_grid_path(global.grid, path, x, y, target_x, target_y, true);
-//			path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
-//	    }
-	
-//		//once the player is near
-//		if (distance_to_object(obj_player_legs) < 104)
-//	    {
-//	        target_x = obj_player_torso.x;
-//	        target_y = obj_player_torso.y;
-//	    }
-
-//	    //delete and create a new path only when updating
-//	    path_delete(path);
-//	    path = path_add();
-
-//	    mp_grid_path(global.grid, path, x, y, target_x, target_y, true);
-//		  path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
-	
-//	    //update previous position only after pathfinding check
-//	    player_previous_x = obj_player_legs.x;
-//	    player_previous_y = obj_player_legs.y;
-
-//	    pathfinding_timer = irandom_range(pathfinding_cooldown / 2, pathfinding_cooldown);
-//		initial_path = false;
-//	}
+	if (pathfinding_timer <= 0)
+	{
+		chase_player();
+	}
 }
 
 //movement animation

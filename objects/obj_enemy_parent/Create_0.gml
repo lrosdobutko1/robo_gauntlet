@@ -9,10 +9,16 @@ torso = spr_enemy1_torso;
 rotation_angle = image_angle;
 
 //line of sight
-sight_line_length = get_sight_line(x,y,rotation_angle,obj_obstacle);
+vis_dist = 500;
+sight_line_length = get_sight_line(x,y,rotation_angle, vis_dist, obj_obstacle);
 sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle+90);
 
-spotted = false;
+movement = movement_state.NONE;
+attacking = attack_state.NONE;
+searching = searching_state.NONE;
+
+spotted_player = false;
+searching_player = false;
 
 last_known_player_x = 0;
 last_known_player_y = 0;
@@ -22,17 +28,24 @@ enum movement_state
 {
 	NONE,
 	GUARDING,
+	SEARCHING,
 	PATROLLING,
 	CHASING,
 	DODGING,
 }
 
-enum attack_behavior
+enum attack_state
 {
 	NONE,
 	ATTACKING,
 	TARGETING,
+}
+
+enum searching_state
+{
+	NONE,
 	SCANNING,
+	SPOTTED,
 }
 
 //movement info
@@ -89,8 +102,8 @@ sprite_color = colors[level];
 flash = 0;
 
 /// Draw an infinitely long line that stops on collision
-function get_sight_line(x_start, y_start, angle, target_object) {
-    var max_distance = 10000; // Large value to simulate infinity
+function get_sight_line(x_start, y_start, angle, vis_dist, target_object) {
+    var max_distance = vis_dist; // Large value to simulate infinity
     var step_size = 1;        // How fine the collision check is
     
     var x_end = x_start;
@@ -134,6 +147,67 @@ function get_sight_cone(xA, yA, spread_angle, height, direction) {
 
 function scan_area()
 {
+	var scanning_time = irandom_range(120, 360);
+	var scanning_direction_time = scanning_time div 2;
+	
+	//if (spotted_player);
+	
 	
 }
 
+function chase_player()
+{
+	var player_moved = (player_previous_x != obj_player_legs.x || player_previous_y != obj_player_legs.y);
+
+	if (initial_path || player_moved)
+	{
+		//while far from the player
+	    if (distance_to_object(obj_player_legs) >= 104)
+	    {
+	        var change_target_x = obj_player_legs.x + irandom_range(-50, 50);
+	        var change_target_y = obj_player_legs.y + irandom_range(-50, 50);
+
+	        while (!mp_grid_path(global.grid, path, x, y, change_target_x, change_target_y, true))
+	        {
+	            change_target_x = obj_player_legs.x + irandom_range(-50, 50);
+	            change_target_y = obj_player_legs.y + irandom_range(-50, 50);
+	        }
+
+	        target_x = change_target_x;
+	        target_y = change_target_y;
+	    }
+	    else
+	    {
+	        target_x = last_known_player_x;
+	        target_y = last_known_player_y;
+	    }
+
+	    //delete and create a new path only when updating
+	    path_delete(path);
+	    path = path_add();
+
+	    mp_grid_path(global.grid, path, x, y, target_x, target_y, true);
+		path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
+	}
+	
+	//once the player is near
+	if (distance_to_object(obj_player_legs) < 104)
+	{
+	    target_x = obj_player_legs.x;
+	    target_y = obj_player_legs.y;
+	}
+
+	//delete and create a new path only when updating
+	path_delete(path);
+	path = path_add();
+
+	mp_grid_path(global.grid, path, x, y, target_x, target_y, true);
+		path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
+	
+	//update previous position only after pathfinding check
+	player_previous_x = obj_player_legs.x;
+	player_previous_y = obj_player_legs.y;
+
+	pathfinding_timer = irandom_range(pathfinding_cooldown / 2, pathfinding_cooldown);
+	initial_path = false;
+}
