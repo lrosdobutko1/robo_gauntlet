@@ -3,29 +3,6 @@ sight_line_length = get_sight_line(x,y, rotation_angle+90, vis_dist, obj_obstacl
 sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle+90);
 spotted_player = point_in_triangle(obj_player_legs.x,obj_player_legs.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
 
-if (spotted_player)
-{
-	last_known_player_x = obj_player_legs.x;
-	last_known_player_y = obj_player_legs.y;
-	movement = movement_state.CHASING;
-}
-else movement = movement_state.NONE;
-
-switch (movement)
-{
-	case movement_state.NONE:	
-		break;
-	
-	case movement_state.CHASING:
-	if (pathfinding_timer <= 0)
-	{
-		chase_player();
-		show_debug_message("chasing");
-	}
-}
-
-
-
 if (previous_x != x || previous_y != y) 
 {
     moving = true;
@@ -45,7 +22,6 @@ ds_list_clear(ally_list);
 current_list_size = 0;
 nearest_ally = noone;
 min_dist = 999999; // Start with a large number
-
 
 with (obj_enemy_parent) 
 {
@@ -96,15 +72,6 @@ if (nearest_ally != noone)
     point_y = y + lengthdir_y(line_length, dir_away);
 }
 
-/* path finding */
-if (spotted_player)
-{
-	if (pathfinding_timer <= 0)
-	{
-		chase_player();
-	}
-}
-
 //movement animation
 var next_x = path_get_x(path, 1); // Get the next node's X position
 var next_y = path_get_y(path, 1); // Get the next node's Y position
@@ -116,12 +83,18 @@ if (moving == true)
 	image_speed = 0.8;
 	
     //face toward the next node instead of the player
-    //image_angle = travel_angle;
 	image_angle -= min(abs(angle_diff), 5) * sign(angle_diff);
 }
 else
 {
 	image_speed = 0;
+}
+
+//movement behavior
+if (pathfinding_timer <= 0)
+{
+	//chase_player();
+	pathfinding_timer = pathfinding_cooldown;
 }
 
 //destroyed
@@ -133,3 +106,31 @@ if (!alive)
 	instance_destroy();
 }
 
+var target_player_stationary = angle_difference(rotation_angle, point_direction(x,y,obj_player_legs.x,obj_player_legs.y)-90);
+
+//lead the player for shooting at
+var distance_to_player = point_distance(x, y, obj_player_legs.x, obj_player_legs.y);
+var min_time = 2;  // Minimum prediction frames
+var max_time = 80; // Maximum prediction frames
+var max_distance = 400; // Distance at which max_time applies
+var prediction_time = min_time + (max_time - min_time) * (distance_to_player / (distance_to_player + max_distance));
+predicted_x = obj_player_collision.x + obj_player_collision.h_speed * prediction_time;
+predicted_y = obj_player_collision.y + obj_player_collision.v_speed * prediction_time;
+
+var target_player_moving = angle_difference(rotation_angle, point_direction(x,y, predicted_x, predicted_y)-90);
+
+var player_moving = (player_previous_x != obj_player_legs.x || player_previous_y != obj_player_legs.y)
+if (player_moving)
+{
+	rotation_angle -= min(abs(target_player_moving), 5) * sign(target_player_moving);
+
+	show_debug_message("player moving");
+}
+else
+{
+	rotation_angle -= min(abs(target_player_stationary), 5) * sign(target_player_stationary);
+	show_debug_message("player still");
+}
+
+player_previous_x = obj_player_legs.x;
+player_previous_y = obj_player_legs.y;

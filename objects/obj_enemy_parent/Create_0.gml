@@ -6,7 +6,7 @@ image_xscale = image_scale;
 image_yscale = image_scale;
 
 torso = spr_enemy1_torso;
-rotation_angle = image_angle;
+rotation_angle = irandom_range(0,360);
 
 //line of sight
 vis_dist = 500;
@@ -18,10 +18,15 @@ attacking = attack_state.NONE;
 searching = searching_state.NONE;
 
 spotted_player = false;
+leading_player = false;
 searching_player = false;
+search_cooldown = 1200;
+search_timer = 0;
 
 last_known_player_x = 0;
 last_known_player_y = 0;
+predicted_x = 0;
+predicted_y = 0;
 
 //behavior
 enum movement_state 
@@ -37,13 +42,15 @@ enum movement_state
 enum attack_state
 {
 	NONE,
-	ATTACKING,
-	TARGETING,
+	ATTACK_1,
+	ATTACK_2,
+	ATTACK_3,
 }
 
 enum searching_state
 {
 	NONE,
+	IDLE,
 	SCANNING,
 	SPOTTED,
 }
@@ -202,7 +209,7 @@ function chase_player()
 	path = path_add();
 
 	mp_grid_path(global.grid, path, x, y, target_x, target_y, true);
-		path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
+	path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
 	
 	//update previous position only after pathfinding check
 	player_previous_x = obj_player_legs.x;
@@ -210,4 +217,13 @@ function chase_player()
 
 	pathfinding_timer = irandom_range(pathfinding_cooldown / 2, pathfinding_cooldown);
 	initial_path = false;
+}
+
+function move_to_location(go_to_x, go_to_y)
+{
+	path_delete(path);
+	path = path_add();
+
+	mp_grid_path(global.grid, path, x, y, go_to_x, go_to_y, true);
+	path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
 }
