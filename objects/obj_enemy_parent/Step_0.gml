@@ -106,30 +106,31 @@ if (!alive)
 	instance_destroy();
 }
 
-var target_player_stationary = angle_difference(rotation_angle, point_direction(x,y,obj_player_legs.x,obj_player_legs.y)-90);
-
 //lead the player for shooting at
 var distance_to_player = point_distance(x, y, obj_player_legs.x, obj_player_legs.y);
 var min_time = 2;  // Minimum prediction frames
 var max_time = 80; // Maximum prediction frames
 var max_distance = 400; // Distance at which max_time applies
 var prediction_time = min_time + (max_time - min_time) * (distance_to_player / (distance_to_player + max_distance));
-predicted_x = obj_player_collision.x + obj_player_collision.h_speed * prediction_time;
-predicted_y = obj_player_collision.y + obj_player_collision.v_speed * prediction_time;
-
-var target_player_moving = angle_difference(rotation_angle, point_direction(x,y, predicted_x, predicted_y)-90);
-
 var player_moving = (player_previous_x != obj_player_legs.x || player_previous_y != obj_player_legs.y)
+
+var player_direction = point_direction(x,y,obj_player_legs.x,obj_player_legs.y)-90;
+var player_lead_direction = point_direction(x,y, predicted_x, predicted_y)-90;
+var player_target_transition = point_direction(obj_player_legs.x,obj_player_legs.y,predicted_x,predicted_y)-90;
+
+var target_player_stationary = angle_difference(rotation_angle, player_direction);
+var target_player_moving = angle_difference(rotation_angle, player_lead_direction);
+var target_player_moving_stationary = angle_difference(rotation_angle,player_target_transition);
+
 if (player_moving)
 {
-	rotation_angle -= min(abs(target_player_moving), 5) * sign(target_player_moving);
-
-	show_debug_message("player moving");
+	predicted_x = obj_player_collision.x + obj_player_collision.h_speed * prediction_time;
+	predicted_y = obj_player_collision.y + obj_player_collision.v_speed * prediction_time;
+	rotation_angle -= min(abs(target_player_moving), 1) * sign(target_player_moving);
 }
 else
 {
-	rotation_angle -= min(abs(target_player_stationary), 5) * sign(target_player_stationary);
-	show_debug_message("player still");
+	rotation_angle -= min(abs(target_player_stationary), 1) * sign(target_player_stationary);	
 }
 
 player_previous_x = obj_player_legs.x;

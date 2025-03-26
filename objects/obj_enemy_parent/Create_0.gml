@@ -7,6 +7,8 @@ image_yscale = image_scale;
 
 torso = spr_enemy1_torso;
 rotation_angle = irandom_range(0,360);
+current_angle = rotation_angle;
+target_angle = angle_difference(rotation_angle,current_angle);
 
 //line of sight
 vis_dist = 500;
