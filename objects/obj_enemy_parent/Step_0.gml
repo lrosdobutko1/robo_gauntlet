@@ -1,7 +1,7 @@
 
 sight_line_length = get_sight_line(x,y, rotation_angle+90, vis_dist, obj_obstacle);
 sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle+90);
-spotted_player = point_in_triangle(obj_player_legs.x,obj_player_legs.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
+spotted_player = point_in_triangle(obj_player_collision.x,obj_player_collision.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
 
 if (previous_x != x || previous_y != y) 
 {
@@ -107,31 +107,30 @@ if (!alive)
 }
 
 //lead the player for shooting at
-var distance_to_player = point_distance(x, y, obj_player_legs.x, obj_player_legs.y);
+
+var distance_to_player = point_distance(x, y, obj_player_collision.x, obj_player_collision.y);
+var min_range = 0;
+var max_range = 500;
+
+var rotation_speed = clamp(3 - (distance_to_player - min_range) / (max_range - min_range) * 4, 1, 5);
 var min_time = 2;  // Minimum prediction frames
 var max_time = 80; // Maximum prediction frames
 var max_distance = 400; // Distance at which max_time applies
 var prediction_time = min_time + (max_time - min_time) * (distance_to_player / (distance_to_player + max_distance));
-var player_moving = (player_previous_x != obj_player_legs.x || player_previous_y != obj_player_legs.y)
+var player_moving = (player_previous_x != obj_player_collision.x || player_previous_y != obj_player_collision.y)
 
-var player_direction = point_direction(x,y,obj_player_legs.x,obj_player_legs.y)-90;
+var player_direction = point_direction(x,y,obj_player_collision.x,obj_player_collision.y)-90;
 var player_lead_direction = point_direction(x,y, predicted_x, predicted_y)-90;
-var player_target_transition = point_direction(obj_player_legs.x,obj_player_legs.y,predicted_x,predicted_y)-90;
+var player_target_transition = point_direction(obj_player_collision.x,obj_player_collision.y,predicted_x,predicted_y)-90;
 
 var target_player_stationary = angle_difference(rotation_angle, player_direction);
 var target_player_moving = angle_difference(rotation_angle, player_lead_direction);
 var target_player_moving_stationary = angle_difference(rotation_angle,player_target_transition);
 
-if (player_moving)
-{
-	predicted_x = obj_player_collision.x + obj_player_collision.h_speed * prediction_time;
-	predicted_y = obj_player_collision.y + obj_player_collision.v_speed * prediction_time;
-	rotation_angle -= min(abs(target_player_moving), 1) * sign(target_player_moving);
-}
-else
-{
-	rotation_angle -= min(abs(target_player_stationary), 1) * sign(target_player_stationary);	
-}
+predicted_x = obj_player_collision.x + obj_player_collision.h_speed * prediction_time;
+predicted_y = obj_player_collision.y + obj_player_collision.v_speed * prediction_time;
 
-player_previous_x = obj_player_legs.x;
-player_previous_y = obj_player_legs.y;
+rotation_angle -= min(abs(target_player_moving), rotation_speed) * sign(target_player_moving);
+
+player_previous_x = obj_player_collision.x;
+player_previous_y = obj_player_collision.y;
