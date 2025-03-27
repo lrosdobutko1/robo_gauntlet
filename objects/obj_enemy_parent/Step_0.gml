@@ -44,18 +44,18 @@ if (current_list_size != previous_list_size)
 
 for (var i = 0; i < ds_list_find_value(ally_list, i); i ++)
 {
-		var ally_id = ds_list_find_value(ally_list, i);
-		var ally_instance = instance_exists(ally_id) ? ally_id : noone;
+	var ally_id = ds_list_find_value(ally_list, i);
+	var ally_instance = instance_exists(ally_id) ? ally_id : noone;
 		
-		if (ally_instance != noone)
+	if (ally_instance != noone)
+	{
+		var dist = point_distance(x,y, ally_instance.x, ally_instance.y);
+		if (dist < min_dist)
 		{
-			var dist = point_distance(x,y, ally_instance.x, ally_instance.y);
-			if (dist < min_dist)
-			{
-				min_dist = dist;
-				nearest_ally = ally_instance;
-			}
+			min_dist = dist;
+			nearest_ally = ally_instance;
 		}
+	}
 }
 
 previous_list_size = current_list_size;
@@ -93,7 +93,7 @@ else
 //movement behavior
 if (pathfinding_timer <= 0)
 {
-	//chase_player();
+	chase_player();
 	pathfinding_timer = pathfinding_cooldown;
 }
 
@@ -106,31 +106,8 @@ if (!alive)
 	instance_destroy();
 }
 
-//lead the player for shooting at
-
-var distance_to_player = point_distance(x, y, obj_player_collision.x, obj_player_collision.y);
-var min_range = 0;
-var max_range = 500;
-
-var rotation_speed = clamp(3 - (distance_to_player - min_range) / (max_range - min_range) * 4, 1, 5);
-var min_time = 2;  // Minimum prediction frames
-var max_time = 80; // Maximum prediction frames
-var max_distance = 400; // Distance at which max_time applies
-var prediction_time = min_time + (max_time - min_time) * (distance_to_player / (distance_to_player + max_distance));
-var player_moving = (player_previous_x != obj_player_collision.x || player_previous_y != obj_player_collision.y)
-
-var player_direction = point_direction(x,y,obj_player_collision.x,obj_player_collision.y)-90;
-var player_lead_direction = point_direction(x,y, predicted_x, predicted_y)-90;
-var player_target_transition = point_direction(obj_player_collision.x,obj_player_collision.y,predicted_x,predicted_y)-90;
-
-var target_player_stationary = angle_difference(rotation_angle, player_direction);
-var target_player_moving = angle_difference(rotation_angle, player_lead_direction);
-var target_player_moving_stationary = angle_difference(rotation_angle,player_target_transition);
-
-predicted_x = obj_player_collision.x + obj_player_collision.h_speed * prediction_time;
-predicted_y = obj_player_collision.y + obj_player_collision.v_speed * prediction_time;
-
-rotation_angle -= min(abs(target_player_moving), rotation_speed) * sign(target_player_moving);
+//choose the angle at which the torso points
+choose_torso_angle();
 
 player_previous_x = obj_player_collision.x;
 player_previous_y = obj_player_collision.y;
