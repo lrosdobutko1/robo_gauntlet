@@ -9,15 +9,13 @@ torso = spr_enemy1_torso;
 rotation_angle = irandom_range(0,360);
 current_angle = rotation_angle;
 target_angle = angle_difference(rotation_angle,current_angle);
+//if an enemy is "smart" it will do things like lead shots against the player, and other advanced behavior
+is_smart = false;
 
 //line of sight
 vis_dist = 500;
 sight_line_length = get_sight_line(x,y,rotation_angle, vis_dist, obj_obstacle);
 sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle+90);
-
-movement = movement_state.NONE;
-attacking = attack_state.NONE;
-searching = searching_state.NONE;
 
 spotted_player = false;
 leading_player = false;
@@ -29,33 +27,6 @@ last_known_player_x = 0;
 last_known_player_y = 0;
 predicted_x = 0;
 predicted_y = 0;
-
-//behavior
-enum movement_state 
-{
-	NONE,
-	GUARDING,
-	SEARCHING,
-	PATROLLING,
-	CHASING,
-	DODGING,
-}
-
-enum attack_state
-{
-	NONE,
-	ATTACK_1,
-	ATTACK_2,
-	ATTACK_3,
-}
-
-enum searching_state
-{
-	NONE,
-	IDLE,
-	SCANNING,
-	SPOTTED,
-}
 
 //movement info
 previous_x = x;
@@ -92,6 +63,17 @@ point_x = 0;
 point_y = 0;
 
 min_distance_to_ally = 50;
+
+//shooting
+gun_barrels = array_create(4);
+left_gun_barrel = array_create(2);
+right_gun_barrel = array_create(2);
+gun_cooldown = 100;
+gun_timer = 0;
+shooting_range = 500;
+firing_offset = 10;
+//determine how much lead time to give the enemy when tracking player. Between 0 and 1.
+prediction_multiplier = (is_smart) ? 1 : 0;
 
 //determine if legs remain after destruction
 random_legs = random_range(0,10);
@@ -158,10 +140,6 @@ function scan_area()
 {
 	var scanning_time = irandom_range(120, 360);
 	var scanning_direction_time = scanning_time div 2;
-	
-	//if (spotted_player);
-	
-	
 }
 
 function chase_player()
@@ -230,7 +208,7 @@ function move_to_location(go_to_x, go_to_y)
 	path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
 }
 
-function choose_torso_angle()
+function choose_torso_angle(prediction_multiplier)
 {
 	var distance_to_player = point_distance(x, y, obj_player_collision.x, obj_player_collision.y);
 	var min_range = 0;
@@ -240,7 +218,7 @@ function choose_torso_angle()
 	var min_time = 2;  // Minimum prediction frames
 	var max_time = 80; // Maximum prediction frames
 	var max_distance = 400; // Distance at which max_time applies
-	var prediction_time = min_time + (max_time - min_time) * (distance_to_player / (distance_to_player + max_distance));
+	var prediction_time = prediction_multiplier * (min_time + (max_time - min_time) * (distance_to_player / (distance_to_player + max_distance)));
 	var player_moving = (player_previous_x != obj_player_collision.x || player_previous_y != obj_player_collision.y)
 
 	var player_direction = point_direction(x,y,obj_player_collision.x,obj_player_collision.y)-90;
@@ -254,5 +232,134 @@ function choose_torso_angle()
 	predicted_x = obj_player_collision.x + obj_player_collision.h_speed * prediction_time;
 	predicted_y = obj_player_collision.y + obj_player_collision.v_speed * prediction_time;
 
-	rotation_angle -= min(abs(target_player_moving), rotation_speed) * sign(target_player_moving);	
+	return min(abs(target_player_moving), rotation_speed) * sign(target_player_moving);	
 }
+
+function find_enemy_gun_create_coordinates(coords, radius, spread_angle, rotation_angle)
+{
+	
+	//find the coordinates to create bullets at by calculating isoscoles triangle
+	var x_fixed = x;
+	var y_fixed = y;
+
+	// Triangle parameters
+	radius = radius * image_scale; // Distance from the fixed point to the other two points
+	spread_angle = spread_angle; // Spread angle between the two equal points (in degrees)
+
+	// Direction to the mouse
+	facing_angle = rotation_angle+90;
+
+	// Calculate the positions of the two equal points
+	var angle1 = facing_angle - spread_angle / 2; // First point's angle
+	var angle2 = facing_angle + spread_angle / 2; // Second point's angle
+
+	coords[0] = x_fixed + lengthdir_x(radius, angle1);
+	coords[1] = y_fixed + lengthdir_y(radius, angle1);
+	coords[2] = x_fixed + lengthdir_x(radius, angle2);
+	coords[3] = y_fixed + lengthdir_y(radius, angle2);
+}
+
+tick_tock_counter = 0;  
+tick_tock_offset = 20; // Default offset, always a multiple of 10
+
+function tick_tock(offset)
+{
+	find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
+	var creator = id;
+	
+    static tick_tock_counter = 0;
+    static cycle_count = 0;
+
+    if (tick_tock_counter == 0)
+    {
+		var right_bullets = instance_create_layer(
+		gun_barrels[0],
+		gun_barrels[1],
+		layer,
+		obj_bullets)
+		{
+			right_bullets.image_angle = rotation_angle;	
+			right_bullets.direction = right_bullets.image_angle+90;
+			right_bullets.x = gun_barrels[0];
+			right_bullets.y = gun_barrels[1];
+			right_bullets.gun_parent = creator; // Store gun reference
+			right_bullets.is_left = false;
+		}	
+
+    fire_guns_counter = offset; // Start countdown
+        show_debug_message("Tick");
+        tick_tock_counter = offset; // Start countdown
+    }
+    else if (tick_tock_counter == offset - offset/2) // 20 steps after "Tick"
+    {
+		var left_bullets = instance_create_layer(
+		gun_barrels[2],
+		gun_barrels[3],
+		layer,
+		obj_bullets)
+		{
+		left_bullets.image_angle = rotation_angle;	
+		left_bullets.direction = left_bullets.image_angle+90;
+		left_bullets.x = gun_barrels[2];
+		left_bullets.y = gun_barrels[3];
+		left_bullets.gun_parent = creator; // Store gun reference
+		left_bullets.is_left = true;
+		}
+        show_debug_message("Tock");
+        cycle_count += 1; // Increment cycle count
+
+        if (cycle_count >= 4) // If 4 cycles completed
+        {
+            tick_tock_counter = -120; // Pause for 120 frames
+            cycle_count = 0; // Reset cycle count
+        }
+    }
+
+    if (tick_tock_counter > 0) 
+    {
+        tick_tock_counter -= 1;
+    }
+    else if (tick_tock_counter < 0) 
+    {
+        tick_tock_counter += 1; // Countdown during pause period
+    }
+}
+
+
+
+//function shoot_enemy_bullets()
+//{
+//	find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
+	
+//	var creator = id;
+	
+//	//right gun
+//	var right_bullets = instance_create_layer(
+//	gun_barrels[0],
+//	gun_barrels[1],
+//	layer,
+//	obj_bullets)
+//	{
+//		right_bullets.image_angle = rotation_angle;	
+//		right_bullets.direction = right_bullets.image_angle+90;
+//		right_bullets.gun_parent = creator; // Store gun reference
+//		right_bullets.is_left = false;
+//	}	
+
+
+//	//left gun
+//	var left_bullets = instance_create_layer(
+//	gun_barrels[2],
+//	gun_barrels[3],
+//	layer,
+//	obj_bullets)
+//	{
+//		left_bullets.image_angle = rotation_angle;	
+//		left_bullets.direction = left_bullets.image_angle+90;
+//		left_bullets.x = gun_barrels[2];
+//		left_bullets.y = gun_barrels[3];
+//		left_bullets.gun_parent = creator; // Store gun reference
+//		left_bullets.is_left = true;
+//	}
+//}
+

@@ -1,21 +1,21 @@
 {
   "$GMObject":"",
-  "%Name":"obj_player_bullets",
+  "%Name":"obj_bullets",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_player_bullets",
+  "name":"obj_bullets",
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
     "path":"folders/Objects.yy",
   },
   "parentObjectId":{
-    "name":"obj_player_projectiles",
-    "path":"objects/obj_player_projectiles/obj_player_projectiles.yy",
+    "name":"obj_projectiles",
+    "path":"objects/obj_projectiles/obj_projectiles.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

@@ -27,3 +27,5 @@ if (alive)
 draw_set_color(c_red);
 draw_circle(predicted_x, predicted_y, 10, false);
 
+draw_triangle(x,y,gun_barrels[0],gun_barrels[1],gun_barrels[2],gun_barrels[3], 3);
+

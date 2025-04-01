@@ -1,4 +1,4 @@
-
+creator = 0;
 sprite_set_offset
 (
 spr_player_bullets,
@@ -15,7 +15,7 @@ image_speed = 0;
 
 max_damage = 10;
 damage = 1;
-bullet_speed = 15;
+if (creator != obj_player_legs.id) bullet_speed = 10;
 crit = damage * 2.5;
 
 speed = bullet_speed * global.delta_multiplier;

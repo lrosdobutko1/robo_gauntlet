@@ -75,7 +75,7 @@ function shoot_bullets()
 	gun_barrels[0],
 	gun_barrels[1],
 	layer,
-	obj_player_bullets)
+	obj_bullets)
 	{
 		right_bullets.image_angle = image_angle;	
 		right_bullets.direction = right_bullets.image_angle+90;
@@ -88,7 +88,7 @@ function shoot_bullets()
 	gun_barrels[2],
 	gun_barrels[3],
 	layer,
-	obj_player_bullets)
+	obj_bullets)
 	{
 		left_bullets.image_angle = image_angle;	
 		left_bullets.direction = right_bullets.image_angle+90;

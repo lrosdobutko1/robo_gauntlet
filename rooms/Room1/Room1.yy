@@ -38,7 +38,6 @@
     {"name":"inst_6DBD3F94","path":"rooms/Room1/Room1.yy",},
     {"name":"inst_7D01DD8B","path":"rooms/Room1/Room1.yy",},
     {"name":"inst_43F49DA3","path":"rooms/Room1/Room1.yy",},
-    {"name":"inst_786BA296","path":"rooms/Room1/Room1.yy",},
     {"name":"inst_5C35BDC6","path":"rooms/Room1/Room1.yy",},
     {"name":"inst_793CF2FE","path":"rooms/Room1/Room1.yy",},
   ],
@@ -47,7 +46,6 @@
     {"$GMRInstanceLayer":"","%Name":"controllers_layer","depth":-100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
         {"$GMRInstance":"v1","%Name":"inst_183538C3","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_183538C3","objectId":{"name":"obj_global_timer","path":"objects/obj_global_timer/obj_global_timer.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":352.0,"y":192.0,},
         {"$GMRInstance":"v1","%Name":"inst_647FF4D3","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_647FF4D3","objectId":{"name":"obj_pathfinding","path":"objects/obj_pathfinding/obj_pathfinding.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":352.0,"y":160.0,},
-        {"$GMRInstance":"v1","%Name":"inst_786BA296","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":true,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_786BA296","objectId":{"name":"obj_create_enemies_at_mouse","path":"objects/obj_create_enemies_at_mouse/obj_create_enemies_at_mouse.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":352.0,"y":384.0,},
       ],"layers":[],"name":"controllers_layer","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRInstanceLayer":"","%Name":"explosions","depth":0,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[],"layers":[],"name":"explosions","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRInstanceLayer":"","%Name":"camera_layer","depth":100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[

@@ -2,6 +2,8 @@
 sight_line_length = get_sight_line(x,y, rotation_angle+90, vis_dist, obj_obstacle);
 sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle+90);
 spotted_player = point_in_triangle(obj_player_collision.x,obj_player_collision.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
+gun_timer --;
+
 
 if (previous_x != x || previous_y != y) 
 {
@@ -93,7 +95,7 @@ else
 //movement behavior
 if (pathfinding_timer <= 0)
 {
-	chase_player();
+	//chase_player();
 	pathfinding_timer = pathfinding_cooldown;
 }
 
@@ -107,7 +109,25 @@ if (!alive)
 }
 
 //choose the angle at which the torso points
-choose_torso_angle();
+rotation_angle -= choose_torso_angle(prediction_multiplier);
+
+//shooting
+/* 
+right gun barrel x = gun_barrels[0]
+right gun barrel y = gun_barrels[1]
+left gun barrel x = gun_barrels[2]
+left gun barrel y = gun_barrels[3]
+*/
+find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
+right_gun_barrel[0] = gun_barrels[0];
+right_gun_barrel[1] = gun_barrels[1];
+left_gun_barrel[0]  = gun_barrels[2];
+left_gun_barrel[1]  = gun_barrels[3];
+if (spotted_player)
+{
+		//shoot_enemy_bullets(fire_guns_offset);
+		tick_tock(tick_tock_offset);
+}
 
 player_previous_x = obj_player_collision.x;
 player_previous_y = obj_player_collision.y;

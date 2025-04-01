@@ -1,11 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"obj_create_enemies_at_mouse",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"obj_projectiles",
+  "eventList":[],
   "managed":true,
-  "name":"obj_create_enemies_at_mouse",
+  "name":"obj_projectiles",
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
