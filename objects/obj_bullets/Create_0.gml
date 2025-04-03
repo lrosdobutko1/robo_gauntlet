@@ -1,22 +1,28 @@
 creator = 0;
 sprite_set_offset
 (
-spr_player_bullets,
-sprite_get_width(spr_player_bullets)/2,
-sprite_get_height(spr_player_bullets)
+spr_bullets,
+sprite_get_width(spr_bullets)/2,
+sprite_get_height(spr_bullets)
 );
 
 life_timer = 200;
-
 image_scale = 1;
 image_xscale = 0.5;
 image_yscale = image_scale;
 image_speed = 0;
 
-max_damage = 10;
-damage = 1;
-if (creator != obj_player_legs.id) bullet_speed = 10;
-crit = damage * 2.5;
+//if the bullet is created by an enemy
+if (creator != obj_player_legs.id) 
+{
+	bullet_speed = 8;
+	damage_to_player = 2;
+
+}
+
+damage_to_enemy = 1;
+
+crit = damage_to_enemy * 2.5;
 
 speed = bullet_speed * global.delta_multiplier;
 
