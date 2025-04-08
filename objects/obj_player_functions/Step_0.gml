@@ -105,3 +105,5 @@ if (firing)
 	get_sight_line(gun_barrels[0],gun_barrels[1],rotation_angle,obj_obstacle);
 	get_sight_line(gun_barrels[2],gun_barrels[3],rotation_angle+90,obj_obstacle);
 }
+
+show_debug_message(player_gun_type);

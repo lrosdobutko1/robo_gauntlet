@@ -7,8 +7,8 @@ if (firing)
 	if (gun_index == 3) gun_index = 0;
 }
 draw_self();
-draw_sprite_ext(spr_player_guns,gun_index,obj_player_legs.x,obj_player_legs.y,image_scale,image_scale,rotation_angle,c_white,1);
-draw_sprite_ext(spr_player_torso,0,obj_player_legs.x,obj_player_legs.y,image_scale,image_scale,rotation_angle,c_white,1);
+draw_sprite_ext(spr_player_guns,gun_index,obj_player_functions.x,obj_player_functions.y,image_scale,image_scale,rotation_angle,c_white,1);
+draw_sprite_ext(spr_player_torso,0,obj_player_functions.x,obj_player_functions.y,image_scale,image_scale,rotation_angle,c_white,1);
 
 //if(firing)
 //{

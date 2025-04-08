@@ -19,13 +19,13 @@ if (alive)
 	//draw_path(path,x,y,true);
 	
 	/*draw other elements*/
-	get_sight_line(x,y, rotation_angle+90, vis_dist, obj_obstacle);
-	draw_triangle(x, y, sight_cone[0], sight_cone[1], sight_cone[2], sight_cone[3], 4);
+	//get_sight_line(x,y, rotation_angle+90, vis_dist, obj_obstacle);
+	//draw_triangle(x, y, sight_cone[0], sight_cone[1], sight_cone[2], sight_cone[3], 4);
 }
 
 
 draw_set_color(c_red);
-draw_circle(predicted_x, predicted_y, 10, false);
+//draw_circle(predicted_x, predicted_y, 10, false);
 
-draw_triangle(x,y,gun_barrels[0],gun_barrels[1],gun_barrels[2],gun_barrels[3], 3);
+//draw_triangle(x,y,gun_barrels[0],gun_barrels[1],gun_barrels[2],gun_barrels[3], 3);
 

@@ -1,6 +1,6 @@
-x = obj_player_torso.x;
-y = obj_player_torso.y;
-image_angle = obj_player_torso.image_angle;
+x = obj_player_functions.x;
+y = obj_player_functions.y;
+image_angle = obj_player_functions.firing_angle;
 
 /* 
 right gun barrel x = gun_barrels[0]

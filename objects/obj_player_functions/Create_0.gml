@@ -26,14 +26,17 @@ gun_counter = 0;
 gun_index = 0;
 player_gun_cooldown = 120;
 player_rocket_cooldown = 600;
-gun_type = [
-0,		//machinegun
-1,		//shotgun
-2,		//grenade
-3,		//blaster
-];
+enum PLAYER_GUN_TYPE 
+{
+	NONE,
+	MACHINEGUN,
+	SHOTGUN,
+	GRENADE,
+	LASER,
+	BLASTER,	
+};
 
-bullet_type = gun_type[0];
+player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
 
 firing = false;
 firing_rockets = false;

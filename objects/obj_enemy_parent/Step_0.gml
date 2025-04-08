@@ -16,7 +16,68 @@ right_gun_barrel[1] = gun_barrels[1];
 left_gun_barrel[0]  = gun_barrels[2];
 left_gun_barrel[1]  = gun_barrels[3];
 
-
+switch (shooting_state)
+{
+	case SHOOTING_STATE.SHOOTING_IDLE:
+	{
+		//path_speed = walk_speed;
+		shooting_cooldown_timer = 240;
+		//show_debug_message("shooting idle");
+		if (spotted_player)
+		{
+			shooting_state = SHOOTING_STATE.PREPARING_TO_SHOOT;
+		}
+		
+		break;
+	}
+	
+	case SHOOTING_STATE.PREPARING_TO_SHOOT:
+	{
+		//show_debug_message("preparing to shoot");
+		path_speed = walk_speed;
+		preparing_to_shoot_timer --;
+		if (!spotted_player)
+		{
+			shooting_state = SHOOTING_STATE.SHOOTING_IDLE	
+		}
+		
+		if (preparing_to_shoot_timer <= 0)
+		{
+			shooting_state = SHOOTING_STATE.SHOOTING;
+		}
+		
+		break;
+	}
+	
+	case SHOOTING_STATE.SHOOTING:
+	{
+		//show_debug_message("shooting");
+		path_speed = 0;
+		shoot_enemy_bullets(fire_gun_offset);
+		preparing_to_shoot_timer = gun_cooldown;
+		shooting_time --;
+		if (shooting_time <= 0)
+		{
+			shooting_state = SHOOTING_STATE.SHOOTING_COOLDOWN;	
+		}
+		
+		break;
+	}
+	
+	case SHOOTING_STATE.SHOOTING_COOLDOWN:
+	{
+		shooting_time = shooting_time_reset;
+		//show_debug_message("shooting cooldown");
+		path_speed = walk_speed;
+		shooting_cooldown_timer --;
+		if (shooting_cooldown_timer <= 0)
+		{
+			shooting_state = SHOOTING_STATE.SHOOTING_IDLE;	
+		}
+		
+	}
+	
+}
 
 if (previous_x != x || previous_y != y) 
 {
@@ -108,7 +169,7 @@ else
 //movement behavior
 if (pathfinding_timer <= 0)
 {
-	//chase_player();
+	chase_player();
 	pathfinding_timer = pathfinding_cooldown;
 }
 
@@ -127,67 +188,6 @@ rotation_angle -= choose_torso_angle(prediction_multiplier);
 player_previous_x = obj_player_collision.x;
 player_previous_y = obj_player_collision.y;
 
-
-switch (shooting_state)
-{
-	case SHOOTING_STATE.SHOOTING_IDLE:
-	{
-		shooting_cooldown_timer = 240;
-		show_debug_message("shooting idle");
-		if (spotted_player)
-		{
-			shooting_state = SHOOTING_STATE.PREPARING_TO_SHOOT;
-		}
-		
-		break;
-	}
-	
-	case SHOOTING_STATE.PREPARING_TO_SHOOT:
-	{
-		show_debug_message("preparing to shoot");
-		gun_timer --;
-
-		if (!spotted_player)
-		{
-			shooting_state = SHOOTING_STATE.SHOOTING_IDLE	
-		}
-		
-		if (gun_timer <= 0)
-		{
-			shooting_state = SHOOTING_STATE.SHOOTING;
-		}
-		
-		break;
-	}
-	
-	case SHOOTING_STATE.SHOOTING:
-	{
-		gun_timer = gun_cooldown;
-		show_debug_message("shooting")
-		shooting_time --;
-		if (shooting_time <= 0)
-		{
-			shooting_state = SHOOTING_STATE.SHOOTING_COOLDOWN;	
-		}
-		
-		break;
-	}
-	
-	case SHOOTING_STATE.SHOOTING_COOLDOWN:
-	{
-		shooting_time = shooting_time_reset;
-		show_debug_message("shooting cooldown");
-		shooting_cooldown_timer --;
-		if (shooting_cooldown_timer <= 0)
-		{
-			shooting_state = SHOOTING_STATE.SHOOTING_IDLE;	
-		}
-		
-	}
-	
-}
-
-//show_debug_message();
 
 
 

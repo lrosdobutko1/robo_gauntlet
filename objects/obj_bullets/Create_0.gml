@@ -13,7 +13,7 @@ image_yscale = image_scale;
 image_speed = 0;
 
 //if the bullet is created by an enemy
-if (creator != obj_player_legs.id) 
+if (creator != obj_player_functions.id) 
 {
 	bullet_speed = 8;
 	damage_to_player = 2;

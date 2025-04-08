@@ -9,6 +9,7 @@ torso = spr_enemy1_torso;
 rotation_angle = irandom_range(0,360);
 current_angle = rotation_angle;
 target_angle = angle_difference(rotation_angle,current_angle);
+
 //if an enemy is "smart" it will do things like lead shots against the player, and other advanced behavior
 is_smart = false;
 
@@ -39,17 +40,17 @@ current_list_size = 0;
 nearest_ally = noone;
 min_dist = 99999999; // Start with a large number
 
-player_previous_x = obj_player_legs.x;
-player_previous_y = obj_player_legs.y;
+player_previous_x = obj_player_functions.x;
+player_previous_y = obj_player_functions.y;
 
 //pathfinding
 initial_path = true;
-pathfinding_cooldown = 120;
+pathfinding_cooldown = 60;
 pathfinding_timer = 0;
 path = path_add();
 
-target_x = obj_player_legs.x;
-target_y = obj_player_legs.y;
+target_x = obj_player_functions.x;
+target_y = obj_player_functions.y;
 
 ally_list = ds_list_create();
 previous_list_size = 0;
@@ -76,16 +77,16 @@ shooting_state = SHOOTING_STATE.SHOOTING_IDLE;
 gun_barrels = array_create(4);
 left_gun_barrel = array_create(2);
 right_gun_barrel = array_create(2);
-gun_cooldown = 240;
-gun_timer = gun_cooldown;
-shooting_range = 500;
-firing_offset = 10;
-shooting_time_reset = 120;
+gun_cooldown = 140;
+preparing_to_shoot_timer = gun_cooldown;
+shooting_range = vis_dist;
+
+fire_gun_offset = 80; 
+shooting_time_reset = fire_gun_offset * 4;
 shooting_time = shooting_time_reset;
-shooting_cooldown_timer = 240;
+shooting_cooldown_timer = 120;
 //determine how much lead time to give the enemy when tracking player. Between 0 and 1.
 prediction_multiplier = (is_smart) ? 1 : 0;
-
 
 //determine if legs remain after destruction
 random_legs = random_range(0,10);
@@ -127,7 +128,6 @@ function get_sight_line(x_start, y_start, angle, vis_dist, target_object) {
 	return line_length;
 }
 
-
 function get_sight_cone(xA, yA, spread_angle, height, direction) {
     var half_angle = spread_angle / 2;
     
@@ -156,44 +156,40 @@ function scan_area()
 
 function chase_player()
 {
-	var player_moved = (player_previous_x != obj_player_legs.x || player_previous_y != obj_player_legs.y);
 
-	if (initial_path || player_moved)
+	if (distance_to_object(obj_player_collision) >= 104)
 	{
-		//while far from the player
-	    if (distance_to_object(obj_player_legs) >= 104)
-	    {
-	        var change_target_x = obj_player_legs.x + irandom_range(-50, 50);
-	        var change_target_y = obj_player_legs.y + irandom_range(-50, 50);
+	    var change_target_x = obj_player_collision.x + irandom_range(-50, 50);
+	    var change_target_y = obj_player_collision.y + irandom_range(-50, 50);
 
-	        while (!mp_grid_path(global.grid, path, x, y, change_target_x, change_target_y, true))
-	        {
-	            change_target_x = obj_player_legs.x + irandom_range(-50, 50);
-	            change_target_y = obj_player_legs.y + irandom_range(-50, 50);
-	        }
-
-	        target_x = change_target_x;
-	        target_y = change_target_y;
-	    }
-	    else
+	    while (!mp_grid_path(global.grid, path, x, y, change_target_x, change_target_y, true))
 	    {
-	        target_x = last_known_player_x;
-	        target_y = last_known_player_y;
+	        change_target_x = obj_player_collision.x + irandom_range(-50, 50);
+	        change_target_y = obj_player_collision.y + irandom_range(-50, 50);
 	    }
 
-	    //delete and create a new path only when updating
-	    path_delete(path);
-	    path = path_add();
-
-	    mp_grid_path(global.grid, path, x, y, target_x, target_y, true);
-		path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
+	    target_x = change_target_x;
+	    target_y = change_target_y;
 	}
+	else
+	{
+	    target_x = last_known_player_x;
+	    target_y = last_known_player_y;
+	}
+
+	//delete and create a new path only when updating
+	path_delete(path);
+	path = path_add();
+
+	mp_grid_path(global.grid, path, x, y, target_x, target_y, true);
+	path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
+	
 	
 	//once the player is near
-	if (distance_to_object(obj_player_legs) < 104)
+	if (distance_to_object(obj_player_collision) < 104)
 	{
-	    target_x = obj_player_legs.x;
-	    target_y = obj_player_legs.y;
+	    target_x = obj_player_collision.x;
+	    target_y = obj_player_collision.y;
 	}
 
 	//delete and create a new path only when updating
@@ -204,8 +200,8 @@ function chase_player()
 	path_start(path, walk_speed * global.delta_multiplier, path_action_stop, true);
 	
 	//update previous position only after pathfinding check
-	player_previous_x = obj_player_legs.x;
-	player_previous_y = obj_player_legs.y;
+	player_previous_x = obj_player_collision.x;
+	player_previous_y = obj_player_collision.y;
 
 	pathfinding_timer = irandom_range(pathfinding_cooldown / 2, pathfinding_cooldown);
 	initial_path = false;
@@ -271,14 +267,9 @@ function find_enemy_gun_create_coordinates(coords, radius, spread_angle, rotatio
 	coords[3] = y_fixed + lengthdir_y(radius, angle2);
 }
 
-//timers for firing cycles
-fire_gun_counter = 0;  
-fire_gun_offset = 120; 
-max_shooting_cycle = 4;
-shooting_max_wait_time = -400;
+
 
 gun_offset_counter = 0;
-cycle_count = 0;
 
 function shoot_enemy_bullets(offset)
 {
@@ -301,10 +292,10 @@ function shoot_enemy_bullets(offset)
 			right_bullets.gun_parent = creator; // Store gun reference
 			right_bullets.is_left = false;
 		}
-        show_debug_message("Tick");
+		
         gun_offset_counter = offset; // Start countdown
     }
-    else if (gun_offset_counter == offset div 6) // 20 steps after "Tick"
+    else if (gun_offset_counter == offset div 2) // 20 steps after "Tick"
     {
 		
 				var left_bullets = instance_create_layer(
@@ -320,7 +311,6 @@ function shoot_enemy_bullets(offset)
 			left_bullets.gun_parent = creator;
 			left_bullets.is_left = true;
 		}
-        show_debug_message("Tock");
     }
 
     gun_offset_counter -= 1;
@@ -329,3 +319,15 @@ function shoot_enemy_bullets(offset)
         gun_offset_counter = offset; // Reset countdown
     }
 }
+
+game_timer = 0;
+
+
+
+
+
+
+
+
+
+
