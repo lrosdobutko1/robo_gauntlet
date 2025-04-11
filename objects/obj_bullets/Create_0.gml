@@ -7,8 +7,8 @@ sprite_get_height(spr_bullets)
 );
 
 life_timer = 200;
-image_scale = 1;
-image_xscale = 0.5;
+image_scale = 2;
+image_xscale = image_scale/4;
 image_yscale = image_scale;
 image_speed = 0;
 

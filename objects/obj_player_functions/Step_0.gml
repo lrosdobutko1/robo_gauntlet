@@ -50,9 +50,55 @@ right_gun_barrel[1] = gun_barrels[1];
 left_gun_barrel[0]  = gun_barrels[2];
 left_gun_barrel[1]  = gun_barrels[3];
 
-player_gun_timer -= obj_global_timer.delta;
+var prev_gun = gun_select_keys; // Store previous selection
 
-if (player_gun_timer < 0) player_gun_timer = 0;
+// Check for key press
+if (keyboard_check_pressed(ord("1")))		gun_select_keys = 1;
+else if (keyboard_check_pressed(ord("2")))	gun_select_keys = 2;
+else if (keyboard_check_pressed(ord("3")))	gun_select_keys = 3;
+else if (keyboard_check_pressed(ord("4")))	gun_select_keys = 4;
+else if (keyboard_check_pressed(ord("5")))	gun_select_keys = 5;
+
+// Only show debug if it actually changed
+if (gun_select_keys != prev_gun) {
+    switch (gun_select_keys)
+    {
+        case 1: 
+		{
+			player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
+			show_debug_message(player_gun_type); 
+			break;
+		}
+		
+        case 2: 
+		{
+			player_gun_type = PLAYER_GUN_TYPE.SHOTGUN;
+			show_debug_message(player_gun_type); 
+			break;
+		}
+		
+		case 3: 
+		{
+			player_gun_type = PLAYER_GUN_TYPE.GRENADE;
+			show_debug_message(player_gun_type); 
+			break;
+		}
+		
+		case 4: 
+		{
+			player_gun_type = PLAYER_GUN_TYPE.LASER;
+			show_debug_message(player_gun_type); 
+			break;
+		}
+		
+		case 5: 
+		{
+			player_gun_type = PLAYER_GUN_TYPE.BLASTER;
+			show_debug_message(player_gun_type); 
+			break;
+		}
+    }
+}
 
 
 //fire primary
@@ -91,13 +137,11 @@ else
 	}
 }
 
-if (firing and player_gun_timer == 0)
+if (firing)
 {
-	muzzle_flash();
-	eject_shells();
-	shoot_bullets();
-	
-	player_gun_timer = player_gun_cooldown;
+	muzzle_flash(fire_gun_offset);
+	shoot_player_bullets_2(fire_gun_offset);
+	eject_shells(fire_gun_offset);
 }
 
 if (firing)
@@ -106,4 +150,5 @@ if (firing)
 	get_sight_line(gun_barrels[2],gun_barrels[3],rotation_angle+90,obj_obstacle);
 }
 
-show_debug_message(player_gun_type);
+//show_debug_message(player_gun_type);
+//shoot_player_bullets_2(fire_gun_offset);

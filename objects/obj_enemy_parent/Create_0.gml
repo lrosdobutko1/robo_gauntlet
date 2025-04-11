@@ -80,11 +80,12 @@ right_gun_barrel = array_create(2);
 gun_cooldown = 140;
 preparing_to_shoot_timer = gun_cooldown;
 shooting_range = vis_dist;
-
+gun_offset_counter = 0;
 fire_gun_offset = 80; 
 shooting_time_reset = fire_gun_offset * 4;
 shooting_time = shooting_time_reset;
 shooting_cooldown_timer = 120;
+
 //determine how much lead time to give the enemy when tracking player. Between 0 and 1.
 prediction_multiplier = (is_smart) ? 1 : 0;
 
@@ -268,9 +269,6 @@ function find_enemy_gun_create_coordinates(coords, radius, spread_angle, rotatio
 }
 
 
-
-gun_offset_counter = 0;
-
 function shoot_enemy_bullets(offset)
 {
 	
@@ -293,12 +291,12 @@ function shoot_enemy_bullets(offset)
 			right_bullets.is_left = false;
 		}
 		
-        gun_offset_counter = offset; // Start countdown
+        gun_offset_counter = offset;
     }
-    else if (gun_offset_counter == offset div 2) // 20 steps after "Tick"
+    else if (gun_offset_counter == offset div 2) 
     {
 		
-				var left_bullets = instance_create_layer(
+		var left_bullets = instance_create_layer(
 		gun_barrels[2],
 		gun_barrels[3],
 		layer,
