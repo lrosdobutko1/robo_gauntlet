@@ -124,7 +124,6 @@ if(firing_rockets)
 	rocket_offset --;
 	player_rocket_timer -= obj_global_timer.delta;
 	if rocket_offset <= 0 firing_rockets = false;
-
 }
 else
 {
@@ -139,16 +138,11 @@ else
 
 if (firing)
 {
+	get_sight_line(gun_barrels[0],gun_barrels[1],rotation_angle,obj_obstacle);
+	get_sight_line(gun_barrels[2],gun_barrels[3],rotation_angle+90,obj_obstacle);
 	muzzle_flash(fire_gun_offset);
-	shoot_player_bullets_2(fire_gun_offset);
+	shoot_player_bullets(fire_gun_offset, player_gun_type);
 	eject_shells(fire_gun_offset);
 }
 
-if (firing)
-{
-	get_sight_line(gun_barrels[0],gun_barrels[1],rotation_angle,obj_obstacle);
-	get_sight_line(gun_barrels[2],gun_barrels[3],rotation_angle+90,obj_obstacle);
-}
-
-//show_debug_message(player_gun_type);
-//shoot_player_bullets_2(fire_gun_offset);
+show_debug_message(player_gun_type);

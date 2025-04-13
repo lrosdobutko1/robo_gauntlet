@@ -94,41 +94,40 @@ function find_gun_create_coordinates(coords, radius, spread_angle)
 }
 
 
-function shoot_player_bullets()
-{
-	find_gun_create_coordinates(gun_barrels,25,65)
+//function shoot_player_bullets()
+//{
+//	find_gun_create_coordinates(gun_barrels,25,65)
 	
-	var creator = id;
+//	var creator = id;
 	
-	//right gun
-	var right_bullets = instance_create_layer(
-	gun_barrels[0],
-	gun_barrels[1],
-	layer,
-	obj_bullets)
-	{
-		right_bullets.image_angle = rotation_angle;	
-		right_bullets.direction = right_bullets.image_angle+90;
-		right_bullets.gun_parent = creator; // Store gun reference
-		right_bullets.is_left = false;
-	}	
+//	//right gun
+//	var right_bullets = instance_create_layer(
+//	gun_barrels[0],
+//	gun_barrels[1],
+//	layer,
+//	obj_bullets)
+//	{
+//		right_bullets.image_angle = rotation_angle;	
+//		right_bullets.direction = right_bullets.image_angle+90;
+//		right_bullets.gun_parent = creator; // Store gun reference
+//		right_bullets.is_left = false;
+//	}	
 	
-	//left gun
-	var left_bullets = instance_create_layer(
-	gun_barrels[2],
-	gun_barrels[3],
-	layer,
-	obj_bullets)
-	{
-		left_bullets.image_angle = rotation_angle;	
-		left_bullets.direction = right_bullets.image_angle+90;
-		left_bullets.x = gun_barrels[2];
-		left_bullets.y = gun_barrels[3];
-		left_bullets.gun_parent = creator; // Store gun reference
-		left_bullets.is_left = true;
-	}
-}
-
+//	//left gun
+//	var left_bullets = instance_create_layer(
+//	gun_barrels[2],
+//	gun_barrels[3],
+//	layer,
+//	obj_bullets)
+//	{
+//		left_bullets.image_angle = rotation_angle;	
+//		left_bullets.direction = right_bullets.image_angle+90;
+//		left_bullets.x = gun_barrels[2];
+//		left_bullets.y = gun_barrels[3];
+//		left_bullets.gun_parent = creator; // Store gun reference
+//		left_bullets.is_left = true;
+//	}
+//}
 
 function muzzle_flash(offset)
 {
@@ -177,6 +176,7 @@ function muzzle_flash(offset)
         shell_offset_counter = offset; // Reset countdown
     }
 }
+
 
 function eject_shells(offset)
 {
@@ -258,7 +258,7 @@ function shoot_rockets(rocket_offset)
 	}
 }
 
-/// Draw an infinitely long line that stops on collision
+
 function get_sight_line(x_start, y_start, angle, target_object) {
     var max_distance = 10000; // Large value to simulate infinity
     var step_size = 1;        // How fine the collision check is
@@ -281,9 +281,9 @@ function get_sight_line(x_start, y_start, angle, target_object) {
 	return line_length;
 }
 
-function shoot_player_bullets_2(offset)
+
+function shoot_player_bullets(offset, player_gun_type)
 {
-	
 	find_gun_create_coordinates(gun_barrels,25,65)
 	var creator = id;
 	
@@ -295,31 +295,50 @@ function shoot_player_bullets_2(offset)
 		layer,
 		obj_bullets)
 		{
+			right_bullets.gun_type = player_gun_type;
 			right_bullets.image_angle = rotation_angle;	
 			right_bullets.direction = right_bullets.image_angle+90;
 			right_bullets.x = gun_barrels[0];
 			right_bullets.y = gun_barrels[1];
 			right_bullets.gun_parent = creator; // Store gun reference
 			right_bullets.is_left = false;
+			if (right_bullets.gun_type == PLAYER_GUN_TYPE.MACHINEGUN)
+			{
+				right_bullets.sprite = spr_bullets;	
+			}
+			else if (right_bullets.gun_type == PLAYER_GUN_TYPE.BLASTER)
+			{
+				right_bullets.image_yscale = right_bullets.image_scale * 8;
+				right_bullets.sprite = spr_laser;
+			}
 		}
-		
         gun_offset_counter = offset; // Start countdown
     }
     else if (gun_offset_counter == offset div 2) // 20 steps after "Tick"
     {
 		
-				var left_bullets = instance_create_layer(
+		var left_bullets = instance_create_layer(
 		gun_barrels[2],
 		gun_barrels[3],
 		layer,
 		obj_bullets)
 		{
+			left_bullets.gun_type = player_gun_type;
 			left_bullets.image_angle = rotation_angle;	
 			left_bullets.direction = left_bullets.image_angle+90;
 			left_bullets.x = gun_barrels[2];
 			left_bullets.y = gun_barrels[3];
 			left_bullets.gun_parent = creator;
 			left_bullets.is_left = true;
+			if (left_bullets.gun_type == PLAYER_GUN_TYPE.MACHINEGUN)
+			{
+				left_bullets.sprite = spr_bullets;	
+			}
+			else if (left_bullets.gun_type == PLAYER_GUN_TYPE.BLASTER)
+			{
+				left_bullets.image_yscale = left_bullets.image_scale * 8;
+				left_bullets.sprite = spr_laser;
+			}
 		}
     }
 
