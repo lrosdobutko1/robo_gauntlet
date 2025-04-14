@@ -66,6 +66,7 @@ if (gun_select_keys != prev_gun) {
         case 1: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
+			fire_gun_offset = 20;
 			
 			break;
 		}
@@ -73,6 +74,7 @@ if (gun_select_keys != prev_gun) {
         case 2: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.SHOTGUN;
+			fire_gun_offset = 80;
 			 
 			break;
 		}
@@ -141,7 +143,14 @@ if (firing)
 	get_sight_line(gun_barrels[0],gun_barrels[1],rotation_angle,obj_obstacle);
 	get_sight_line(gun_barrels[2],gun_barrels[3],rotation_angle+90,obj_obstacle);
 	muzzle_flash(fire_gun_offset);
-	shoot_player_bullets(fire_gun_offset, player_gun_type);
+	shoot_player_bullets(fire_gun_offset, player_gun_type, 0);
+	if (player_gun_type == PLAYER_GUN_TYPE.SHOTGUN)
+	{
+		for (var i = -1; i = 1; i++)
+		{
+			shoot_player_bullets(fire_gun_offset, player_gun_type, 5*i);
+		}
+	}
 	eject_shells(fire_gun_offset);
 }
 

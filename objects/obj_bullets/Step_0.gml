@@ -30,6 +30,12 @@ switch (gun_type)
 		choose_sprite_index = gun_type;
 		break;
 	}
+	
+		case 2:
+	{
+		choose_sprite_index = gun_type;
+		break;
+	}
 				
 	case 5:
 	{

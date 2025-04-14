@@ -51,6 +51,7 @@ gun_offset_counter = 0;
 shell_offset_counter = 0;
 muzzle_offset_counter = 0;
 fire_gun_offset = 20; 
+angle_offset = 0;
 
 player_rocket_cooldown = 2400;
 player_rocket_timer = player_rocket_cooldown;
@@ -282,7 +283,7 @@ function get_sight_line(x_start, y_start, angle, target_object) {
 }
 
 
-function shoot_player_bullets(offset, player_gun_type)
+function shoot_player_bullets(offset, player_gun_type, angle_offset)
 {
 	find_gun_create_coordinates(gun_barrels,25,65)
 	var creator = id;
@@ -297,62 +298,52 @@ function shoot_player_bullets(offset, player_gun_type)
 		{
 			right_bullets.gun_type = player_gun_type;
 			right_bullets.image_angle = rotation_angle;	
-			right_bullets.direction = right_bullets.image_angle+90;
+			right_bullets.direction = right_bullets.image_angle + 90 + angle_offset;
 			right_bullets.x = gun_barrels[0];
 			right_bullets.y = gun_barrels[1];
 			right_bullets.gun_parent = creator; // Store gun reference
 			right_bullets.is_left = false;
 			right_bullets.image_speed = 0;
-			//switch (right_bullets.gun_type)
-			//{
-			//	case 1:
-			//	{
-			//		right_bullets.choose_sprite_index = right_bullets.gun_type;;
-			//		show_debug_message("index 0");
-			//		break;
-			//	}
-				
-			//	case 5:
-			//	{
-			//		right_bullets.choose_sprite_index = right_bullets.gun_type;	
-			//		show_debug_message("index 5");
-			//		break;
-			//	}
-			//}
 		}
         gun_offset_counter = offset; // Start countdown
-    }
-    else if (gun_offset_counter == offset div 2) // 20 steps after "Tick"
-    {
-		
-		var left_bullets = instance_create_layer(
-		gun_barrels[2],
-		gun_barrels[3],
-		layer,
-		obj_bullets)
+		if (player_gun_type == PLAYER_GUN_TYPE.SHOTGUN)
 		{
-			left_bullets.gun_type = player_gun_type;
-			left_bullets.image_angle = rotation_angle;	
-			left_bullets.direction = left_bullets.image_angle+90;
-			left_bullets.x = gun_barrels[2];
-			left_bullets.y = gun_barrels[3];
-			left_bullets.gun_parent = creator;
-			left_bullets.is_left = true;
-			left_bullets.image_speed = 0;
-			//switch (left_bullets.gun_type)
-			//{
-			//	case 1:
-			//	{
-			//		left_bullets.choose_sprite_index = left_bullets.gun_type;
-			//		break;
-			//	}
-				
-			//	case 5:
-			//	{
-			//		left_bullets.choose_sprite_index = left_bullets.gun_type;	
-			//		break;
-			//	}
-			//}
+			var left_bullets = instance_create_layer(
+			gun_barrels[2],
+			gun_barrels[3],
+			layer,
+			obj_bullets)
+			{
+				left_bullets.gun_type = player_gun_type;
+				left_bullets.image_angle = rotation_angle;	
+				left_bullets.direction = left_bullets.image_angle + 90 + angle_offset;
+				left_bullets.x = gun_barrels[2];
+				left_bullets.y = gun_barrels[3];
+				left_bullets.gun_parent = creator;
+				left_bullets.is_left = true;
+				left_bullets.image_speed = 0;
+			}
+		}
+    }
+    else if (gun_offset_counter == offset div 2)
+    {
+		if (player_gun_type != PLAYER_GUN_TYPE.SHOTGUN)
+		{
+			var left_bullets = instance_create_layer(
+			gun_barrels[2],
+			gun_barrels[3],
+			layer,
+			obj_bullets)
+			{
+				left_bullets.gun_type = player_gun_type;
+				left_bullets.image_angle = rotation_angle;	
+				left_bullets.direction = left_bullets.image_angle + 90 + angle_offset;
+				left_bullets.x = gun_barrels[2];
+				left_bullets.y = gun_barrels[3];
+				left_bullets.gun_parent = creator;
+				left_bullets.is_left = true;
+				left_bullets.image_speed = 0;
+			}
 		}
     }
 
