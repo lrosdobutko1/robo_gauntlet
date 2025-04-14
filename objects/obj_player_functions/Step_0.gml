@@ -66,35 +66,35 @@ if (gun_select_keys != prev_gun) {
         case 1: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
-			show_debug_message(player_gun_type); 
+			
 			break;
 		}
 		
         case 2: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.SHOTGUN;
-			show_debug_message(player_gun_type); 
+			 
 			break;
 		}
 		
 		case 3: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.GRENADE;
-			show_debug_message(player_gun_type); 
+			
 			break;
 		}
 		
 		case 4: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.LASER;
-			show_debug_message(player_gun_type); 
+			
 			break;
 		}
 		
 		case 5: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.BLASTER;
-			show_debug_message(player_gun_type); 
+			
 			break;
 		}
     }
@@ -145,4 +145,3 @@ if (firing)
 	eject_shells(fire_gun_offset);
 }
 
-show_debug_message(player_gun_type);

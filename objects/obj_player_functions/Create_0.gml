@@ -302,15 +302,23 @@ function shoot_player_bullets(offset, player_gun_type)
 			right_bullets.y = gun_barrels[1];
 			right_bullets.gun_parent = creator; // Store gun reference
 			right_bullets.is_left = false;
-			if (right_bullets.gun_type == PLAYER_GUN_TYPE.MACHINEGUN)
-			{
-				right_bullets.sprite = spr_bullets;	
-			}
-			else if (right_bullets.gun_type == PLAYER_GUN_TYPE.BLASTER)
-			{
-				right_bullets.image_yscale = right_bullets.image_scale * 8;
-				right_bullets.sprite = spr_laser;
-			}
+			right_bullets.image_speed = 0;
+			//switch (right_bullets.gun_type)
+			//{
+			//	case 1:
+			//	{
+			//		right_bullets.choose_sprite_index = right_bullets.gun_type;;
+			//		show_debug_message("index 0");
+			//		break;
+			//	}
+				
+			//	case 5:
+			//	{
+			//		right_bullets.choose_sprite_index = right_bullets.gun_type;	
+			//		show_debug_message("index 5");
+			//		break;
+			//	}
+			//}
 		}
         gun_offset_counter = offset; // Start countdown
     }
@@ -330,15 +338,21 @@ function shoot_player_bullets(offset, player_gun_type)
 			left_bullets.y = gun_barrels[3];
 			left_bullets.gun_parent = creator;
 			left_bullets.is_left = true;
-			if (left_bullets.gun_type == PLAYER_GUN_TYPE.MACHINEGUN)
-			{
-				left_bullets.sprite = spr_bullets;	
-			}
-			else if (left_bullets.gun_type == PLAYER_GUN_TYPE.BLASTER)
-			{
-				left_bullets.image_yscale = left_bullets.image_scale * 8;
-				left_bullets.sprite = spr_laser;
-			}
+			left_bullets.image_speed = 0;
+			//switch (left_bullets.gun_type)
+			//{
+			//	case 1:
+			//	{
+			//		left_bullets.choose_sprite_index = left_bullets.gun_type;
+			//		break;
+			//	}
+				
+			//	case 5:
+			//	{
+			//		left_bullets.choose_sprite_index = left_bullets.gun_type;	
+			//		break;
+			//	}
+			//}
 		}
     }
 

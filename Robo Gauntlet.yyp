@@ -55,6 +55,7 @@
     {"id":{"name":"obj_spark","path":"objects/obj_spark/obj_spark.yy",},},
     {"id":{"name":"obj_wall_parent","path":"objects/obj_wall_parent/obj_wall_parent.yy",},},
     {"id":{"name":"obj_wall","path":"objects/obj_wall/obj_wall.yy",},},
+    {"id":{"name":"test_object","path":"objects/test_object/test_object.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"sh_white","path":"shaders/sh_white/sh_white.yy",},},
     {"id":{"name":"spr_background1","path":"sprites/spr_background1/spr_background1.yy",},},
