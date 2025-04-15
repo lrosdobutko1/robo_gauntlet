@@ -15,13 +15,6 @@ if (life_timer <= 0 )
 	instance_destroy();
 }
 
-var wall_collision = get_bullet_sight_line(x,y,image_angle+90,obj_obstacle);
-if (wall_collision - sprite_get_height(spr_bullets)*2 - speed <= 0) instance_destroy();
-
-//show_debug_message(object_get_name(gun_parent.object_index));
-//show_debug_message(gun_type);
-//show_debug_message(image_index);
-
 
 switch (gun_type)
 {
@@ -43,3 +36,7 @@ switch (gun_type)
 		break;
 	}
 }
+
+counter ++;
+if (counter % 60 == 0)
+show_debug_message("bullet: " + string(round(x)) + " " + string(round(y)));

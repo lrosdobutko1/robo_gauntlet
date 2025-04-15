@@ -8,7 +8,7 @@ v_speed = obj_player_collision.v_speed * global.delta_multiplier;
 var next_x = x + obj_player_collision.h_speed;
 var next_y = y + obj_player_collision.v_speed;
 
-var angle_diff = angle_difference(image_angle, point_direction(x,y,next_x,next_y)-90);
+var angle_diff = angle_difference(image_angle, point_direction(x,y,next_x,next_y));
 
 //animate legs
 if (h_speed != 0 || v_speed != 0)
@@ -44,11 +44,7 @@ right gun barrel y = gun_barrels[1]
 left gun barrel x = gun_barrels[2]
 left gun barrel y = gun_barrels[3]
 */
-find_gun_create_coordinates(gun_barrels, 25, 65);
-right_gun_barrel[0] = gun_barrels[0];
-right_gun_barrel[1] = gun_barrels[1];
-left_gun_barrel[0]  = gun_barrels[2];
-left_gun_barrel[1]  = gun_barrels[3];
+
 
 var prev_gun = gun_select_keys; // Store previous selection
 
@@ -66,7 +62,7 @@ if (gun_select_keys != prev_gun) {
         case 1: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
-			fire_gun_offset = 20;
+
 			
 			break;
 		}
@@ -74,7 +70,7 @@ if (gun_select_keys != prev_gun) {
         case 2: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.SHOTGUN;
-			fire_gun_offset = 80;
+
 			 
 			break;
 		}
@@ -140,17 +136,21 @@ else
 
 if (firing)
 {
-	get_sight_line(gun_barrels[0],gun_barrels[1],rotation_angle,obj_obstacle);
-	get_sight_line(gun_barrels[2],gun_barrels[3],rotation_angle+90,obj_obstacle);
-	muzzle_flash(fire_gun_offset);
-	shoot_player_bullets(fire_gun_offset, player_gun_type, 0);
-	if (player_gun_type == PLAYER_GUN_TYPE.SHOTGUN)
-	{
-		for (var i = -1; i = 1; i++)
-		{
-			shoot_player_bullets(fire_gun_offset, player_gun_type, 5*i);
-		}
-	}
-	eject_shells(fire_gun_offset);
+	find_gun_create_coordinates(gun_barrels, 25, 65);
+	//muzzle_flash(fire_gun_offset);
+	shoot_player_bullets(gun_barrels, firing_speed, firing_offset, 1);
+	firing_speed --;
+
 }
+
+if(firing_speed != firing_speed_cooldown)
+{
+	firing_speed --;
+	if (firing_speed <= 0) firing_speed = firing_speed_cooldown;
+}
+
+
+counter ++;
+if (counter % 60 == 0)
+show_debug_message("barrel: " + string(round(gun_barrels[0])) + " " + string(round(gun_barrels[1])));
 
