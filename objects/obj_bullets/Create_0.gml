@@ -2,7 +2,7 @@
 //gun_type = 0;
 direction = 0;
 life_timer = 100;
-sprite = spr_bullets;
+sprite = spr_bullets_1;
 choose_sprite_index = 0;
 image_multiply_scale = 1;
 image_reduce_scale = image_multiply_scale;
