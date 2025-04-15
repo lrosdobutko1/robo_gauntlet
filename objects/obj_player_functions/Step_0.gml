@@ -1,6 +1,7 @@
 
 //moving
 moving = false;
+rotation_angle = point_direction(x,y, mouse_x,mouse_y);
 
 h_speed = obj_player_collision.h_speed * global.delta_multiplier;
 v_speed = obj_player_collision.v_speed * global.delta_multiplier;
@@ -62,6 +63,8 @@ if (gun_select_keys != prev_gun) {
         case 1: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
+			firing_speed_cooldown = 40;
+			no_of_bullets = 1;
 
 			
 			break;
@@ -70,6 +73,8 @@ if (gun_select_keys != prev_gun) {
         case 2: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.SHOTGUN;
+			firing_speed_cooldown = 120;
+			no_of_bullets = 3;
 
 			 
 			break;
@@ -136,9 +141,9 @@ else
 
 if (firing)
 {
-	find_gun_create_coordinates(gun_barrels, 25, 65);
+	//find_gun_create_coordinates(gun_barrels, 25, 65);
 	//muzzle_flash(fire_gun_offset);
-	shoot_player_bullets(gun_barrels, firing_speed, firing_offset, 1);
+	shoot_player_bullets(gun_barrels, firing_speed, firing_offset, 1, 2.5, no_of_bullets);
 	firing_speed --;
 
 }
@@ -149,8 +154,4 @@ if(firing_speed != firing_speed_cooldown)
 	if (firing_speed <= 0) firing_speed = firing_speed_cooldown;
 }
 
-
-counter ++;
-if (counter % 60 == 0)
-show_debug_message("barrel: " + string(round(gun_barrels[0])) + " " + string(round(gun_barrels[1])));
-
+find_gun_create_coordinates(gun_barrels, 25, 65);

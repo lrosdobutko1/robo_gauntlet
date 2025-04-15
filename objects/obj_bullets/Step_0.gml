@@ -15,6 +15,20 @@ if (life_timer <= 0 )
 	instance_destroy();
 }
 
+//collision with walls
+if (created)
+{
+	wall_collision = get_bullet_sight_line(x,y, direction_angle, obj_obstacle);
+	end_x = wall_collision[0];
+	end_y = wall_collision[1];
+}
+created = false;
+
+if (abs(x - speed - end_x) < speed && abs(y - speed - end_y) < speed)
+{
+    instance_destroy();
+}
+
 
 switch (gun_type)
 {
@@ -37,6 +51,4 @@ switch (gun_type)
 	}
 }
 
-counter ++;
-if (counter % 60 == 0)
-show_debug_message("bullet: " + string(round(x)) + " " + string(round(y)));
+
