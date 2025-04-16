@@ -24,9 +24,14 @@ if (created)
 }
 created = false;
 
-if (abs(x - speed - end_x) < speed && abs(y - speed - end_y) < speed)
+if (abs(x - end_x) < speed && abs(y - end_y) < speed)
 {
     instance_destroy();
+}
+
+if (distance_to_point(end_x, end_y) <= speed)
+{
+	move_towards_point(end_x,end_y, speed);
 }
 
 

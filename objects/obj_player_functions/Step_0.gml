@@ -65,8 +65,6 @@ if (gun_select_keys != prev_gun) {
 			player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
 			firing_speed_cooldown = 40;
 			no_of_bullets = 1;
-
-			
 			break;
 		}
 		
@@ -75,29 +73,26 @@ if (gun_select_keys != prev_gun) {
 			player_gun_type = PLAYER_GUN_TYPE.SHOTGUN;
 			firing_speed_cooldown = 120;
 			no_of_bullets = 3;
-
-			 
 			break;
 		}
 		
 		case 3: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.GRENADE;
-			
 			break;
 		}
 		
 		case 4: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.LASER;
-			
 			break;
 		}
 		
 		case 5: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.BLASTER;
-			
+			firing_speed_cooldown = 80;
+			no_of_bullets = 1;
 			break;
 		}
     }
@@ -139,13 +134,14 @@ else
 	}
 }
 
+
+
 if (firing)
 {
-	//find_gun_create_coordinates(gun_barrels, 25, 65);
-	//muzzle_flash(fire_gun_offset);
+
+
 	shoot_player_bullets(gun_barrels, firing_speed, firing_offset, 1, 2.5, no_of_bullets);
 	firing_speed --;
-
 }
 
 if(firing_speed != firing_speed_cooldown)
@@ -154,4 +150,3 @@ if(firing_speed != firing_speed_cooldown)
 	if (firing_speed <= 0) firing_speed = firing_speed_cooldown;
 }
 
-find_gun_create_coordinates(gun_barrels, 25, 65);
