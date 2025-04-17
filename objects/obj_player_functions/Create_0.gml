@@ -154,31 +154,17 @@ function get_sight_line(x_start, y_start, angle, target_object) {
 }
 
 
-function eject_shells()
+function eject_shells(x_coord, y_coord, angle_offset)
 {
-	
-
-	
 		//eject casings
-		var right_casing = instance_create_layer(
-		casings_eject[0],
-		casings_eject[1],
+		var casing = instance_create_layer(
+		x_coord,
+		y_coord,
 		layer,
 		obj_bullet_casing)
 		{
-			right_casing.direction = rotation_angle - 90 + random_range(-15,15);
-			right_casing.image_angle = direction;
-		}
-
-  
-		var left_casing = instance_create_layer(
-		casings_eject[2],
-		casings_eject[3],
-		layer,
-		obj_bullet_casing)
-		{
-			left_casing.direction = rotation_angle + 90 + random_range(-15,15);
-			left_casing.image_angle = direction;
+			casing.direction = angle_offset + random_range(-15,15);
+			casing.image_angle = direction;
 		}
 }
 
@@ -251,6 +237,9 @@ no_of_bullets
 	if (player_gun_type != PLAYER_GUN_TYPE.SHOTGUN) muzzle_flash();
 	if(firing_speed == firing_speed_cooldown)
 	{
+		eject_shells(casings_eject[0], casings_eject[1], rotation_angle-90);
+		if(player_gun_type == PLAYER_GUN_TYPE.SHOTGUN)
+		eject_shells(casings_eject[2], casings_eject[3], rotation_angle+90);
 		for (var i = bullet_loop_create_start; i < bullet_loop_create_start + no_of_bullets; i++)
 		{
 			create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], firing_angle_offset*i);
@@ -267,6 +256,7 @@ no_of_bullets
 	{
 		if (player_gun_type != PLAYER_GUN_TYPE.SHOTGUN)
 		{
+			eject_shells(casings_eject[2], casings_eject[3], rotation_angle+90);
 			create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], firing_angle_offset);
 		}
 	}

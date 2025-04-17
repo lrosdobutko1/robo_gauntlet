@@ -32,8 +32,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_player_muzzle_flash",
-    "path":"sprites/spr_player_muzzle_flash/spr_player_muzzle_flash.yy",
+    "name":"spr_muzzle_flash",
+    "path":"sprites/spr_muzzle_flash/spr_muzzle_flash.yy",
   },
   "spriteMaskId":null,
   "visible":true,

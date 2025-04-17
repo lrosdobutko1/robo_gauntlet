@@ -1,5 +1,5 @@
 
-speed--;
+speed-=4;
 
 var tilemap = layer_tilemap_get_id("level_tiles")
 
