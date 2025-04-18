@@ -30,6 +30,7 @@ enum PLAYER_GUN_TYPE
 	GRENADE,
 	LASER,
 	BLASTER,	
+	FLAMER,
 };
 
 player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
@@ -48,6 +49,7 @@ firing_angle = image_angle;
 firing_speed_cooldown = 40;
 firing_speed = firing_speed_cooldown;
 firing_offset = firing_speed*0.5;
+firing_angle_offset = 2.5;
 no_of_bullets = 1;
 angle_offset = 0;
 
@@ -189,6 +191,18 @@ function create_bullet(creator, x_coord, y_coord, firing_angle_offset)
 		bullets.wall_collision = 0;
 		bullets.end_x = 0;
 		bullets.end_y = 0;
+		if (bullets.gun_type == 6)
+		{
+			bullets.life_timer = 20;
+			bullets.image_scale = 0.1;
+			show_debug_message("set bullet scale to really small");
+		}
+		else 
+		{
+			bullets.life_timer = 200;
+			bullets.image_scale = 1;
+			show_debug_message("set bullet scale to normal");
+		}
 	}	
 }
 
@@ -238,13 +252,17 @@ no_of_bullets
 	if(firing_speed == firing_speed_cooldown)
 	{
 		eject_shells(casings_eject[0], casings_eject[1], rotation_angle-90);
-		if(player_gun_type == PLAYER_GUN_TYPE.SHOTGUN)
+		if(player_gun_type == PLAYER_GUN_TYPE.SHOTGUN || 
+		player_gun_type == PLAYER_GUN_TYPE.BLASTER ||
+		player_gun_type == PLAYER_GUN_TYPE.FLAMER)
 		eject_shells(casings_eject[2], casings_eject[3], rotation_angle+90);
 		for (var i = bullet_loop_create_start; i < bullet_loop_create_start + no_of_bullets; i++)
 		{
 			create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], firing_angle_offset*i);
 
-			if (player_gun_type == PLAYER_GUN_TYPE.SHOTGUN)
+			if (player_gun_type == PLAYER_GUN_TYPE.SHOTGUN || 
+			player_gun_type == PLAYER_GUN_TYPE.BLASTER ||
+			player_gun_type == PLAYER_GUN_TYPE.FLAMER)
 			{
 				muzzle_flash()
 				create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], firing_angle_offset*i);
@@ -254,10 +272,12 @@ no_of_bullets
 	}
 	else if(firing_speed == firing_offset)
 	{
-		if (player_gun_type != PLAYER_GUN_TYPE.SHOTGUN)
+		if (player_gun_type != PLAYER_GUN_TYPE.SHOTGUN && 
+		player_gun_type != PLAYER_GUN_TYPE.BLASTER && 
+		player_gun_type != PLAYER_GUN_TYPE.FLAMER)
 		{
 			eject_shells(casings_eject[2], casings_eject[3], rotation_angle+90);
-			create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], firing_angle_offset);
+			create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], firing_angle_offset*0);
 		}
 	}
 }

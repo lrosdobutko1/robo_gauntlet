@@ -1,4 +1,47 @@
 life_timer --;
+image_yscale = image_scale;
+image_xscale = image_scale;
+
+switch (gun_type)
+{
+	case 1:
+	{
+		choose_sprite_index = gun_type;
+		break;
+	}
+	
+		case 2:
+	{
+		choose_sprite_index = gun_type;
+		break;
+	}
+	
+		case 3:
+	{
+		choose_sprite_index = gun_type;
+		break;
+	}
+	
+		case 4:
+	{
+		choose_sprite_index = gun_type;
+		break;
+	}	
+				
+	case 5:
+	{
+		choose_sprite_index = gun_type;	
+		break;
+	}
+	
+	case 6:
+	{
+		choose_sprite_index = gun_type;	
+		image_scale += 0.07;
+		if (image_scale >= 1) image_scale = 1;
+		break;
+	}
+}
 
 //if the bullet is created by an enemy
 if (gun_parent != obj_player_functions.id) 
@@ -34,26 +77,8 @@ if (distance_to_point(end_x, end_y) <= speed)
 	move_towards_point(end_x,end_y, speed);
 }
 
+//show_debug_message(gun_type);
 
-switch (gun_type)
-{
-	case 1:
-	{
-		choose_sprite_index = gun_type;
-		break;
-	}
-	
-		case 2:
-	{
-		choose_sprite_index = gun_type;
-		break;
-	}
-				
-	case 5:
-	{
-		choose_sprite_index = gun_type;	
-		break;
-	}
-}
+
 
 

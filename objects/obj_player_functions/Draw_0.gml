@@ -1,6 +1,3 @@
-var sight_coords = get_sight_line(gun_barrels[0], gun_barrels[1], rotation_angle, obj_wall_parent);
-var end_x = sight_coords[0];
-var end_y = sight_coords[1];
 
 //animation machinegun barrels
 if (firing)
@@ -18,4 +15,4 @@ draw_sprite_ext(spr_player_torso,0,obj_player_functions.x,obj_player_functions.y
 draw_text(x+10, y+10, "FPS: " + string(fps_real));
 //draw_text(x-50, y-50, "x: " + string(x) + " " + "y: " + string(y));
 //draw_triangle(x,y,gun_barrels[0], gun_barrels[1], gun_barrels[2], gun_barrels[3], 5);
-draw_triangle(x,y, casings_eject[0], casings_eject[1], casings_eject[2], casings_eject[3],3);
+//draw_triangle(x,y, casings_eject[0], casings_eject[1], casings_eject[2], casings_eject[3],3);
