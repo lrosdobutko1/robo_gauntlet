@@ -1,12 +1,14 @@
-//gun_parent = noone;
+gun_parent = noone;
 //gun_type = 0;
 
 sprite = spr_bullets_1;
 choose_sprite_index = 0;
-//image_scale = 0;
+collision_offset = 0;
 
-//image_yscale = image_scale;
-//image_xscale = image_scale;
+direction_angle = 0;
+sprite_collision_mask(sprite,true,0,0,0,0,0,0,0);
+
+
 image_speed = 0;
 
 sprite_set_offset
@@ -21,8 +23,12 @@ damage_to_enemy = 0;
 crit = damage_to_enemy * 2.5;
 bullet_speed = 0;
 
+wall_collision = get_bullet_sight_line(x,y, direction_angle, obj_obstacle, collision_offset);
+end_x = wall_collision[0];
+end_y = wall_collision[1];
 
-function get_bullet_sight_line(x_start, y_start, angle, target_object)
+
+function get_bullet_sight_line(x_start, y_start, angle, target_object, collision_offset)
 {
     var max_distance = 800; 
     var step_size = 2;
@@ -39,7 +45,7 @@ function get_bullet_sight_line(x_start, y_start, angle, target_object)
         
         if (position_meeting(test_x, test_y, target_object)) 
         {
-            line_length = i - 8;
+            line_length = i - collision_offset;
             break;
         }
     }
@@ -51,3 +57,4 @@ function get_bullet_sight_line(x_start, y_start, angle, target_object)
 }
 
 created = true;
+speed = bullet_speed * global.delta_multiplier + random_range(-2,2);

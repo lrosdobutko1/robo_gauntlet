@@ -27,8 +27,6 @@ if (tile !=0)
 	{
 		scale_direction = -1;
 	}
-
-
 	else if (image_scale < .75)
 	{
 		scale_direction = 0;

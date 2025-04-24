@@ -139,7 +139,7 @@ if (mouse_check_button(2) && rockets_ready)
 
 if(firing_rockets) 
 {
-	shoot_rockets(rocket_offset);
+	//shoot_rockets(rocket_offset);
 	rocket_offset --;
 	player_rocket_timer -= obj_global_timer.delta;
 	if rocket_offset <= 0 firing_rockets = false;
@@ -159,7 +159,7 @@ else
 
 if (firing)
 {
-	shoot_player_bullets(gun_barrels, firing_speed, firing_offset, 1, firing_angle_offset, no_of_bullets);
+	shoot_player_bullets(gun_barrels, firing_speed, firing_offset, player_gun_type, firing_angle_offset, no_of_bullets);
 	firing_speed --;
 }
 

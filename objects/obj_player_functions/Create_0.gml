@@ -171,48 +171,13 @@ function eject_shells(x_coord, y_coord, angle_offset)
 }
 
 
-function create_bullet(creator, x_coord, y_coord, firing_angle_offset)
-{
-	var bullets = instance_create_layer(
-	x_coord,
-	y_coord,
-	layer,
-	obj_bullets)
-	{
-		bullets.gun_type = player_gun_type;
-		bullets.direction_angle = rotation_angle + firing_angle_offset;
-		bullets.direction = bullets.direction_angle;
-		bullets.image_angle = bullets.direction_angle;
-		bullets.x = x_coord;
-		bullets.y = y_coord;
-		bullets.gun_parent = creator; // Store gun reference
-		bullets.is_left = false;
-		bullets.image_speed = 0;
-		bullets.wall_collision = 0;
-		bullets.end_x = 0;
-		bullets.end_y = 0;
-		if (bullets.gun_type == 6)
-		{
-			bullets.life_timer = 20;
-			bullets.image_scale = 0.1;
-			show_debug_message("set bullet scale to really small");
-		}
-		else 
-		{
-			bullets.life_timer = 200;
-			bullets.image_scale = 1;
-			show_debug_message("set bullet scale to normal");
-		}
-	}	
-}
-
 function muzzle_flash()
 {
 	var creator = id;
 	var right_muzzle_flash = instance_create_layer(
 		gun_barrels[0],
 		gun_barrels[1],
-		layer,
+		"explosions",
 		obj_player_muzzle_flash)
 		{
 			right_muzzle_flash.image_angle = rotation_angle;
@@ -220,12 +185,10 @@ function muzzle_flash()
 			right_muzzle_flash.is_left = false;
 		}	
 		
-
-
 		var left_muzzle_flash = instance_create_layer(
 		gun_barrels[2],
 		gun_barrels[3],
-		layer,
+		"explosions",
 		obj_player_muzzle_flash)
 		{
 			left_muzzle_flash.image_angle = rotation_angle;
@@ -248,7 +211,7 @@ no_of_bullets
 	bullet_loop_create_start = 0 - ((no_of_bullets - 1) / 2)
 	var creator = id;
 	
-	if (player_gun_type != PLAYER_GUN_TYPE.SHOTGUN) muzzle_flash();
+	if (player_gun_type != PLAYER_GUN_TYPE.SHOTGUN && player_gun_type != PLAYER_GUN_TYPE.FLAMER) muzzle_flash();
 	if(firing_speed == firing_speed_cooldown)
 	{
 		eject_shells(casings_eject[0], casings_eject[1], rotation_angle-90);
@@ -258,14 +221,14 @@ no_of_bullets
 		eject_shells(casings_eject[2], casings_eject[3], rotation_angle+90);
 		for (var i = bullet_loop_create_start; i < bullet_loop_create_start + no_of_bullets; i++)
 		{
-			create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], firing_angle_offset*i);
+			create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], firing_angle_offset*i, gun_type);
 
 			if (player_gun_type == PLAYER_GUN_TYPE.SHOTGUN || 
 			player_gun_type == PLAYER_GUN_TYPE.BLASTER ||
 			player_gun_type == PLAYER_GUN_TYPE.FLAMER)
 			{
-				muzzle_flash()
-				create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], firing_angle_offset*i);
+				if (player_gun_type != PLAYER_GUN_TYPE.FLAMER) muzzle_flash()
+				create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], firing_angle_offset*i, gun_type);
 			}
 		}
 
@@ -277,7 +240,7 @@ no_of_bullets
 		player_gun_type != PLAYER_GUN_TYPE.FLAMER)
 		{
 			eject_shells(casings_eject[2], casings_eject[3], rotation_angle+90);
-			create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], firing_angle_offset*0);
+			create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], firing_angle_offset*0, gun_type);
 		}
 	}
 }

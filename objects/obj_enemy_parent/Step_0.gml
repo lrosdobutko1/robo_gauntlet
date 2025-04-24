@@ -1,97 +1,95 @@
 
-sight_line_length = get_sight_line(x,y, rotation_angle+90, vis_dist, obj_obstacle);
-sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle+90);
-spotted_player = point_in_triangle(obj_player_collision.x,obj_player_collision.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
+//sight_line_length = get_sight_line(x,y, rotation_angle, vis_dist, obj_obstacle);
+//sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle);
+//spotted_player = point_in_triangle(obj_player_collision.x,obj_player_collision.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
 
-//shooting
-/* 
-right gun barrel x = gun_barrels[0]
-right gun barrel y = gun_barrels[1]
-left gun barrel x = gun_barrels[2]
-left gun barrel y = gun_barrels[3]
-*/
-find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
-right_gun_barrel[0] = gun_barrels[0];
-right_gun_barrel[1] = gun_barrels[1];
-left_gun_barrel[0]  = gun_barrels[2];
-left_gun_barrel[1]  = gun_barrels[3];
+////shooting
+///* 
+//right gun barrel x = gun_barrels[0]
+//right gun barrel y = gun_barrels[1]
+//left gun barrel x = gun_barrels[2]
+//left gun barrel y = gun_barrels[3]
+//*/
+//find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
+//right_gun_barrel[0] = gun_barrels[0];
+//right_gun_barrel[1] = gun_barrels[1];
+//left_gun_barrel[0]  = gun_barrels[2];
+//left_gun_barrel[1]  = gun_barrels[3];
 
-switch (shooting_state)
-{
-	case SHOOTING_STATE.SHOOTING_IDLE:
-	{
-		//path_speed = walk_speed;
-		shooting_cooldown_timer = 240;
-		//show_debug_message("shooting idle");
-		if (spotted_player)
-		{
-			shooting_state = SHOOTING_STATE.PREPARING_TO_SHOOT;
-		}
+//switch (shooting_state)
+//{
+//	case SHOOTING_STATE.SHOOTING_IDLE:
+//	{
+
+//		shooting_cooldown_timer = 240;
+//		//show_debug_message("shooting idle");
+//		if (spotted_player)
+//		{
+//			shooting_state = SHOOTING_STATE.PREPARING_TO_SHOOT;
+//		}
 		
-		break;
-	}
+//		break;
+//	}
 	
-	case SHOOTING_STATE.PREPARING_TO_SHOOT:
-	{
-		//show_debug_message("preparing to shoot");
-		path_speed = walk_speed;
-		preparing_to_shoot_timer --;
-		if (!spotted_player)
-		{
-			shooting_state = SHOOTING_STATE.SHOOTING_IDLE	
-		}
+//	case SHOOTING_STATE.PREPARING_TO_SHOOT:
+//	{
+//		//show_debug_message("preparing to shoot");
+//		preparing_to_shoot_timer --;
+//		if (!spotted_player)
+//		{
+//			shooting_state = SHOOTING_STATE.SHOOTING_IDLE	
+//		}
 		
-		if (preparing_to_shoot_timer <= 0)
-		{
-			shooting_state = SHOOTING_STATE.SHOOTING;
-		}
+//		if (preparing_to_shoot_timer <= 0)
+//		{
+//			shooting_state = SHOOTING_STATE.SHOOTING;
+//		}
 		
-		break;
-	}
+//		break;
+//	}
 	
-	case SHOOTING_STATE.SHOOTING:
-	{
-		//show_debug_message("shooting");
-		path_speed = 0;
-		shoot_enemy_bullets(fire_gun_offset);
-		preparing_to_shoot_timer = gun_cooldown;
-		shooting_time --;
-		if (shooting_time <= 0)
-		{
-			shooting_state = SHOOTING_STATE.SHOOTING_COOLDOWN;	
-		}
+//	case SHOOTING_STATE.SHOOTING:
+//	{
+//		//show_debug_message("shooting");
+
+//		shoot_enemy_bullets(fire_gun_offset);
+//		preparing_to_shoot_timer = gun_cooldown;
+//		shooting_time --;
+//		if (shooting_time <= 0)
+//		{
+//			shooting_state = SHOOTING_STATE.SHOOTING_COOLDOWN;	
+//		}
 		
-		break;
-	}
+//		break;
+//	}
 	
-	case SHOOTING_STATE.SHOOTING_COOLDOWN:
-	{
-		shooting_time = shooting_time_reset;
-		//show_debug_message("shooting cooldown");
-		path_speed = walk_speed;
-		shooting_cooldown_timer --;
-		if (shooting_cooldown_timer <= 0)
-		{
-			shooting_state = SHOOTING_STATE.SHOOTING_IDLE;	
-		}
+//	case SHOOTING_STATE.SHOOTING_COOLDOWN:
+//	{
+//		shooting_time = shooting_time_reset;
+//		//show_debug_message("shooting cooldown");
+//		shooting_cooldown_timer --;
+//		if (shooting_cooldown_timer <= 0)
+//		{
+//			shooting_state = SHOOTING_STATE.SHOOTING_IDLE;	
+//		}
 		
-	}
+//	}
 	
-}
+//}
 
-if (previous_x != x || previous_y != y) 
-{
-    moving = true;
-} 
-else 
-{
-    moving = false;
-}
+//if (previous_x != x || previous_y != y) 
+//{
+//    moving = true;
+//} 
+//else 
+//{
+//    moving = false;
+//}
 
-previous_x = x;
-previous_y = y;
+//previous_x = x;
+//previous_y = y;
 
-pathfinding_timer -= global.delta_multiplier;
+//pathfinding_timer -= global.delta_multiplier;
 
 //make a list of all allies, and check to see which is closest
 ds_list_clear(ally_list);
@@ -148,46 +146,47 @@ if (nearest_ally != noone)
     point_y = y + lengthdir_y(line_length, dir_away);
 }
 
-//movement animation
-var next_x = path_get_x(path, 1); // Get the next node's X position
-var next_y = path_get_y(path, 1); // Get the next node's Y position
-var travel_angle = point_direction(x, y, next_x, next_y);
-var angle_diff = angle_difference(image_angle+90, travel_angle);
+////movement animation
+//var next_x = path_get_x(path, 1); // Get the next node's X position
+//var next_y = path_get_y(path, 1); // Get the next node's Y position
+//var travel_angle = point_direction(x, y, next_x, next_y);
+//var angle_diff = angle_difference(image_angle, travel_angle);
 
-if (moving == true)
-{
-	image_speed = 0.8;
+//if (moving == true)
+//{
+//	image_speed = 0.8;
 	
-    //face toward the next node instead of the player
-	image_angle -= min(abs(angle_diff), 5) * sign(angle_diff);
-}
-else
-{
-	image_speed = 0;
-}
+//    //face toward the next node instead of the player
+//	image_angle -= min(abs(angle_diff), 5) * sign(angle_diff);
+//}
+//else
+//{
+//	image_speed = 0;
+//}
 
-//movement behavior
-if (pathfinding_timer <= 0)
-{
-	chase_player();
-	pathfinding_timer = pathfinding_cooldown;
-}
+////movement behavior
+//if (pathfinding_timer <= 0)
+//{
+//	chase_player();
+//	pathfinding_timer = pathfinding_cooldown;
+//}
 
-//destroyed
-if (hp <= 0) alive = false;
-if (!alive)
-{
-	instance_create_layer(x,y,"explosions",obj_explosions);
-	instance_create_layer(x,y,"scorch_marks",obj_scorch_mark);
-	instance_destroy();
-}
+////destroyed
+//if (hp <= 0) alive = false;
+//if (!alive)
+//{
+//	instance_create_layer(x,y,"explosions",obj_explosions);
+//	instance_create_layer(x,y,"scorch_marks",obj_scorch_mark);
+//	instance_destroy();
+//}
 
 //choose the angle at which the torso points
-rotation_angle -= choose_torso_angle(prediction_multiplier);
+//rotation_angle -= choose_torso_angle(prediction_multiplier);
 
-player_previous_x = obj_player_collision.x;
-player_previous_y = obj_player_collision.y;
-
-
+//player_previous_x = obj_player_collision.x;
+//player_previous_y = obj_player_collision.y;
 
 
+
+//var next_x = x + h_speed;
+//var next_y = y + v_speed;

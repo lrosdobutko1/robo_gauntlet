@@ -1,12 +1,12 @@
 {
   "$GMSprite":"",
-  "%Name":"spr_player_collision",
+  "%Name":"spr_enemy_collision",
   "bboxMode":2,
   "bbox_bottom":25,
   "bbox_left":0,
   "bbox_right":25,
   "bbox_top":0,
-  "collisionKind":1,
+  "collisionKind":2,
   "collisionTolerance":0,
   "DynamicTexturePage":false,
   "edgeFiltering":false,
@@ -22,7 +22,7 @@
   "layers":[
     {"$GMImageLayer":"","%Name":"cecd0216-f025-4953-b145-aa7f53fb8c2e","blendMode":0,"displayName":"default","isLocked":false,"name":"cecd0216-f025-4953-b145-aa7f53fb8c2e","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
-  "name":"spr_player_collision",
+  "name":"spr_enemy_collision",
   "nineSlice":null,
   "origin":4,
   "parent":{
@@ -34,7 +34,7 @@
   "resourceVersion":"2.0",
   "sequence":{
     "$GMSequence":"",
-    "%Name":"spr_player_collision",
+    "%Name":"spr_enemy_collision",
     "autoRecord":true,
     "backdropHeight":768,
     "backdropImageOpacity":0.5,
@@ -58,7 +58,7 @@
       "resourceType":"KeyframeStore<MomentsEventKeyframe>",
       "resourceVersion":"2.0",
     },
-    "name":"spr_player_collision",
+    "name":"spr_enemy_collision",
     "playback":1,
     "playbackSpeed":30.0,
     "playbackSpeedType":0,
@@ -70,10 +70,10 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"810302c7-ceb1-44ac-b020-b4d21d60fffd","path":"sprites/spr_player_collision/spr_player_collision.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"810302c7-ceb1-44ac-b020-b4d21d60fffd","path":"sprites/spr_enemy_collision/spr_enemy_collision.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"baa9f000-6a71-4548-8f82-1cb7b966b249","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"43385a2e-0af4-4f06-b0f2-58edfe3fb1d6","path":"sprites/spr_player_collision/spr_player_collision.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"43385a2e-0af4-4f06-b0f2-58edfe3fb1d6","path":"sprites/spr_enemy_collision/spr_enemy_collision.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"98a36053-25fa-4c8e-a680-03f7f0ed9977","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
