@@ -1,0 +1,1 @@
+ds_list_destroy(ally_list);

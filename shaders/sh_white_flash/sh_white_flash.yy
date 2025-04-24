@@ -1,7 +1,7 @@
 {
   "$GMShader":"",
-  "%Name":"sh_white",
-  "name":"sh_white",
+  "%Name":"sh_white_flash",
+  "name":"sh_white_flash",
   "parent":{
     "name":"Shaders",
     "path":"folders/Shaders.yy",
