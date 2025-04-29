@@ -37,60 +37,60 @@ min_distance_to_ally = 50;
 //no longer in use. remove function later
 function chase_player(player_current_x, player_current_y, player_moved, created, point_x, point_y) 
 {
-    //var update_path = false;
+    var update_path = false;
 
-    //// Player is close always chase directly
-    //if (distance_to_object(obj_player_collision) <= 104)
-    //{
-    //    target_x = player_current_x;
-    //    target_y = player_current_y;
-    //    update_path = true;
-    //}
-    //// Player is far only set new target if player moved or just created
-    //else if (created || player_moved)
-    //{
-    //    var change_target_x = player_current_x + irandom_range(-50, 50);
-    //    var change_target_y = player_current_y + irandom_range(-50, 50);
+    // Player is close always chase directly
+    if (distance_to_object(obj_player_collision) <= 104)
+    {
+        target_x = player_current_x;
+        target_y = player_current_y;
+        update_path = true;
+    }
+    // Player is far only set new target if player moved or just created
+    else if (created || player_moved)
+    {
+        var change_target_x = player_current_x + irandom_range(-50, 50);
+        var change_target_y = player_current_y + irandom_range(-50, 50);
 
-    //    while (!mp_grid_path(global.grid, path, x, y, change_target_x, change_target_y, true))
-    //    {
-    //        change_target_x = player_current_x + irandom_range(-50, 50);
-    //        change_target_y = player_current_y + irandom_range(-50, 50);
-    //    }
+        while (!mp_grid_path(global.grid, path, x, y, change_target_x, change_target_y, true))
+        {
+            change_target_x = player_current_x + irandom_range(-50, 50);
+            change_target_y = player_current_y + irandom_range(-50, 50);
+        }
 
-    //    target_x = change_target_x;
-    //    target_y = change_target_y;
-    //    update_path = true;
-    //}
+        target_x = change_target_x;
+        target_y = change_target_y;
+        update_path = true;
+    }
 
-    //// Only update path if a valid target was selected
-    //if (update_path)
-    //{
-    //    path_delete(path);
-    //    path = path_add();
+    // Only update path if a valid target was selected
+    if (update_path)
+    {
+        path_delete(path);
+        path = path_add();
 
-    //    if (mp_grid_path(global.grid, path, x, y, target_x, target_y, true))
-	//	{
-	//	var point_count = path_get_number(path);
+        if (mp_grid_path(global.grid, path, x, y, target_x, target_y, true))
+		{
+		var point_count = path_get_number(path);
 
-	//	// If path has at least 2 points, we can modify the second point
-	//		if (point_count > 1)
-	//		{
-	//			var dx = path_get_point_x(path, 1);
-	//			var dy = path_get_point_y(path, 1);
+		// If path has at least 2 points, we can modify the second point
+			if (point_count > 1)
+			{
+				var dx = path_get_point_x(path, 1);
+				var dy = path_get_point_y(path, 1);
 
-	//			// Add a random offset
-	//			dx += point_x;
-	//			dy += point_y;
+				// Add a random offset
+				dx += point_x;
+				dy += point_y;
 
-	//			// Delete and recreate the path using the new offset as target
-	//			path_delete(path);
-	//			path = path_add();
-	//			mp_grid_path(global.grid, path, x, y, dx, dy, true);
-	//		}
-	//	}
-    //    path_start(path, walk_speed, path_action_stop, true);
-    //}
+				// Delete and recreate the path using the new offset as target
+				path_delete(path);
+				path = path_add();
+				mp_grid_path(global.grid, path, x, y, dx, dy, true);
+			}
+		}
+        path_start(path, walk_speed, path_action_stop, true);
+    }
 }
 
 

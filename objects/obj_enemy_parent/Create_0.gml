@@ -96,7 +96,7 @@ hp = (starting_hp * level) + power(level,level);
 /// Draw an infinitely long line that stops on collision
 function get_sight_line(x_start, y_start, angle, vis_dist, target_object) {
     var max_distance = vis_dist; // Large value to simulate infinity
-    var step_size = 1;        // How fine the collision check is
+    var step_size = 10;        // How fine the collision check is
     
     var x_end = x_start;
     var y_end = y_start;
@@ -135,8 +135,6 @@ function get_sight_cone(xA, yA, spread_angle, height, direction) {
     
     return [xB, yB, xC, yC];
 }
-
-
 
 
 function choose_torso_angle(prediction_multiplier)
@@ -192,10 +190,9 @@ function find_enemy_gun_create_coordinates(coords, radius, spread_angle, rotatio
 }
 
 
-
 path = path_add();
 
-pathfinding_cooldown = 40;
+pathfinding_cooldown = 20;
 pathfinding = pathfinding_cooldown;
 
 walk_speed = 0.8;
@@ -217,50 +214,50 @@ min_dist = 99999999;
 ally_list = ds_list_create();
 previous_list_size = 0;
 
-//// drawa a line away from nearby allies
-distance = 0;
-dir_away = 0;
-line_length = 0;
-
-point_x = 0;
-point_y = 0;
-
 min_distance_to_ally = 50;
 
 
-function basic_chase_player(point_x, point_y, move_speed)
+function chase_player(player_current_x, player_current_y, player_moved, created, move_x, move_y) 
 {
-	var target_x = obj_player_collision.x;
-	var target_y = obj_player_collision.y;
+    if (created || player_moved)
+    {
+        target_x = 0;
+        target_y = 0;
 
-	// Delete the current path and make a fresh one
-	path_delete(path);
-	path = path_add();
+        if (distance_to_object(obj_player_collision) > 104)
+        {
+            var change_target_x = player_current_x + irandom_range(-50, 50);
+            var change_target_y = player_current_y + irandom_range(-50, 50);
 
-	// Generate an initial path to the player
-	if (mp_grid_path(global.grid, path, x, y, target_x, target_y, true))
-	{
-		var point_count = path_get_number(path);
+            while (!mp_grid_path(global.grid, path, x, y, change_target_x, change_target_y, true))
+            {
+                change_target_x = player_current_x + irandom_range(-50, 50);
+                change_target_y = player_current_y + irandom_range(-50, 50);
+            }
 
-		// If path has at least 2 points, we can modify the second point
-		if (point_count > 1)
+            target_x = change_target_x;
+            target_y = change_target_y;
+        }
+        else
+        {
+            target_x = player_current_x;
+            target_y = player_current_y;
+        }
+		if (move_x > 0 || move_y > 0)
 		{
-			var dx = path_get_point_x(path, 1);
-			var dy = path_get_point_y(path, 1);
-
-			// Add a random offset
-			dx += point_x;
-			dy += point_y;
-
-			// Delete and recreate the path using the new offset as target
-			path_delete(path);
-			path = path_add();
-			mp_grid_path(global.grid, path, x, y, dx, dy, true);
+			target_x += move_x;
+			target_y += move_y;
 		}
-	}
 
-	// Start moving along the (possibly offset) path
-	path_start(path, move_speed, path_action_stop, true);
+        // Delete and create a new path only when updating
+        path_delete(path);
+        path = path_add();
+
+        mp_grid_path(global.grid, path, x, y, target_x, target_y, true);
+        path_start(path, walk_speed, path_action_stop, true);
+    }
+
+	
 }
 
 
@@ -310,16 +307,71 @@ function get_list_of_nearest_allies()
 	previous_list_size = current_list_size;
 }
 
-function move_away_from_ally()
+
+function move_away_from_ally(min_distance_to_ally)
 {
+	var distance;
+	var dir_away;
+	var line_length;
+	var point_x;
+	var point_y;
 	if (nearest_ally != noone) 
 	{
-	    distance = point_distance(x, y, nearest_ally.x, nearest_ally.y);
-	    dir_away = point_direction(x, y, nearest_ally.x, nearest_ally.y) + 180;
+	   distance = point_distance(x, y, nearest_ally.x, nearest_ally.y);
+	   dir_away = point_direction(x, y, nearest_ally.x, nearest_ally.y) + 180;
 
 	    line_length = clamp(min_distance_to_ally - distance, 0, min_distance_to_ally);
 
 	    point_x = x + lengthdir_x(line_length, dir_away);
 	    point_y = y + lengthdir_y(line_length, dir_away);
 	}	
+	else
+	{
+		point_x = x;
+		point_y = y;
+	}
+	
+	return 
+	({
+		px: point_x,
+		py: point_y
+	});
 }
+
+
+//function basic_chase_player(point_x, point_y, move_speed)
+//{
+//	var target_x = obj_player_collision.x;
+//	var target_y = obj_player_collision.y;
+//	var dx = path_get_point_x(path, 1);
+//	var dy = path_get_point_y(path, 1);
+
+//	// Delete the current path and make a fresh one
+//	path_delete(path);
+//	path = path_add();
+
+//	// Generate an initial path to the player
+//	if (mp_grid_path(global.grid, path, x, y, target_x, target_y, true))
+//	{
+//		var point_count = path_get_number(path);
+
+//		// If path has at least 2 points, we can modify the second point
+//		if (point_count > 1)
+//		{
+//			dx = path_get_point_x(path, 1);
+//			dy = path_get_point_y(path, 1);
+
+//			// Add a random offset
+//			dx += point_x;
+//			dy += point_y;
+
+//			// Delete and recreate the path using the new offset as target
+//			path_delete(path);
+//			path = path_add();
+//			mp_grid_path(global.grid, path, x, y, dx, dy, true);
+//		}
+//	}
+
+//	// Start moving along the (possibly offset) path
+//	//path_start(path, move_speed, path_action_stop, true);
+//}

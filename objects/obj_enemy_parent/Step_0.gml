@@ -1,7 +1,23 @@
 
-//sight_line_length = get_sight_line(x,y, rotation_angle, vis_dist, obj_obstacle);
-//sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle);
-//spotted_player = point_in_triangle(obj_player_collision.x,obj_player_collision.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
+sight_cone = get_sight_cone(x,y,60,400,rotation_angle);
+spotted_player = point_in_triangle(obj_player_collision.x,obj_player_collision.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
+
+if (distance_to_point(mouse_x,mouse_y) <= 10)
+{
+	if (mouse_check_button(3))
+	{
+		x = mouse_x; 
+		y = mouse_y;
+	}
+}
+
+get_list_of_nearest_allies();
+var move_away = move_away_from_ally(min_distance_to_ally);
+
+//pathfinding
+pathfinding --;
+player_current_x = obj_player_collision.x;
+player_current_y = obj_player_collision.y;
 
 ////shooting
 ///* 
@@ -16,14 +32,25 @@ right_gun_barrel[1] = gun_barrels[1];
 left_gun_barrel[0]  = gun_barrels[2];
 left_gun_barrel[1]  = gun_barrels[3];
 
+if (pathfinding <= 0)
+{
+	
+	//if (shooting_state != SHOOTING_STATE.SHOOTING)
+	//basic_chase_player(move_away.px-x, move_away.py-y, walk_speed);
+	chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
+	created = false;
+	pathfinding = irandom_range(pathfinding_cooldown / 2, pathfinding_cooldown);
+}
+
 switch (shooting_state)
 {
 	case SHOOTING_STATE.SHOOTING_IDLE:
 	{
-
+		var sight_line = collision_line(x,y,player_current_x,player_current_y,obj_obstacle,false,true);
 		shooting_cooldown_timer = 240;
-		//show_debug_message("shooting idle");
-		if (spotted_player)
+		//show_debug_message("idle");
+
+		if (spotted_player && sight_line == noone)
 		{
 			shooting_state = SHOOTING_STATE.PREPARING_TO_SHOOT;
 		}
@@ -47,12 +74,11 @@ switch (shooting_state)
 		
 		break;
 	}
-	
+
 	case SHOOTING_STATE.SHOOTING:
 	{
 		//show_debug_message("shooting");
 
-		shoot_enemy_bullets(fire_gun_offset);
 		preparing_to_shoot_timer = gun_cooldown;
 		shooting_time --;
 		if (shooting_time <= 0)
@@ -125,27 +151,19 @@ rotation_angle -= choose_torso_angle(prediction_multiplier);
 player_previous_x = obj_player_collision.x;
 player_previous_y = obj_player_collision.y;
 
-get_list_of_nearest_allies();
-move_away_from_ally();
 
-//pathfinding
-pathfinding --;
-player_current_x = obj_player_collision.x;
-player_current_y = obj_player_collision.y;
-
-
-if (pathfinding <= 0)
-{
-	basic_chase_player(point_x-x, point_y-y, walk_speed);
+//if (pathfinding <= 0)
+//{
+//	basic_chase_player(move_away.px-x, move_away.py-y, walk_speed);
 	
-	pathfinding = irandom_range(pathfinding_cooldown / 2, pathfinding_cooldown);
-}
+//	pathfinding = irandom_range(pathfinding_cooldown / 2, pathfinding_cooldown);
+//}
 
 player_moved = ((player_current_x != previous_player_x) || (player_current_y != previous_player_y));
 
 previous_player_x = obj_player_collision.x;
 previous_player_y = obj_player_collision.y;
 
-if (created)
-created = false;
 
+show_debug_message("px = " + string(move_away.px) + " py= " + string(move_away.py));
+show_debug_message("x = " + string(x) + " y= " + string(y));
