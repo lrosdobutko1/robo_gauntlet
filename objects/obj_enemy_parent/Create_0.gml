@@ -63,9 +63,16 @@ enum SHOOTING_STATE
 }
 
 shooting_state = SHOOTING_STATE.SHOOTING_IDLE;
+
 gun_barrels = array_create(4);
-//left_gun_barrel = array_create(2);
-//right_gun_barrel = array_create(2);
+find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
+
+casings_eject = array_create(4);
+find_enemy_gun_create_coordinates(casings_eject, 15, 170, rotation_angle);
+
+
+
+
 gun_cooldown = 140;
 preparing_to_shoot_timer = gun_cooldown;
 shooting_range = vis_dist;
@@ -91,8 +98,6 @@ hp = (starting_hp * level) + power(level,level);
 //shields = hp/2;
 
 
-
-
 /// Draw an infinitely long line that stops on collision
 function get_sight_line(x_start, y_start, angle, vis_dist, target_object) {
     var max_distance = vis_dist; // Large value to simulate infinity
@@ -115,6 +120,7 @@ function get_sight_line(x_start, y_start, angle, vis_dist, target_object) {
     draw_line(x_start,y_start,x_end,y_end);
 	return line_length;
 }
+
 
 function get_sight_cone(xA, yA, spread_angle, height, direction) {
     var half_angle = spread_angle / 2;
@@ -176,8 +182,7 @@ function find_enemy_gun_create_coordinates(coords, radius, spread_angle, rotatio
 	radius = radius * image_scale; // Distance from the fixed point to the other two points
 	spread_angle = spread_angle; // Spread angle between the two equal points (in degrees)
 
-	// Direction to the mouse
-	facing_angle = rotation_angle+90;
+	var facing_angle = rotation_angle;
 
 	// Calculate the positions of the two equal points
 	var angle1 = facing_angle - spread_angle / 2; // First point's angle
@@ -216,49 +221,6 @@ previous_list_size = 0;
 
 min_distance_to_ally = 50;
 
-
-function chase_player(player_current_x, player_current_y, player_moved, created, move_x, move_y) 
-{
-    if (created || player_moved)
-    {
-        target_x = 0;
-        target_y = 0;
-
-        if (distance_to_object(obj_player_collision) > 104)
-        {
-            var change_target_x = player_current_x + irandom_range(-50, 50);
-            var change_target_y = player_current_y + irandom_range(-50, 50);
-
-            while (!mp_grid_path(global.grid, path, x, y, change_target_x, change_target_y, true))
-            {
-                change_target_x = player_current_x + irandom_range(-50, 50);
-                change_target_y = player_current_y + irandom_range(-50, 50);
-            }
-
-            target_x = change_target_x;
-            target_y = change_target_y;
-        }
-        else
-        {
-            target_x = player_current_x;
-            target_y = player_current_y;
-        }
-		if (move_x > 0 || move_y > 0)
-		{
-			target_x += move_x;
-			target_y += move_y;
-		}
-
-        // Delete and create a new path only when updating
-        path_delete(path);
-        path = path_add();
-
-        mp_grid_path(global.grid, path, x, y, target_x, target_y, true);
-        path_start(path, walk_speed, path_action_stop, true);
-    }
-
-	
-}
 
 
 function get_list_of_nearest_allies()
@@ -338,6 +300,76 @@ function move_away_from_ally(min_distance_to_ally)
 	});
 }
 
+
+function chase_player(player_current_x, player_current_y, player_moved, created, move_x, move_y) {
+    var target_x = player_current_x;
+    var target_y = player_current_y;
+    var distance_to_player = point_distance(x, y, player_current_x, player_current_y);
+
+    // Determine if a new path should be calculated
+    var should_update_path = false;
+
+    if (distance_to_player > 104)
+	{
+        if (created || player_moved || !path_exists(path)) 
+		{
+            should_update_path = true;
+            // Add randomness to the target position
+            target_x += irandom_range(-50, 50);
+            target_y += irandom_range(-50, 50);
+        }
+    } 
+	else 
+	{
+        // Always update path when close to the player
+        should_update_path = true;
+    }
+
+    // Adjust target to avoid other enemies
+    target_x += move_x;
+    target_y += move_y;
+
+    if (should_update_path) {
+        // Delete existing path if it exists
+        if (path_exists(path)) {
+            //path_delete(path);
+        }
+        path = path_add();
+
+        if (mp_grid_path(global.grid, path, x, y, target_x, target_y, true)) {
+            path_start(path, walk_speed, path_action_stop, true);
+        }
+    }
+}
+
+firing_speed_cooldown = 40;
+firing_speed = firing_speed_cooldown;
+firing_offset = firing_speed*0.5;
+
+function shoot_enemy_bullets(
+gun_barrel_coords, 
+firing_speed, 
+firing_offset, 
+)
+{
+	find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
+	//find_enemy_gun_create_coordinates(casings_eject, 15, 170);
+
+	var creator = id;
+	
+
+	if(firing_speed == firing_speed_cooldown)
+	{
+		//eject_shells(casings_eject[0], casings_eject[1], rotation_angle-90);
+		create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], 0, 0);
+
+	}
+
+	else if(firing_speed == firing_offset)
+	{
+		create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], 0, 0);
+	}
+}
 
 //function basic_chase_player(point_x, point_y, move_speed)
 //{

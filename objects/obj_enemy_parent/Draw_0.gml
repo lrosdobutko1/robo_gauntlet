@@ -15,10 +15,12 @@ if (alive)
 		shader_reset();
 	}
 }
-
+if (path_exists(path))
 draw_path(path,x,y,true);
 	
-//	/*draw other elements*/
-//	//get_sight_line(x,y, rotation_angle, vis_dist, obj_obstacle);
+/*draw other elements*/
+//get_sight_line(x,y, rotation_angle, vis_dist, obj_obstacle);
 //draw_triangle(x, y, sight_cone[0], sight_cone[1], sight_cone[2], sight_cone[3], 4);
-draw_line(x,y, move_away.px,move_away.py);
+//draw_line(x,y, move_away.px,move_away.py);
+
+draw_triangle(x,y,gun_barrels[0], gun_barrels[1], gun_barrels[2], gun_barrels[3], 5) ;

@@ -169,3 +169,12 @@ if(firing_speed != firing_speed_cooldown)
 	if (firing_speed <= 0) firing_speed = firing_speed_cooldown;
 }
 
+
+
+/////////////
+
+
+
+
+
+//show_debug_message(id)

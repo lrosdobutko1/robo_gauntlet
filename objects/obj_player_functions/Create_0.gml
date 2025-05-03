@@ -245,7 +245,4 @@ no_of_bullets
 	}
 }
 
-count_cooldown = 120;
-count = count_cooldown;
 
-line = get_sight_line(gun_barrels[0],gun_barrels[1], rotation_angle,obj_wall);

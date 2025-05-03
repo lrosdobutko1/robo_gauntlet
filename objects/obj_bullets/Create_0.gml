@@ -1,4 +1,4 @@
-gun_parent = noone;
+
 //gun_type = 0;
 
 sprite = spr_bullets_1;

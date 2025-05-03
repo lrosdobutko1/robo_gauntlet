@@ -32,21 +32,16 @@ right_gun_barrel[1] = gun_barrels[1];
 left_gun_barrel[0]  = gun_barrels[2];
 left_gun_barrel[1]  = gun_barrels[3];
 
-if (pathfinding <= 0)
-{
-	
-	//if (shooting_state != SHOOTING_STATE.SHOOTING)
-	//basic_chase_player(move_away.px-x, move_away.py-y, walk_speed);
-	chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
-	created = false;
-	pathfinding = irandom_range(pathfinding_cooldown / 2, pathfinding_cooldown);
-}
+//chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
+//created = false;
+
+var sight_line = collision_line(x,y,player_current_x,player_current_y,obj_obstacle,false,true);
 
 switch (shooting_state)
 {
 	case SHOOTING_STATE.SHOOTING_IDLE:
 	{
-		var sight_line = collision_line(x,y,player_current_x,player_current_y,obj_obstacle,false,true);
+
 		shooting_cooldown_timer = 240;
 		//show_debug_message("idle");
 
@@ -62,7 +57,7 @@ switch (shooting_state)
 	{
 		//show_debug_message("preparing to shoot");
 		preparing_to_shoot_timer --;
-		if (!spotted_player)
+		if (!spotted_player || sight_line != noone)
 		{
 			shooting_state = SHOOTING_STATE.SHOOTING_IDLE	
 		}
@@ -78,9 +73,12 @@ switch (shooting_state)
 	case SHOOTING_STATE.SHOOTING:
 	{
 		//show_debug_message("shooting");
+		firing_speed --;
+		if (firing_speed <=0) firing_speed = firing_speed_cooldown;
 
 		preparing_to_shoot_timer = gun_cooldown;
 		shooting_time --;
+		shoot_enemy_bullets(gun_barrels,firing_speed,firing_offset);
 		if (shooting_time <= 0)
 		{
 			shooting_state = SHOOTING_STATE.SHOOTING_COOLDOWN;	
@@ -102,6 +100,26 @@ switch (shooting_state)
 	}
 	
 }
+
+if (shooting_state != SHOOTING_STATE.SHOOTING)
+{
+	if (pathfinding <= 0)
+	{
+		if (shooting_state != SHOOTING_STATE.SHOOTING)
+		{
+			chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
+		}
+
+		created = false;
+		pathfinding = irandom_range(pathfinding_cooldown / 2, pathfinding_cooldown);
+	}
+}
+
+else 
+{
+	if(path_exists(path)) path_delete(path);
+}
+
 
 if (previous_x != x || previous_y != y) 
 {
@@ -164,6 +182,4 @@ player_moved = ((player_current_x != previous_player_x) || (player_current_y != 
 previous_player_x = obj_player_collision.x;
 previous_player_y = obj_player_collision.y;
 
-
-show_debug_message("px = " + string(move_away.px) + " py= " + string(move_away.py));
-show_debug_message("x = " + string(x) + " y= " + string(y));
+//show_debug_message(id);

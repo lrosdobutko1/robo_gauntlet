@@ -12,7 +12,7 @@ function create_bullet(creator, x_coord, y_coord, firing_angle_offset, gun_type)
 		bullets.image_angle = bullets.direction_angle;
 		bullets.x = x_coord;
 		bullets.y = y_coord;
-		bullets.gun_parent = creator; // Store gun reference
+		bullets.creator = creator; // Store gun reference
 		if (creator == obj_player_functions.id) bullets.gun_type = gun_type;
 		else bullets.gun_type = noone;
 		bullets.is_left = false;

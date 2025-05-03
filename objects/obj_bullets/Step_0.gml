@@ -2,67 +2,77 @@ life_timer --;
 image_yscale = image_scale;
 image_xscale = image_scale;
 
-switch (gun_type)
+
+//bullets created by player
+if (creator == obj_player_functions.id)
 {
-	case 1:
+	bullet_speed = 8;
+	switch (gun_type)
 	{
-		choose_sprite_index = gun_type;
-		collision_offset = 8;
-		break;
-	}
+		case 1:
+		{
+			choose_sprite_index = gun_type;
+			collision_offset = 8;
+			break;
+		}
 	
-		case 2:
-	{
-		choose_sprite_index = gun_type;
-		collision_offset = -4;
-		break;
-	}
+			case 2:
+		{
+			choose_sprite_index = gun_type;
+			collision_offset = -4;
+			break;
+		}
 	
-		case 3:
-	{
-		choose_sprite_index = gun_type;
-		collision_offset = 8;
-		break;
-	}
+			case 3:
+		{
+			choose_sprite_index = gun_type;
+			collision_offset = 8;
+			break;
+		}
 	
-		case 4:
-	{
-		choose_sprite_index = gun_type;
-		collision_offset = 8;
-		break;
-	}	
+			case 4:
+		{
+			choose_sprite_index = gun_type;
+			collision_offset = 8;
+			break;
+		}	
 				
-	case 5:
-	{
-		choose_sprite_index = gun_type;	
-		collision_offset = 8;
-		break;
-	}
+		case 5:
+		{
+			choose_sprite_index = gun_type;	
+			collision_offset = 8;
+			break;
+		}
 	
-	case 6:
-	{
-		choose_sprite_index = gun_type;	
-		collision_offset = -4;
-		image_scale += 0.07;
-		if (image_scale >= 1) image_scale = 1;
-		break;
+		case 6:
+		{
+			choose_sprite_index = gun_type;	
+			collision_offset = -4;
+			image_scale += 0.07;
+			if (image_scale >= 1) image_scale = 1;
+			break;
+		}
 	}
+
 }
 
-//if the bullet is created by an enemy
-if (gun_parent != obj_player_functions.id) 
+//bullets created by enemies
+else
 {
-	bullet_speed = 2;
-	damage_to_player = 2;
-}
-else bullet_speed = 2;
+	choose_sprite_index = 1;
 
-//speed = bullet_speed * global.delta_multiplier + random_range(-2,2);
+	bullet_speed = 6;
+	damage_to_player = 2;
+	show_debug_message("I am not a player bullet.")
+}
+
 
 if (life_timer <= 0 )
 {
 	instance_destroy();
 }
+
+speed = bullet_speed * global.delta_multiplier + random_range(-2,2);
 
 //collision with walls
 //if (created)
@@ -84,7 +94,5 @@ if (life_timer <= 0 )
 //}
 
 //show_debug_message(gun_type);
-
-
 
 
