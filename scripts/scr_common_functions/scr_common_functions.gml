@@ -23,7 +23,7 @@ function create_bullet(creator, x_coord, y_coord, firing_angle_offset, gun_type)
 		if (bullets.gun_type == 6)
 		{
 			bullets.life_timer = 20;
-			bullets.image_scale = 0.1;
+			bullets.image_scale = 1;
 		}
 		else 
 		{

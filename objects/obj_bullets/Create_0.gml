@@ -1,13 +1,14 @@
 
 //gun_type = 0;
+frame_skip = 0;
+
 
 sprite = spr_bullets_1;
-choose_sprite_index = 0;
+choose_sprite_index = 6;
 collision_offset = 0;
 
 direction_angle = 0;
 sprite_collision_mask(sprite,true,0,0,0,0,0,0,0);
-
 
 image_speed = 0;
 
@@ -58,3 +59,92 @@ function get_bullet_sight_line(x_start, y_start, angle, target_object, collision
 
 created = true;
 speed = bullet_speed * global.delta_multiplier + random_range(-2,2);
+bounding_box_size_h = 0;
+bounding_box_size_v = 0;
+
+
+function collision_box_size(x, y, side_length_1, side_length_2, obj_to_check) 
+{
+    // Calculate the angle from the point to the mouse cursor and negate it
+    //var angle = -point_direction(x, y, mouse_x, mouse_y);
+	var angle = -image_angle;
+	
+    // Calculate half the side length for convenience
+    var half_side_1 = side_length_1 / 2;
+	var half_side_2 = side_length_2 / 2;
+
+    // Define the four corners of the square relative to the center
+    var x0 = -half_side_1;
+    var y0 = -half_side_2;
+    var x1 =  half_side_1;
+    var y1 = -half_side_2;
+    var x2 =  half_side_1;
+    var y2 =  half_side_2;
+    var x3 = -half_side_1;
+    var y3 =  half_side_2;
+
+    // Rotate each corner around the center
+    var cos_a = dcos(angle);
+    var sin_a = dsin(angle);
+
+    var rx0 = x + x0 * cos_a - y0 * sin_a;
+    var ry0 = y + x0 * sin_a + y0 * cos_a;
+
+    var rx1 = x + x1 * cos_a - y1 * sin_a;
+    var ry1 = y + x1 * sin_a + y1 * cos_a;
+
+    var rx2 = x + x2 * cos_a - y2 * sin_a;
+    var ry2 = y + x2 * sin_a + y2 * cos_a;
+
+    var rx3 = x + x3 * cos_a - y3 * sin_a;
+    var ry3 = y + x3 * sin_a + y3 * cos_a;
+
+    // Draw the square by connecting the corners
+    if (collision_line(rx0, ry0, rx1, ry1, obj_to_check, true, false) != noone) return true;
+    if (collision_line(rx1, ry1, rx2, ry2, obj_to_check, true, false) != noone) return true;
+    if (collision_line(rx2, ry2, rx3, ry3, obj_to_check, true, false) != noone) return true;
+    if (collision_line(rx3, ry3, rx0, ry0, obj_to_check, true, false) != noone) return true;
+
+    return false;
+}
+
+
+/// @func square_edge_blocked(x, y, side_length, obj_to_check)
+/// @desc  Checks whether any of the four edges of a rotated square around (x,y)
+///        is intersected by an instance of obj_to_check. Returns true if blocked.
+/// @arg   x             center x
+/// @arg   y             center y
+/// @arg   side_length   length of each side
+/// @arg   obj_to_check  object index to test, or noone for any instance
+//function square_edge_blocked(x, y, side_length, obj_to_check) {
+//    // compute facing angle toward mouse
+//    var angle = -point_direction(x, y, mouse_x, mouse_y);
+//    var half = side_length * 0.5;
+//    var cos_a = dcos(angle), sin_a = dsin(angle);
+
+//    // local unrotated corners
+//    var x0 = -half, y0 = -half;
+//    var x1 =  half, y1 = -half;
+//    var x2 =  half, y2 =  half;
+//    var x3 = -half, y3 =  half;
+
+//    // rotate & translate each corner
+//    var rx0 = x + x0 * cos_a - y0 * sin_a;
+//    var ry0 = y + x0 * sin_a + y0 * cos_a;
+//    var rx1 = x + x1 * cos_a - y1 * sin_a;
+//    var ry1 = y + x1 * sin_a + y1 * cos_a;
+//    var rx2 = x + x2 * cos_a - y2 * sin_a;
+//    var ry2 = y + x2 * sin_a + y2 * cos_a;
+//    var rx3 = x + x3 * cos_a - y3 * sin_a;
+//    var ry3 = y + x3 * sin_a + y3 * cos_a;
+
+//    // check each edge for collision
+//    if (collision_line(rx0, ry0, rx1, ry1, obj_to_check, true, false) != noone) return true;
+//    if (collision_line(rx1, ry1, rx2, ry2, obj_to_check, true, false) != noone) return true;
+//    if (collision_line(rx2, ry2, rx3, ry3, obj_to_check, true, false) != noone) return true;
+//    if (collision_line(rx3, ry3, rx0, ry0, obj_to_check, true, false) != noone) return true;
+
+//    return false;
+//}
+
+is_flamer = false;

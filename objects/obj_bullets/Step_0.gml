@@ -6,13 +6,16 @@ image_xscale = image_scale;
 //bullets created by player
 if (creator == obj_player_functions.id)
 {
-	bullet_speed = 8;
+	//show_debug_message("I am a player bullet.");
+	bullet_speed = 7;
 	switch (gun_type)
 	{
 		case 1:
 		{
 			choose_sprite_index = gun_type;
 			collision_offset = 8;
+			bounding_box_size_h = 24;
+			bounding_box_size_v = 2;
 			break;
 		}
 	
@@ -46,10 +49,16 @@ if (creator == obj_player_functions.id)
 	
 		case 6:
 		{
-			choose_sprite_index = gun_type;	
+			frame_skip ++;
+			if (frame_skip >=3) 
+			{
+				if (choose_sprite_index != sprite_get_number(spr_bullets_1)-1)
+				choose_sprite_index ++ ;
+				frame_skip = 0;
+			}
+	
 			collision_offset = -4;
-			image_scale += 0.07;
-			if (image_scale >= 1) image_scale = 1;
+			//image_scale += 0.07;
 			break;
 		}
 	}
@@ -63,18 +72,17 @@ else
 
 	bullet_speed = 6;
 	damage_to_player = 2;
-	show_debug_message("I am not a player bullet.")
+	//show_debug_message("I am not a player bullet.")
 }
 
-
-if (life_timer <= 0 )
+if (life_timer <= 0 || collision_box_size(x, y, bounding_box_size_h, bounding_box_size_v, obj_obstacle))
 {
 	instance_destroy();
 }
 
 speed = bullet_speed * global.delta_multiplier + random_range(-2,2);
 
-//collision with walls
+//collision with walls using ray-casting
 //if (created)
 //{
 //	wall_collision = get_bullet_sight_line(x,y, direction_angle, obj_obstacle, collision_offset);
@@ -93,6 +101,4 @@ speed = bullet_speed * global.delta_multiplier + random_range(-2,2);
 //	move_towards_point(end_x, end_y, speed);
 //}
 
-//show_debug_message(gun_type);
-
-
+//collision with walls using custom bounding box
