@@ -6,8 +6,6 @@ image_xscale = image_scale;
 //bullets created by player
 if (creator == obj_player_functions.id)
 {
-	//show_debug_message("I am a player bullet.");
-
 	switch (gun_type)
 	{
 		case 1:
@@ -90,8 +88,9 @@ else
 	choose_sprite_index = 1;
 
 	bullet_speed = 6;
+	bounding_box_size_h = 24;
+	bounding_box_size_v = 2;
 	damage_to_player = 2;
-	//show_debug_message("I am not a player bullet.")
 }
 
 if (
@@ -105,11 +104,7 @@ collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_
 	//obj_entities.hp -= damage;
 }
 
-
-
 speed = bullet_speed * global.delta_multiplier;
-
-
 
 //collision with walls using ray-casting
 //if (created)
