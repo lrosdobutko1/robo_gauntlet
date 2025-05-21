@@ -296,3 +296,45 @@ gun_type,
 		}
 	}
 }
+
+
+function draw_rotating_square(x, y, s1, s2) {
+    // Calculate the angle from the point to the mouse cursor and negate it
+    var angle = -point_direction(x, y, mouse_x, mouse_y);
+
+    // Calculate half the side length for convenience
+    var half_1 = s1 / 2;
+	var half_2 = s2 / 2;
+
+    // Define the four corners of the square relative to the center
+    var x0 = -half_1;
+    var y0 = -half_2;
+    var x1 =  half_1;
+    var y1 = -half_2;
+    var x2 =  half_1;
+    var y2 =  half_2;
+    var x3 = -half_1;
+    var y3 =  half_2;
+
+    // Rotate each corner around the center
+    var cos_a = dcos(angle);
+    var sin_a = dsin(angle);
+
+    var rx0 = x + x0 * cos_a - y0 * sin_a;
+    var ry0 = y + x0 * sin_a + y0 * cos_a;
+
+    var rx1 = x + x1 * cos_a - y1 * sin_a;
+    var ry1 = y + x1 * sin_a + y1 * cos_a;
+
+    var rx2 = x + x2 * cos_a - y2 * sin_a;
+    var ry2 = y + x2 * sin_a + y2 * cos_a;
+
+    var rx3 = x + x3 * cos_a - y3 * sin_a;
+    var ry3 = y + x3 * sin_a + y3 * cos_a;
+
+    // Draw the square by connecting the corners
+    draw_line(rx0, ry0, rx1, ry1);
+    draw_line(rx1, ry1, rx2, ry2);
+    draw_line(rx2, ry2, rx3, ry3);
+    draw_line(rx3, ry3, rx0, ry0);
+}

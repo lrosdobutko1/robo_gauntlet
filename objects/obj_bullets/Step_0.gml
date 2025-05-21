@@ -7,11 +7,12 @@ image_xscale = image_scale;
 if (creator == obj_player_functions.id)
 {
 	//show_debug_message("I am a player bullet.");
-	bullet_speed = 7;
+
 	switch (gun_type)
 	{
 		case 1:
 		{
+			bullet_speed = 7;
 			choose_sprite_index = gun_type;
 			collision_offset = 8;
 			bounding_box_size_h = 24;
@@ -21,6 +22,7 @@ if (creator == obj_player_functions.id)
 	
 			case 2:
 		{
+			bullet_speed = 7;
 			choose_sprite_index = gun_type;
 			collision_offset = -4;
 			break;
@@ -28,6 +30,13 @@ if (creator == obj_player_functions.id)
 	
 			case 3:
 		{
+			if (created)
+			{
+				bullet_speed = 1.5;
+				created = false;
+			}
+			bullet_speed += 0.05;
+			if (bullet_speed >= 7) bullet_speed = 7;
 			choose_sprite_index = gun_type;
 			collision_offset = 8;
 			break;
@@ -35,6 +44,7 @@ if (creator == obj_player_functions.id)
 	
 			case 4:
 		{
+			bullet_speed = 7;
 			choose_sprite_index = gun_type;
 			collision_offset = 8;
 			break;
@@ -42,6 +52,7 @@ if (creator == obj_player_functions.id)
 				
 		case 5:
 		{
+			bullet_speed = 7;
 			choose_sprite_index = gun_type;	
 			collision_offset = 8;
 			break;
@@ -49,6 +60,7 @@ if (creator == obj_player_functions.id)
 	
 		case 6:
 		{
+			bullet_speed = 7;
 			frame_skip ++;
 			if (frame_skip >=3) 
 			{
