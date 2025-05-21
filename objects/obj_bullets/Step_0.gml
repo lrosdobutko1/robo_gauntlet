@@ -24,7 +24,8 @@ if (creator == obj_player_functions.id)
 		{
 			bullet_speed = 7;
 			choose_sprite_index = gun_type;
-			collision_offset = -4;
+			bounding_box_size_h = 13;
+			bounding_box_size_v = 4;
 			break;
 		}
 	
@@ -39,6 +40,8 @@ if (creator == obj_player_functions.id)
 			if (bullet_speed >= 7) bullet_speed = 7;
 			choose_sprite_index = gun_type;
 			collision_offset = 8;
+			bounding_box_size_h = 14;
+			bounding_box_size_v = 4;			
 			break;
 		}
 	
@@ -55,6 +58,8 @@ if (creator == obj_player_functions.id)
 			bullet_speed = 7;
 			choose_sprite_index = gun_type;	
 			collision_offset = 8;
+			bounding_box_size_h = 22;
+			bounding_box_size_v = 4;
 			break;
 		}
 	
@@ -70,7 +75,9 @@ if (creator == obj_player_functions.id)
 			}
 	
 			collision_offset = -4;
-			//image_scale += 0.07;
+			
+			bounding_box_size_h = 9;
+			bounding_box_size_v = 9;
 			break;
 		}
 	}
@@ -95,6 +102,7 @@ collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_
  
 {
 	instance_destroy();
+	//obj_entities.hp -= damage;
 }
 
 

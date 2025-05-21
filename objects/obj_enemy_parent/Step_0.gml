@@ -98,7 +98,7 @@ if (shooting_state != SHOOTING_STATE.SHOOTING)
 	{
 		if (shooting_state != SHOOTING_STATE.SHOOTING)
 		{
-			chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
+			//chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
 		}
 
 		created = false;

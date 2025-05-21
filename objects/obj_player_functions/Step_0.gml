@@ -76,7 +76,7 @@ if (gun_select_keys != prev_gun) {
 			player_gun_type = PLAYER_GUN_TYPE.SHOTGUN;
 			firing_speed_cooldown = 120;
 			no_of_bullets = 3;
-			firing_angle_offset = 2.5;
+			firing_angle_offset = 9;
 			break;
 		}
 		
