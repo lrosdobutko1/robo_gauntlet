@@ -16,8 +16,8 @@
     "path":"folders/Objects.yy",
   },
   "parentObjectId":{
-    "name":"obj_solid_objects",
-    "path":"objects/obj_solid_objects/obj_solid_objects.yy",
+    "name":"obj_entities",
+    "path":"objects/obj_entities/obj_entities.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

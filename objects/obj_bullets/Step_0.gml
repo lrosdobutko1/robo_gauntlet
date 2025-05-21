@@ -75,12 +75,21 @@ else
 	//show_debug_message("I am not a player bullet.")
 }
 
-if (life_timer <= 0 || collision_box_size(x, y, bounding_box_size_h, bounding_box_size_v, obj_obstacle))
+if (
+life_timer <= 0 ||
+collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_obstacle) || 
+collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_entities)
+)
+ 
 {
 	instance_destroy();
 }
 
-speed = bullet_speed * global.delta_multiplier + random_range(-2,2);
+
+
+speed = bullet_speed * global.delta_multiplier;
+
+
 
 //collision with walls using ray-casting
 //if (created)

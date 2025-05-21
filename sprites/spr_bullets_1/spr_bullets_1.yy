@@ -31,6 +31,8 @@
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"4a1f3623-92bc-4e7e-9505-a4d3f61952e3","blendMode":0,"displayName":"default","isLocked":false,"name":"4a1f3623-92bc-4e7e-9505-a4d3f61952e3","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"98337737-0152-4f56-a295-4dfaa74acc74","blendMode":0,"displayName":"Layer 2","isLocked":false,"name":"98337737-0152-4f56-a295-4dfaa74acc74","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"c8324b06-424d-48ce-b42f-659345aa4507","blendMode":0,"displayName":"Layer 1","isLocked":false,"name":"c8324b06-424d-48ce-b42f-659345aa4507","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_bullets_1",
   "nineSlice":null,

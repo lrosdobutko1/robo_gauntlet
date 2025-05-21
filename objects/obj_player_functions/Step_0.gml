@@ -170,11 +170,12 @@ if(firing_speed != firing_speed_cooldown)
 }
 
 
+var inst = 100003;
 
-/////////////
-
-
-
-
-
-//show_debug_message(id)
+if (instance_exists(inst)) {
+    var obj_index = inst.object_index;
+    var obj_name = object_get_name(obj_index);
+    show_debug_message("Instance " + string(inst) + " is of object: " + obj_name);
+} else {
+    show_debug_message("Instance " + string(inst) + " does not exist.");
+}

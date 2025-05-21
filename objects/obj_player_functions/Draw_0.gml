@@ -31,5 +31,4 @@ draw_text(x+10, y+10, "FPS: " + string(fps_real));
 
 //draw_line(x1,y1,x2,y2);
 //draw_line(x3,y3,x4,y4);
-
-//draw_rotating_square(x, y, 200, 100);
+if (firing) muzzle_flash_2(gun_barrels, firing_speed, firing_offset, player_gun_type);
