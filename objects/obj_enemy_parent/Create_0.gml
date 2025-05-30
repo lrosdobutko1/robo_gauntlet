@@ -1,6 +1,8 @@
 created = true;
 level = 1;
 
+
+
 ////sprite info
 image_scale = 1.25;
 image_speed = 0;
@@ -62,6 +64,18 @@ enum SHOOTING_STATE
 	SHOOTING_COOLDOWN,
 }
 
+enum HEALTH_STATE
+{
+	HIGH,
+	MED,
+	LOW,
+	CRITICAL,
+	DEAD,
+	DESTROYED,
+}
+
+existing_state = HEALTH_STATE.HIGH;
+
 shooting_state = SHOOTING_STATE.SHOOTING_IDLE;
 
 gun_barrels = array_create(4);
@@ -69,9 +83,6 @@ find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
 
 casings_eject = array_create(4);
 find_enemy_gun_create_coordinates(casings_eject, 15, 170, rotation_angle);
-
-
-
 
 gun_cooldown = 140;
 preparing_to_shoot_timer = gun_cooldown;
@@ -81,6 +92,8 @@ fire_gun_offset = 40;
 shooting_time_reset = fire_gun_offset * 4;
 shooting_time = shooting_time_reset;
 shooting_cooldown_timer = 120;
+
+damage = 1;
 
 ////determine how much lead time to give the enemy when tracking player. Between 0 and 1.
 prediction_multiplier = (is_smart) ? 1 : 0;
@@ -350,6 +363,7 @@ function shoot_enemy_bullets(
 gun_barrel_coords, 
 firing_speed, 
 firing_offset, 
+damage
 )
 {
 	find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
@@ -361,13 +375,13 @@ firing_offset,
 	if(firing_speed == firing_speed_cooldown)
 	{
 		//eject_shells(casings_eject[0], casings_eject[1], rotation_angle-90);
-		create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], 0, 0);
+		create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], 0, 0, damage);
 
 	}
 
 	else if(firing_speed == firing_offset)
 	{
-		create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], 0, 0);
+		create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], 0, 0, damage);
 	}
 }
 

@@ -1,36 +1,10 @@
 
 //moving
-moving = false;
-rotation_angle = point_direction(x,y, mouse_x,mouse_y);
 
-h_speed = obj_player_collision.h_speed * global.delta_multiplier;
-v_speed = obj_player_collision.v_speed * global.delta_multiplier;
 
-var next_x = x + obj_player_collision.h_speed;
-var next_y = y + obj_player_collision.v_speed;
 
-var angle_diff = angle_difference(image_angle, point_direction(x,y,next_x,next_y));
 
-//animate legs
-if (h_speed != 0 || v_speed != 0)
-{
-	moving = true;
-}
-else 
-{
-	moving = false;
-}
 
-if (moving == true)
-{
-	image_speed = 1;
-	image_angle -= min(abs(angle_diff), 5) * sign(angle_diff);
-
-}
-else
-{
-	image_speed = 0;
-}
 
 x = obj_player_collision.x;
 y = obj_player_collision.y;
@@ -68,6 +42,8 @@ if (gun_select_keys != prev_gun) {
 			firing_offset = firing_speed_cooldown * 0.50;
 			no_of_bullets = 1;
 			firing_angle_offset = 0;
+			damage = player_gun_type;
+			
 			break;
 		}
 		
@@ -77,6 +53,7 @@ if (gun_select_keys != prev_gun) {
 			firing_speed_cooldown = 120;
 			no_of_bullets = 3;
 			firing_angle_offset = 9;
+			damage = player_gun_type;
 			break;
 		}
 		
@@ -87,12 +64,14 @@ if (gun_select_keys != prev_gun) {
 			firing_offset = firing_speed_cooldown * 0.50;
 			no_of_bullets = 1;
 			firing_angle_offset = 0;
+			damage = player_gun_type;
 			break;
 		}
 		
 		case 4: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.LASER;
+
 			
 			
 			firing_angle_offset = 0;
@@ -102,9 +81,11 @@ if (gun_select_keys != prev_gun) {
 		case 5: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.BLASTER;
+			gun_index = 5;
 			firing_speed_cooldown = 30;
 			no_of_bullets = 1;
 			firing_angle_offset = 0;
+			damage = player_gun_type;
 			break;
 		}
 		
@@ -114,6 +95,7 @@ if (gun_select_keys != prev_gun) {
 			firing_speed_cooldown = 4;
 			no_of_bullets = 1;
 			firing_angle_offset = 0;
+			damage = player_gun_type/20;
 			break;
 		}
     }
@@ -139,7 +121,7 @@ if (mouse_check_button(2) && rockets_ready)
 
 if(firing_rockets) 
 {
-	//shoot_rockets(rocket_offset);
+	shoot_rockets(rocket_offset);
 	rocket_offset --;
 	player_rocket_timer -= obj_global_timer.delta;
 	if rocket_offset <= 0 firing_rockets = false;
@@ -159,8 +141,20 @@ else
 
 if (firing)
 {
-	shoot_player_bullets(gun_barrels, firing_speed, firing_offset, player_gun_type, firing_angle_offset, no_of_bullets);
+	shoot_player_bullets(gun_barrels, firing_speed, firing_offset, player_gun_type, firing_angle_offset, no_of_bullets, damage);
 	firing_speed --;
+	
+
+	if (player_gun_type == PLAYER_GUN_TYPE.MACHINEGUN)
+	{
+		gun_index += 0.33;
+		if (gun_index >= 4) gun_index = 0;
+	}
+	else if (player_gun_type == PLAYER_GUN_TYPE.BLASTER) 
+	{
+		gun_index += 0.15;
+		if (gun_index >= (sprite_get_number(spr_player_guns) - 1)) gun_index = 5;
+	}
 }
 
 if(firing_speed != firing_speed_cooldown)
@@ -169,13 +163,3 @@ if(firing_speed != firing_speed_cooldown)
 	if (firing_speed <= 0) firing_speed = firing_speed_cooldown;
 }
 
-
-var inst = 100003;
-
-if (instance_exists(inst)) {
-    var obj_index = inst.object_index;
-    var obj_name = object_get_name(obj_index);
-    show_debug_message("Instance " + string(inst) + " is of object: " + obj_name);
-} else {
-    show_debug_message("Instance " + string(inst) + " does not exist.");
-}

@@ -15,7 +15,10 @@
     "name":"Objects",
     "path":"folders/Objects.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_entities",
+    "path":"objects/obj_entities/obj_entities.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -34,8 +37,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_player_legs",
-    "path":"sprites/spr_player_legs/spr_player_legs.yy",
+    "name":"spr_player_torso",
+    "path":"sprites/spr_player_torso/spr_player_torso.yy",
   },
   "spriteMaskId":null,
   "visible":true,

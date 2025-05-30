@@ -47,7 +47,6 @@
     {"id":{"name":"obj_pathfinding","path":"objects/obj_pathfinding/obj_pathfinding.yy",},},
     {"id":{"name":"obj_player_collision","path":"objects/obj_player_collision/obj_player_collision.yy",},},
     {"id":{"name":"obj_player_functions","path":"objects/obj_player_functions/obj_player_functions.yy",},},
-    {"id":{"name":"obj_player_muzzle_flash","path":"objects/obj_player_muzzle_flash/obj_player_muzzle_flash.yy",},},
     {"id":{"name":"obj_player_rockets","path":"objects/obj_player_rockets/obj_player_rockets.yy",},},
     {"id":{"name":"obj_projectiles","path":"objects/obj_projectiles/obj_projectiles.yy",},},
     {"id":{"name":"obj_rocket_smoke","path":"objects/obj_rocket_smoke/obj_rocket_smoke.yy",},},

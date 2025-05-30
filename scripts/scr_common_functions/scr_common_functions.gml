@@ -1,4 +1,4 @@
-function create_bullet(creator, x_coord, y_coord, firing_angle_offset, gun_type)
+function create_bullet(creator, x_coord, y_coord, firing_angle_offset, gun_type, damage)
 {
 	var bullets = instance_create_layer(
 	x_coord,
@@ -15,11 +15,9 @@ function create_bullet(creator, x_coord, y_coord, firing_angle_offset, gun_type)
 		bullets.creator = creator; // Store gun reference
 		if (creator == obj_player_functions.id) bullets.gun_type = gun_type;
 		else bullets.gun_type = noone;
-		bullets.is_left = false;
+		bullets.damage = damage;
 		bullets.image_speed = 0;
-		bullets.wall_collision = 0;
-		bullets.end_x = 0;
-		bullets.end_y = 0;
+
 		if (bullets.gun_type == 6)
 		{
 			bullets.life_timer = 20;

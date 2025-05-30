@@ -93,16 +93,41 @@ else
 	damage_to_player = 2;
 }
 
-if (
-life_timer <= 0 ||
-collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_obstacle) || 
-collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_entities)
-)
- 
+if (life_timer <= 0) instance_destroy();
+
+
+/**********************/
+//if (
+//collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_obstacle) || 
+//collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_entities)
+//) 
+//{
+//	if (gun_type != 6) instance_destroy();
+//}
+
+var hit = collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_entities);
+if (hit != noone) 
+{
+    if (hit != creator) 
+	{
+		//show_debug_message(hit.id);
+		hit.hp -= damage;
+		if variable_instance_exists(hit.id,"flash")
+		{
+			hit.flash = 2;
+		}
+	}
+	
+    if (gun_type != 6) instance_destroy();
+}
+
+//wall collision
+var hit_wall = collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_obstacle);
+if (hit_wall !=noone)
 {
 	instance_destroy();
-	//obj_entities.hp -= damage;
 }
+
 
 speed = bullet_speed * global.delta_multiplier;
 

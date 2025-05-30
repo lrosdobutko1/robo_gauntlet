@@ -1,4 +1,6 @@
 
+damage = (hp/20) * level;
+
 sight_cone = get_sight_cone(x,y,60,400,rotation_angle);
 spotted_player = point_in_triangle(obj_player_collision.x,obj_player_collision.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
 
@@ -69,7 +71,7 @@ switch (shooting_state)
 
 		preparing_to_shoot_timer = gun_cooldown;
 		shooting_time --;
-		shoot_enemy_bullets(gun_barrels,firing_speed,firing_offset);
+		shoot_enemy_bullets(gun_barrels,firing_speed,firing_offset, damage);
 		if (shooting_time <= 0)
 		{
 			shooting_state = SHOOTING_STATE.SHOOTING_COOLDOWN;	
@@ -146,14 +148,6 @@ else
 
 //movement behavior
 
-//destroyed
-if (hp <= 0) alive = false;
-if (!alive)
-{
-
-	instance_destroy();
-}
-
 //choose the angle at which the torso points
 rotation_angle -= choose_torso_angle(prediction_multiplier);
 
@@ -172,5 +166,3 @@ player_moved = ((player_current_x != previous_player_x) || (player_current_y != 
 
 previous_player_x = obj_player_collision.x;
 previous_player_y = obj_player_collision.y;
-
-//show_debug_message(id);

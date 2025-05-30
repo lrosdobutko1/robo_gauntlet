@@ -43,15 +43,15 @@ var next_y = y + v_speed;
 
 var angle_diff = angle_difference(image_angle, point_direction(x,y,next_x,next_y)-90);
 
-//animate legs
-if (h_speed != 0 || v_speed != 0)
-{
-	moving = true;
-}
-else 
-{
-	moving = false;
-}
+////animate legs
+//if (h_speed != 0 || v_speed != 0)
+//{
+//	moving = true;
+//}
+//else 
+//{
+//	moving = false;
+//}
 
 
 //collision detection
@@ -75,3 +75,5 @@ if (place_meeting(x,y+v_speed,obj_wall_parent))
 
 x += h_speed;
 y += v_speed;
+
+//show_debug_message(hp);

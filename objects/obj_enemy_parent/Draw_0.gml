@@ -1,5 +1,6 @@
-draw_self();
-var move_away = move_away_from_ally(min_distance_to_ally);
+
+
+if (hp <= 0) alive = false;
 if (alive)
 {
 	draw_self();
@@ -15,6 +16,15 @@ if (alive)
 		shader_reset();
 	}
 }
+
+//destroyed
+if (!alive)
+{
+	instance_destroy();
+}
+
+
+
 //if (path_exists(path))
 //draw_path(path,x,y,true);
 	
