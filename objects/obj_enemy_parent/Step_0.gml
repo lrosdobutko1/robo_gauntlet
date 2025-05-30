@@ -1,5 +1,66 @@
 
-damage = (hp/20) * level;
+switch (health_state)
+{
+	case HEALTH_STATE.HIGH:
+	{
+		damage = starting_damage;
+		if (hp <= starting_hp * 0.75 && hp >= starting_hp * 0.5)
+		{
+			health_state = HEALTH_STATE.MED;
+			damage *= 1.25
+		}
+		
+		break;
+	}
+	
+	case HEALTH_STATE.MED:
+	{
+		if (hp <= starting_hp * 0.5 && hp >= starting_hp * 0.25)
+		{
+			damage *= 1.25;
+			health_state = HEALTH_STATE.LOW;
+		}
+		
+		break;
+	}
+	
+	case HEALTH_STATE.LOW:
+	{
+		if (hp <= starting_hp * 0.1 && hp > 0)
+		{
+			health_state = HEALTH_STATE.CRITICAL;
+			damage *= 1.5;
+		}
+
+
+		break;
+	}
+	
+	case HEALTH_STATE.CRITICAL:
+	{
+		if (hp <= 0) health_state = HEALTH_STATE.DEAD;
+		
+		break;
+	}
+	
+	case HEALTH_STATE.DEAD:
+	{
+		if (explode_anim >= (sprite_get_number(spr_explode1) - 1))
+		{
+			health_state = HEALTH_STATE.DESTROYED
+		}
+		
+		break;
+	}
+	
+	case HEALTH_STATE.DESTROYED:
+	{
+		instance_destroy();
+		break;
+	}
+}
+	
+
 
 sight_cone = get_sight_cone(x,y,60,400,rotation_angle);
 spotted_player = point_in_triangle(obj_player_collision.x,obj_player_collision.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);

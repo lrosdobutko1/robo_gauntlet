@@ -95,20 +95,11 @@ else
 
 if (life_timer <= 0) instance_destroy();
 
-
-/**********************/
-//if (
-//collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_obstacle) || 
-//collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_entities)
-//) 
-//{
-//	if (gun_type != 6) instance_destroy();
-//}
-
 var hit = collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_entities);
+
 if (hit != noone) 
 {
-    if (hit != creator) 
+	if (hit != creator) 
 	{
 		//show_debug_message(hit.id);
 		hit.hp -= damage;
@@ -118,7 +109,7 @@ if (hit != noone)
 		}
 	}
 	
-    if (gun_type != 6) instance_destroy();
+	if (gun_type != 6) instance_destroy();
 }
 
 //wall collision
@@ -127,7 +118,6 @@ if (hit_wall !=noone)
 {
 	instance_destroy();
 }
-
 
 speed = bullet_speed * global.delta_multiplier;
 

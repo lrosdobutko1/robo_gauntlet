@@ -1,15 +1,5 @@
 
-//animation machinegun barrels
-if (player_gun_type == PLAYER_GUN_TYPE.MACHINEGUN)
-{
-	//if (firing)
-	//{
-	//	gun_counter ++;
-	//	if (gun_counter % 3 == 0)
-	//	gun_index ++;
-	//	if (gun_index == 3) gun_index = 0;
-	//}
-}
+
 moving = false;
 
 h_speed = obj_player_collision.h_speed * global.delta_multiplier;
@@ -36,7 +26,8 @@ if (moving)
 
 draw_sprite_ext(
 spr_player_legs,
-leg_anim,obj_player_functions.x,
+leg_anim,
+obj_player_functions.x,
 obj_player_functions.y,
 image_scale,image_scale,
 leg_angle,c_white,1);
@@ -51,7 +42,7 @@ rotation_angle,
 c_white,1);
 
 draw_sprite_ext(
-spr_player_torso,gun_index,
+spr_player_torso,0,
 obj_player_functions.x,
 obj_player_functions.y,
 image_scale,image_scale,

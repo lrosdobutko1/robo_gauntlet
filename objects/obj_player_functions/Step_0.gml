@@ -42,7 +42,7 @@ if (gun_select_keys != prev_gun) {
 			firing_offset = firing_speed_cooldown * 0.50;
 			no_of_bullets = 1;
 			firing_angle_offset = 0;
-			damage = player_gun_type;
+			//damage = player_gun_type;
 			
 			break;
 		}
@@ -92,6 +92,7 @@ if (gun_select_keys != prev_gun) {
 		case 6: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.FLAMER;
+			gun_index = 8;
 			firing_speed_cooldown = 4;
 			no_of_bullets = 1;
 			firing_angle_offset = 0;
@@ -162,4 +163,3 @@ if(firing_speed != firing_speed_cooldown)
 	firing_speed --;
 	if (firing_speed <= 0) firing_speed = firing_speed_cooldown;
 }
-

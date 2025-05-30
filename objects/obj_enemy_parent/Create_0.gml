@@ -1,5 +1,5 @@
 created = true;
-level = 1;
+level = 2;
 
 
 
@@ -10,6 +10,7 @@ image_xscale = image_scale;
 image_yscale = image_scale;
 colors = [c_white, c_green, c_blue, c_yellow, c_red, c_purple];
 sprite_color = colors[level];
+explode_anim = 0;
 
 torso = spr_enemy1_torso;
 rotation_angle = irandom_range(0,360);
@@ -74,7 +75,11 @@ enum HEALTH_STATE
 	DESTROYED,
 }
 
-existing_state = HEALTH_STATE.HIGH;
+base_hp = 40;
+starting_hp = (base_hp * level) + power(level,level);
+hp = starting_hp;
+
+if (hp == starting_hp) health_state = HEALTH_STATE.HIGH;
 
 shooting_state = SHOOTING_STATE.SHOOTING_IDLE;
 
@@ -93,21 +98,21 @@ shooting_time_reset = fire_gun_offset * 4;
 shooting_time = shooting_time_reset;
 shooting_cooldown_timer = 120;
 
-damage = 1;
+
 
 ////determine how much lead time to give the enemy when tracking player. Between 0 and 1.
 prediction_multiplier = (is_smart) ? 1 : 0;
 
-////determine if legs remain after destruction
-//random_legs = random_range(0,10);
+
 
 ////level and health information
 //max_level = 5;
 
-starting_hp = 40;
-//starting_damage = 2;
-hp = (starting_hp * level) + power(level,level);
-//damage = starting_damage * power(level,2);
+
+
+base_damage = 2;
+starting_damage = base_damage * power(level,2);
+damage = starting_damage * power(level,2);
 //shields = hp/2;
 
 

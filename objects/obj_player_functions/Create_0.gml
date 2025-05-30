@@ -45,7 +45,7 @@ enum PLAYER_GUN_TYPE
 
 player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
 
-damage = player_gun_type;
+damage = 1;
 
 gun_counter = 0;
 gun_index = 0;

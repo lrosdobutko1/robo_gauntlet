@@ -1,7 +1,7 @@
 
 
-if (hp <= 0) alive = false;
-if (alive)
+
+if (health_state != HEALTH_STATE.DEAD && health_state != HEALTH_STATE.DESTROYED)
 {
 	draw_self();
 	//draw the torso
@@ -17,12 +17,13 @@ if (alive)
 	}
 }
 
-//destroyed
-if (!alive)
+else
 {
-	instance_destroy();
-}
 
+	draw_sprite_ext(spr_explode1,explode_anim,x,y,2,2,random_range(0,359),c_white,1)
+	explode_anim += 0.8;
+
+}
 
 
 //if (path_exists(path))
