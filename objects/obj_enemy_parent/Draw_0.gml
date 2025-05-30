@@ -21,7 +21,7 @@ else
 {
 
 	draw_sprite_ext(spr_explode1,explode_anim,x,y,2,2,random_range(0,359),c_white,1)
-	explode_anim += 0.8;
+	explode_anim += 0.75;
 
 }
 

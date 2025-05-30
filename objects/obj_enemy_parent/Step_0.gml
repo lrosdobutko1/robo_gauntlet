@@ -1,4 +1,7 @@
 
+
+var shake_coefficient = max(1 - (distance_to_object(obj_player_collision) / 300), 0);
+
 switch (health_state)
 {
 	case HEALTH_STATE.HIGH:
@@ -45,6 +48,11 @@ switch (health_state)
 	
 	case HEALTH_STATE.DEAD:
 	{
+
+		var camera_shake_x = random_range(-5,5)
+		var camera_shake_y = random_range(-5,5)
+		obj_camera.x += camera_shake_x * shake_coefficient;
+		obj_camera.y += camera_shake_y * shake_coefficient;
 		if (explode_anim >= (sprite_get_number(spr_explode1) - 1))
 		{
 			health_state = HEALTH_STATE.DESTROYED
@@ -59,7 +67,7 @@ switch (health_state)
 		break;
 	}
 }
-	
+
 
 
 sight_cone = get_sight_cone(x,y,60,400,rotation_angle);
@@ -73,13 +81,6 @@ pathfinding --;
 player_current_x = obj_player_collision.x;
 player_current_y = obj_player_collision.y;
 
-////shooting
-///* 
-//right gun barrel x = gun_barrels[0]
-//right gun barrel y = gun_barrels[1]
-//left gun barrel x = gun_barrels[2]
-//left gun barrel y = gun_barrels[3]
-//*/
 find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
 right_gun_barrel[0] = gun_barrels[0];
 right_gun_barrel[1] = gun_barrels[1];
@@ -227,3 +228,5 @@ player_moved = ((player_current_x != previous_player_x) || (player_current_y != 
 
 previous_player_x = obj_player_collision.x;
 previous_player_y = obj_player_collision.y;
+
+show_debug_message("level: " + +string(level) + " health: " + string(hp) + "/" + string(starting_hp) + " damage: " + string(damage));
