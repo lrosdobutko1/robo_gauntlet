@@ -30,6 +30,7 @@ else if (keyboard_check_pressed(ord("3")))	gun_select_keys = 3;
 else if (keyboard_check_pressed(ord("4")))	gun_select_keys = 4;
 else if (keyboard_check_pressed(ord("5")))	gun_select_keys = 5;
 else if (keyboard_check_pressed(ord("6")))	gun_select_keys = 6;
+else if (keyboard_check_pressed(ord("7")))	gun_select_keys = 7;
 
 // Only show debug if it actually changed
 if (gun_select_keys != prev_gun) {
@@ -81,7 +82,7 @@ if (gun_select_keys != prev_gun) {
 		case 5: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.BLASTER;
-			gun_index = 5;
+			gun_anim = 5;
 			firing_speed_cooldown = 30;
 			no_of_bullets = 1;
 			firing_angle_offset = 0;
@@ -92,8 +93,20 @@ if (gun_select_keys != prev_gun) {
 		case 6: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.FLAMER;
-			gun_index = 8;
+			gun_anim = 8;
 			firing_speed_cooldown = 4;
+			no_of_bullets = 1;
+			firing_angle_offset = 0;
+			damage = player_gun_type/20;
+			break;
+		}
+		
+		case 7:
+		{
+			player_gun_type = PLAYER_GUN_TYPE.ROCKET;
+			gun_anim = 8;
+			firing_speed_cooldown = 40;
+			firing_offset = firing_speed_cooldown * 0.50;
 			no_of_bullets = 1;
 			firing_angle_offset = 0;
 			damage = player_gun_type/20;
@@ -148,13 +161,13 @@ if (firing)
 
 	if (player_gun_type == PLAYER_GUN_TYPE.MACHINEGUN)
 	{
-		gun_index += 0.33;
-		if (gun_index >= 4) gun_index = 0;
+		gun_anim += 0.33;
+		if (gun_anim >= 4) gun_anim = 0;
 	}
 	else if (player_gun_type == PLAYER_GUN_TYPE.BLASTER) 
 	{
-		gun_index += 0.15;
-		if (gun_index >= (sprite_get_number(spr_player_guns) - 1)) gun_index = 5;
+		gun_anim += 0.15;
+		if (gun_anim >= (sprite_get_number(spr_player_guns) - 1)) gun_anim = 5;
 	}
 }
 

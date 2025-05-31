@@ -67,7 +67,7 @@ if (creator == obj_player_functions.id)
 			frame_skip ++;
 			if (frame_skip >=3) 
 			{
-				if (choose_sprite_index != sprite_get_number(spr_bullets_1)-1)
+				if (choose_sprite_index != sprite_get_number(spr_bullets_3)-1)
 				choose_sprite_index ++ ;
 				frame_skip = 0;
 			}
@@ -79,7 +79,6 @@ if (creator == obj_player_functions.id)
 			break;
 		}
 	}
-
 }
 
 //bullets created by enemies
@@ -101,7 +100,6 @@ if (hit != noone)
 {
 	if (hit != creator) 
 	{
-		//show_debug_message(hit.id);
 		hit.hp -= damage;
 		if variable_instance_exists(hit.id,"flash")
 		{

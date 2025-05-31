@@ -19,9 +19,11 @@ if (active)
 {
 	image_speed = 1;
 	direction = image_angle;
+	if (alive)
 	speed = 12;
+	else speed = 0;
 	
-	instance_create_layer(x,y,layer,obj_rocket_smoke);
+	if(alive) instance_create_layer(x,y,layer,obj_rocket_smoke);
 	if (instance_exists(obj_enemy_1))
 	{
 		target = instance_nearest(x,y, obj_enemy_1);
@@ -31,4 +33,6 @@ if (active)
 	}
 
 }
+
+
 

@@ -33,7 +33,7 @@ image_scale,image_scale,
 leg_angle,c_white,1);
 
 draw_sprite_ext(
-spr_player_guns,gun_index,
+spr_player_guns,gun_anim,
 obj_player_functions.x,
 obj_player_functions.y,
 image_scale,

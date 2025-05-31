@@ -1,7 +1,7 @@
 created = true;
 level = 1;
 
-
+suicidal = false;
 
 ////sprite info
 image_scale = 1.25;

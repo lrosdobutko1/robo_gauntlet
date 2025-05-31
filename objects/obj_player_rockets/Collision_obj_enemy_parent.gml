@@ -1,2 +1,2 @@
-
-instance_destroy();
+alive = false;
+speed = 0;

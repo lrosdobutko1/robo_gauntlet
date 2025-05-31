@@ -1,6 +1,6 @@
 
 
-var shake_coefficient = max(1 - (distance_to_object(obj_player_collision) / 300), 0);
+
 
 switch (health_state)
 {
@@ -49,10 +49,11 @@ switch (health_state)
 	case HEALTH_STATE.DEAD:
 	{
 
-		var camera_shake_x = random_range(-5,5)
-		var camera_shake_y = random_range(-5,5)
-		obj_camera.x += camera_shake_x * shake_coefficient;
-		obj_camera.y += camera_shake_y * shake_coefficient;
+		//var camera_shake_x = random_range(-5,5)
+		//var camera_shake_y = random_range(-5,5)
+		//obj_camera.x += camera_shake_x * shake_coefficient;
+		//obj_camera.y += camera_shake_y * shake_coefficient;
+		camera_shake();
 		if (explode_anim >= (sprite_get_number(spr_explode1) - 1))
 		{
 			health_state = HEALTH_STATE.DESTROYED
@@ -71,7 +72,15 @@ switch (health_state)
 
 
 sight_cone = get_sight_cone(x,y,60,400,rotation_angle);
-spotted_player = point_in_triangle(obj_player_collision.x,obj_player_collision.y,x,y,sight_cone[0],sight_cone[1],sight_cone[2],sight_cone[3]);
+spotted_player = point_in_triangle(
+obj_player_collision.x,
+obj_player_collision.y,
+x,
+y,
+sight_cone[0],
+sight_cone[1],
+sight_cone[2],
+sight_cone[3]);
 
 get_list_of_nearest_allies();
 var move_away = move_away_from_ally(min_distance_to_ally);
@@ -98,7 +107,7 @@ switch (shooting_state)
 	{
 
 		shooting_cooldown_timer = 240;
-		//show_debug_message("idle");
+
 
 		if (spotted_player && sight_line == noone)
 		{
@@ -110,7 +119,7 @@ switch (shooting_state)
 	
 	case SHOOTING_STATE.PREPARING_TO_SHOOT:
 	{
-		//show_debug_message("preparing to shoot");
+
 		preparing_to_shoot_timer --;
 		if (!spotted_player || sight_line != noone)
 		{
@@ -127,13 +136,16 @@ switch (shooting_state)
 
 	case SHOOTING_STATE.SHOOTING:
 	{
-		//show_debug_message("shooting");
+
 		firing_speed --;
 		if (firing_speed <=0) firing_speed = firing_speed_cooldown;
 
 		preparing_to_shoot_timer = gun_cooldown;
 		shooting_time --;
-		shoot_enemy_bullets(gun_barrels,firing_speed,firing_offset, damage);
+		if (health_state != HEALTH_STATE.DEAD || health_state != HEALTH_STATE.DESTROYED)
+		{
+			shoot_enemy_bullets(gun_barrels,firing_speed,firing_offset, damage);
+		}
 		if (shooting_time <= 0)
 		{
 			shooting_state = SHOOTING_STATE.SHOOTING_COOLDOWN;	
@@ -145,7 +157,7 @@ switch (shooting_state)
 	case SHOOTING_STATE.SHOOTING_COOLDOWN:
 	{
 		shooting_time = shooting_time_reset;
-		//show_debug_message("shooting cooldown");
+
 		shooting_cooldown_timer --;
 		if (shooting_cooldown_timer <= 0)
 		{
@@ -162,7 +174,7 @@ if (shooting_state != SHOOTING_STATE.SHOOTING)
 	{
 		if (shooting_state != SHOOTING_STATE.SHOOTING)
 		{
-			//chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
+			chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
 		}
 
 		created = false;
@@ -217,16 +229,23 @@ player_previous_x = obj_player_collision.x;
 player_previous_y = obj_player_collision.y;
 
 
-//if (pathfinding <= 0)
-//{
-//	basic_chase_player(move_away.px-x, move_away.py-y, walk_speed);
-	
-//	pathfinding = irandom_range(pathfinding_cooldown / 2, pathfinding_cooldown);
-//}
-
 player_moved = ((player_current_x != previous_player_x) || (player_current_y != previous_player_y));
 
 previous_player_x = obj_player_collision.x;
 previous_player_y = obj_player_collision.y;
 
-show_debug_message("level: " + +string(level) + " health: " + string(hp) + "/" + string(starting_hp) + " damage: " + string(damage));
+var hit_player = (instance_place(x,y, obj_player_collision))
+{
+	if (hit_player == obj_player_collision.id)
+	{
+		if (explode_anim == 0)
+		hit_player.damage_player(10);
+		health_state = HEALTH_STATE.DEAD;
+		if (explode_anim >= (sprite_get_number(spr_explode1) - 1))
+		{
+			health_state = HEALTH_STATE.DESTROYED
+		}
+	}
+}
+
+//show_debug_message("level: " + +string(level) + " health: " + string(hp) + "/" + string(starting_hp) + " damage: " + string(damage));

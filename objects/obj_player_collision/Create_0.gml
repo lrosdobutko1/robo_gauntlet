@@ -27,3 +27,9 @@ v_speed = 0;
 
 walk_speed = 2;
 
+damage_player = function(damage)
+{
+	obj_player_functions.hp -= damage;
+}
+
+

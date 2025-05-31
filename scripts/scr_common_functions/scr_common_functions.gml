@@ -1,5 +1,9 @@
 function create_bullet(creator, x_coord, y_coord, firing_angle_offset, gun_type, damage)
 {
+	
+	// Prevent trying to use a non-existent creator
+    if (!instance_exists(creator)) return;
+	
 	var bullets = instance_create_layer(
 	x_coord,
 	y_coord,
@@ -30,3 +34,17 @@ function create_bullet(creator, x_coord, y_coord, firing_angle_offset, gun_type,
 		}
 	}	
 }
+
+function camera_shake()
+{	
+	global.shake_call_count += 1;
+	
+	var shake_coefficient = max(1 - (distance_to_object(obj_player_collision) / 300) * 0.9, 0.1);
+	var camera_shake_x = random_range(-5,5)
+	var camera_shake_y = random_range(-5,5)
+	obj_camera.x += camera_shake_x * shake_coefficient;
+	obj_camera.y += camera_shake_y * shake_coefficient;
+	show_debug_message(global.shake_call_count);
+		
+}
+

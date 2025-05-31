@@ -41,6 +41,7 @@ enum PLAYER_GUN_TYPE
 	LASER,
 	BLASTER,	
 	FLAMER,
+	ROCKET,
 };
 
 player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
@@ -48,7 +49,7 @@ player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
 damage = 1;
 
 gun_counter = 0;
-gun_index = 0;
+gun_anim = 0;
 
 player_rocket_cooldown = 600;
 
@@ -69,7 +70,7 @@ player_rocket_cooldown = 2400;
 player_rocket_timer = player_rocket_cooldown;
 rockets_ready = true;
 
-rocket_offset_cd = 60;
+rocket_offset_cd = 240;
 rocket_offset = rocket_offset_cd;
 
 gun_barrels = array_create(4);
@@ -276,6 +277,8 @@ muzzle_flash_frame
 	}
 	
 }
+
+
 
 
 //function draw_rotating_square(x, y, s1, s2) {

@@ -19,10 +19,8 @@ if (health_state != HEALTH_STATE.DEAD && health_state != HEALTH_STATE.DESTROYED)
 
 else
 {
-
-	draw_sprite_ext(spr_explode1,explode_anim,x,y,2,2,random_range(0,359),c_white,1)
-	explode_anim += 0.75;
-
+	draw_sprite_ext(spr_explode2,explode_anim,x,y,3,3,random_range(0,359),c_white,1)
+	explode_anim += 0.66;
 }
 
 

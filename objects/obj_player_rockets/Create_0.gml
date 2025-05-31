@@ -1,6 +1,6 @@
 life_time = 2000;
 activate_timer = 40;
-image_size = 0.5;
+image_size = 0.25;
 image_xscale = image_size;
 image_yscale = image_size;
 
@@ -16,3 +16,6 @@ if (instance_exists(obj_enemy_1))
 {
 	target = instance_nearest(x,y, obj_enemy_1);
 }
+
+alive = true;
+explode_anim = 0;

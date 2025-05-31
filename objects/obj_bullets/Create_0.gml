@@ -4,7 +4,7 @@ frame_skip = 0;
 
 
 
-sprite = spr_bullets_1;
+sprite = spr_bullets_3;
 choose_sprite_index = 6;
 collision_offset = 0;
 
@@ -152,7 +152,8 @@ function collision_box_size(x, y, creator, side_length_1, side_length_2, obj_to_
     var rx3 = x + x3 * cos_a - y3 * sin_a;
     var ry3 = y + x3 * sin_a + y3 * cos_a;
 
-    function valid_hit(inst) {
+    function valid_hit(inst) 
+	{
         return instance_exists(inst)
             && inst.object_index != creator.object_index
             && !(creator.object_index == obj_player_functions && inst.object_index == obj_player_collision);
