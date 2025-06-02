@@ -19,3 +19,5 @@ if (instance_exists(obj_enemy_1))
 
 alive = true;
 explode_anim = 0;
+damage = 10;
+hit = false;

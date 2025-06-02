@@ -1,67 +1,40 @@
 
 
+if (hp == starting_hp) health_state = HEALTH_STATE.HIGH;
+if (hp <= starting_hp * 0.75 && hp <= starting_hp * 0.50) health_state = HEALTH_STATE.MED;
+if (hp <= starting_hp * 0.50 && hp <= starting_hp * 0.25) health_state = HEALTH_STATE.LOW;
+if (hp <= starting_hp * 0.25 && hp < starting_hp * 0.10) health_state = HEALTH_STATE.CRITICAL;
+if (hp <= 0) health_state = HEALTH_STATE.DEAD;
+if (explode_anim >= (sprite_get_number(spr_explode1) - 1)) health_state = HEALTH_STATE.DESTROYED;
 
 
 switch (health_state)
 {
 	case HEALTH_STATE.HIGH:
 	{
-		damage = starting_damage;
-		if (hp <= starting_hp * 0.75 && hp >= starting_hp * 0.5)
-		{
-			health_state = HEALTH_STATE.MED;
-			damage *= 1.25
-		}
-		
+		damage = base_damage;
 		break;
 	}
-	
 	case HEALTH_STATE.MED:
 	{
-		if (hp <= starting_hp * 0.5 && hp >= starting_hp * 0.25)
-		{
-			damage *= 1.25;
-			health_state = HEALTH_STATE.LOW;
-		}
-		
+		damage = base_damage * 1.1;
 		break;
 	}
-	
 	case HEALTH_STATE.LOW:
 	{
-		if (hp <= starting_hp * 0.1 && hp > 0)
-		{
-			health_state = HEALTH_STATE.CRITICAL;
-			damage *= 1.5;
-		}
-
-
+		damage = base_damage * 1.1 * 1.1;
 		break;
 	}
-	
 	case HEALTH_STATE.CRITICAL:
 	{
-		if (hp <= 0) health_state = HEALTH_STATE.DEAD;
-		
+		damage = base_damage * 1.1 * 1.1 * 1.25;
 		break;
 	}
-	
 	case HEALTH_STATE.DEAD:
 	{
-
-		//var camera_shake_x = random_range(-5,5)
-		//var camera_shake_y = random_range(-5,5)
-		//obj_camera.x += camera_shake_x * shake_coefficient;
-		//obj_camera.y += camera_shake_y * shake_coefficient;
 		camera_shake();
-		if (explode_anim >= (sprite_get_number(spr_explode1) - 1))
-		{
-			health_state = HEALTH_STATE.DESTROYED
-		}
-		
 		break;
 	}
-	
 	case HEALTH_STATE.DESTROYED:
 	{
 		instance_destroy();
@@ -248,4 +221,4 @@ var hit_player = (instance_place(x,y, obj_player_collision))
 	}
 }
 
-//show_debug_message("level: " + +string(level) + " health: " + string(hp) + "/" + string(starting_hp) + " damage: " + string(damage));
+show_debug_message("level: " + +string(level) + " health: " + string(hp) + "/" + string(starting_hp) + " damage: " + string(damage));

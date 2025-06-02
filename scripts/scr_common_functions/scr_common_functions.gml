@@ -44,7 +44,7 @@ function camera_shake()
 	var camera_shake_y = random_range(-5,5)
 	obj_camera.x += camera_shake_x * shake_coefficient;
 	obj_camera.y += camera_shake_y * shake_coefficient;
-	show_debug_message(global.shake_call_count);
+	//show_debug_message(global.shake_call_count);
 		
 }
 

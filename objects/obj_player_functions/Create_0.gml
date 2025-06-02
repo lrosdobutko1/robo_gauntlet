@@ -41,7 +41,6 @@ enum PLAYER_GUN_TYPE
 	LASER,
 	BLASTER,	
 	FLAMER,
-	ROCKET,
 };
 
 player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
@@ -70,7 +69,7 @@ player_rocket_cooldown = 2400;
 player_rocket_timer = player_rocket_cooldown;
 rockets_ready = true;
 
-rocket_offset_cd = 240;
+rocket_offset_cd = 60;
 rocket_offset = rocket_offset_cd;
 
 gun_barrels = array_create(4);

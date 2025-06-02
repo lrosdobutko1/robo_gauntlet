@@ -111,8 +111,8 @@ prediction_multiplier = (is_smart) ? 1 : 0;
 
 
 base_damage = 2;
-starting_damage = base_damage * power(level,2);
-damage = starting_damage * power(level,2);
+base_damage = base_damage * power(level,2);
+damage = base_damage * power(level,2);
 //shields = hp/2;
 
 

@@ -30,7 +30,6 @@ else if (keyboard_check_pressed(ord("3")))	gun_select_keys = 3;
 else if (keyboard_check_pressed(ord("4")))	gun_select_keys = 4;
 else if (keyboard_check_pressed(ord("5")))	gun_select_keys = 5;
 else if (keyboard_check_pressed(ord("6")))	gun_select_keys = 6;
-else if (keyboard_check_pressed(ord("7")))	gun_select_keys = 7;
 
 // Only show debug if it actually changed
 if (gun_select_keys != prev_gun) {
@@ -101,17 +100,6 @@ if (gun_select_keys != prev_gun) {
 			break;
 		}
 		
-		case 7:
-		{
-			player_gun_type = PLAYER_GUN_TYPE.ROCKET;
-			gun_anim = 8;
-			firing_speed_cooldown = 40;
-			firing_offset = firing_speed_cooldown * 0.50;
-			no_of_bullets = 1;
-			firing_angle_offset = 0;
-			damage = player_gun_type/20;
-			break;
-		}
     }
 }
 
