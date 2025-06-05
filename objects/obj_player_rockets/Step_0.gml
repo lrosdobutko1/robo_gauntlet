@@ -6,7 +6,7 @@ activate_timer--;
 
 if(life_time <= 0)
 {
-	instance_destroy();
+	alive = false;
 }
 
 if (activate_timer <= 0) 

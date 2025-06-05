@@ -1,7 +1,7 @@
 
 
 
-if (health_state != HEALTH_STATE.DEAD && health_state != HEALTH_STATE.DESTROYED)
+if (health_state != ENEMY_HEALTH_STATE.DEAD && health_state != ENEMY_HEALTH_STATE.DESTROYED)
 {
 	draw_self();
 	//draw the torso
@@ -17,9 +17,9 @@ if (health_state != HEALTH_STATE.DEAD && health_state != HEALTH_STATE.DESTROYED)
 	}
 }
 
-else
+else if (health_state == ENEMY_HEALTH_STATE.DEAD)
 {
-	draw_sprite_ext(spr_explode2,explode_anim,x,y,3,3,random_range(0,359),c_white,1)
+	draw_sprite_ext(explode_sprite,explode_anim,x,y,3,3,random_range(0,359),c_white,1)
 	explode_anim += 0.66;
 }
 
@@ -32,4 +32,3 @@ else
 //draw_triangle(x, y, sight_cone[0], sight_cone[1], sight_cone[2], sight_cone[3], 4);
 //draw_line(x,y, move_away.px,move_away.py);
 
-//draw_triangle(x,y,gun_barrels[0], gun_barrels[1], gun_barrels[2], gun_barrels[3], 5) ;

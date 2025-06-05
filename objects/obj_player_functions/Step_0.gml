@@ -1,25 +1,62 @@
 
+
+
+if (hp == starting_hp) health_state = PLAYER_HEALTH_STATE.FULL;
+if (hp < starting_hp && hp > starting_hp * 0.75) health_state = PLAYER_HEALTH_STATE.HIGH;
+if (hp <= starting_hp * 0.75 && hp > starting_hp * 0.25) health_state = PLAYER_HEALTH_STATE.MED;
+if (hp <= starting_hp * 0.25 && hp > starting_hp * 0.10) health_state = PLAYER_HEALTH_STATE.LOW;
+if (hp <= starting_hp * 0.10 && hp > 0) health_state = PLAYER_HEALTH_STATE.CRITICAL;
+if (hp <= 0) health_state = PLAYER_HEALTH_STATE.DEAD;
+if (explode_anim >= (sprite_get_number(spr_explode1) - 1)) health_state = PLAYER_HEALTH_STATE.DESTROYED;
+
+
+switch (health_state)
+{
+	case PLAYER_HEALTH_STATE.FULL:
+	{
+		
+		break;
+	}
+	
+	case PLAYER_HEALTH_STATE.HIGH:
+	{
+		break;
+	}
+	
+	case PLAYER_HEALTH_STATE.MED:
+	{
+		break;
+	}
+	
+	case PLAYER_HEALTH_STATE.LOW:
+	{
+		break;
+	}
+	
+	case PLAYER_HEALTH_STATE.CRITICAL:
+	{
+		break;
+	}
+	
+	case PLAYER_HEALTH_STATE.DEAD:
+	{
+		break;
+	}
+	
+		case PLAYER_HEALTH_STATE.DESTROYED:
+	{
+		instance_destroy();
+		break;
+	}
+	
+}
+
+
 //moving
-
-
-
-
-
-
 x = obj_player_collision.x;
 y = obj_player_collision.y;
 
-var nearest_enemy = instance_nearest(x,y,obj_enemy_1);
-
 //shooting
-
-/* 
-right gun barrel x = gun_barrels[0]
-right gun barrel y = gun_barrels[1]
-left gun barrel x = gun_barrels[2]
-left gun barrel y = gun_barrels[3]
-*/
-
 
 var prev_gun = gun_select_keys; // Store previous selection
 
@@ -42,8 +79,6 @@ if (gun_select_keys != prev_gun) {
 			firing_offset = firing_speed_cooldown * 0.50;
 			no_of_bullets = 1;
 			firing_angle_offset = 0;
-			//damage = player_gun_type;
-			
 			break;
 		}
 		
@@ -71,9 +106,6 @@ if (gun_select_keys != prev_gun) {
 		case 4: 
 		{
 			player_gun_type = PLAYER_GUN_TYPE.LASER;
-
-			
-			
 			firing_angle_offset = 0;
 			break;
 		}
@@ -99,10 +131,8 @@ if (gun_select_keys != prev_gun) {
 			damage = player_gun_type/20;
 			break;
 		}
-		
     }
 }
-
 
 //fire primary
 if (mouse_check_button(1))
@@ -139,8 +169,6 @@ else
 	}
 }
 
-
-
 if (firing)
 {
 	shoot_player_bullets(gun_barrels, firing_speed, firing_offset, player_gun_type, firing_angle_offset, no_of_bullets, damage);
@@ -164,3 +192,6 @@ if(firing_speed != firing_speed_cooldown)
 	firing_speed --;
 	if (firing_speed <= 0) firing_speed = firing_speed_cooldown;
 }
+
+
+show_debug_message("player level: " + +string(level) + " health: " + string(hp) + "/" + string(starting_hp) + " damage: " + string(damage));

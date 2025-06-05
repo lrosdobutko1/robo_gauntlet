@@ -1,8 +1,32 @@
-level = 1;
-hp = 10 * level;
-armor = 0;
-shields = 0;
 
+level = 1;
+
+experience_points = 0;
+enemy_kills = 0;
+
+base_hp = 40;
+starting_hp = (base_hp * level) + power(level,level);
+hp = starting_hp;
+
+base_damage = 10;
+damage = base_damage * (0.05 * level);
+
+enum PLAYER_HEALTH_STATE
+{
+	FULL,
+	HIGH,
+	MED,
+	LOW,
+	CRITICAL,
+	DEAD,
+	DESTROYED
+}
+
+health_state = PLAYER_HEALTH_STATE.FULL;
+explode_anim = 0;
+
+explosion_sprites = [spr_explode1, spr_explode2];
+explode_sprite = explosion_sprites[irandom(array_length(explosion_sprites)-1)];
 
 image_scale = 1;
 

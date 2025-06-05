@@ -1,41 +1,41 @@
 
 
-if (hp == starting_hp) health_state = HEALTH_STATE.HIGH;
-if (hp <= starting_hp * 0.75 && hp <= starting_hp * 0.50) health_state = HEALTH_STATE.MED;
-if (hp <= starting_hp * 0.50 && hp <= starting_hp * 0.25) health_state = HEALTH_STATE.LOW;
-if (hp <= starting_hp * 0.25 && hp < starting_hp * 0.10) health_state = HEALTH_STATE.CRITICAL;
-if (hp <= 0) health_state = HEALTH_STATE.DEAD;
-if (explode_anim >= (sprite_get_number(spr_explode1) - 1)) health_state = HEALTH_STATE.DESTROYED;
+if (hp == starting_hp) health_state = ENEMY_HEALTH_STATE.HIGH;
+if (hp <= starting_hp * 0.75 && hp <= starting_hp * 0.50) health_state = ENEMY_HEALTH_STATE.MED;
+if (hp <= starting_hp * 0.50 && hp <= starting_hp * 0.25) health_state = ENEMY_HEALTH_STATE.LOW;
+if (hp <= starting_hp * 0.25 && hp < starting_hp * 0.10) health_state = ENEMY_HEALTH_STATE.CRITICAL;
+if (hp <= 0) health_state = ENEMY_HEALTH_STATE.DEAD;
+if (explode_anim >= (sprite_get_number(explode_sprite) - 1)) health_state = ENEMY_HEALTH_STATE.DESTROYED;
 
 
 switch (health_state)
 {
-	case HEALTH_STATE.HIGH:
+	case ENEMY_HEALTH_STATE.HIGH:
 	{
 		damage = base_damage;
 		break;
 	}
-	case HEALTH_STATE.MED:
+	case ENEMY_HEALTH_STATE.MED:
 	{
 		damage = base_damage * 1.1;
 		break;
 	}
-	case HEALTH_STATE.LOW:
+	case ENEMY_HEALTH_STATE.LOW:
 	{
 		damage = base_damage * 1.1 * 1.1;
 		break;
 	}
-	case HEALTH_STATE.CRITICAL:
+	case ENEMY_HEALTH_STATE.CRITICAL:
 	{
 		damage = base_damage * 1.1 * 1.1 * 1.25;
 		break;
 	}
-	case HEALTH_STATE.DEAD:
+	case ENEMY_HEALTH_STATE.DEAD:
 	{
 		camera_shake();
 		break;
 	}
-	case HEALTH_STATE.DESTROYED:
+	case ENEMY_HEALTH_STATE.DESTROYED:
 	{
 		instance_destroy();
 		break;
@@ -64,10 +64,9 @@ player_current_x = obj_player_collision.x;
 player_current_y = obj_player_collision.y;
 
 find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
-right_gun_barrel[0] = gun_barrels[0];
-right_gun_barrel[1] = gun_barrels[1];
-left_gun_barrel[0]  = gun_barrels[2];
-left_gun_barrel[1]  = gun_barrels[3];
+
+var aim_right = angle_difference(point_direction(gun_barrels[0], gun_barrels[1], obj_player_collision.x, obj_player_collision.y),rotation_angle);
+var aim_left = angle_difference(point_direction(gun_barrels[2], gun_barrels[3], obj_player_collision.x, obj_player_collision.y),rotation_angle);
 
 //chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
 //created = false;
@@ -115,9 +114,9 @@ switch (shooting_state)
 
 		preparing_to_shoot_timer = gun_cooldown;
 		shooting_time --;
-		if (health_state != HEALTH_STATE.DEAD || health_state != HEALTH_STATE.DESTROYED)
+		if (health_state != ENEMY_HEALTH_STATE.DEAD || health_state != ENEMY_HEALTH_STATE.DESTROYED)
 		{
-			shoot_enemy_bullets(gun_barrels,firing_speed,firing_offset, damage);
+			shoot_enemy_bullets(gun_barrels,aim_right, aim_left,firing_speed,firing_offset, damage);
 		}
 		if (shooting_time <= 0)
 		{
@@ -211,14 +210,10 @@ var hit_player = (instance_place(x,y, obj_player_collision))
 {
 	if (hit_player == obj_player_collision.id)
 	{
-		if (explode_anim == 0)
-		hit_player.damage_player(10);
-		health_state = HEALTH_STATE.DEAD;
-		if (explode_anim >= (sprite_get_number(spr_explode1) - 1))
-		{
-			health_state = HEALTH_STATE.DESTROYED
-		}
+		if (explode_anim == 0) hit_player.damage_player(10);
+		health_state = ENEMY_HEALTH_STATE.DEAD;
 	}
 }
 
-show_debug_message("level: " + +string(level) + " health: " + string(hp) + "/" + string(starting_hp) + " damage: " + string(damage));
+//show_debug_message("level: " + +string(level) + " health: " + string(hp) + "/" + string(starting_hp) + " damage: " + string(damage));
+	

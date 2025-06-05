@@ -1,4 +1,4 @@
-life_time = 2000;
+life_time = 150;
 activate_timer = 40;
 image_size = 0.25;
 image_xscale = image_size;

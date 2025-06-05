@@ -10,7 +10,11 @@ image_xscale = image_scale;
 image_yscale = image_scale;
 colors = [c_white, c_green, c_blue, c_yellow, c_red, c_purple];
 sprite_color = colors[level];
+
 explode_anim = 0;
+explosion_sprites = [spr_explode1, spr_explode2];
+explode_sprite = explosion_sprites[irandom(array_length(explosion_sprites)-1)];
+explode_rotation = irandom_range(0,359);
 
 torso = spr_enemy1_torso;
 rotation_angle = irandom_range(0,360);
@@ -46,10 +50,6 @@ previous_y = y;
 
 moving = false;
 
- // Start with a large number
-
-
-
 ////pathfinding
 //initial_path = true;
 pathfinding_cooldown = 60;
@@ -65,7 +65,25 @@ enum SHOOTING_STATE
 	SHOOTING_COOLDOWN,
 }
 
-enum HEALTH_STATE
+shooting_state = SHOOTING_STATE.SHOOTING_IDLE;
+
+gun_barrels = array_create(4);
+find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
+
+gun_cooldown = 140;
+preparing_to_shoot_timer = gun_cooldown;
+shooting_range = vis_dist;
+gun_offset_counter = 0;
+fire_gun_offset = 40; 
+shooting_time_reset = fire_gun_offset * 4;
+shooting_time = shooting_time_reset;
+shooting_cooldown_timer = 120;
+
+base_damage = 2;
+base_damage = base_damage * power(level,2);
+damage = base_damage * power(level,2);
+
+enum ENEMY_HEALTH_STATE
 {
 	HIGH,
 	MED,
@@ -79,44 +97,15 @@ base_hp = 40;
 starting_hp = (base_hp * level) + power(level,level);
 hp = starting_hp;
 
-if (hp == starting_hp) health_state = HEALTH_STATE.HIGH;
-
-shooting_state = SHOOTING_STATE.SHOOTING_IDLE;
-
-gun_barrels = array_create(4);
-find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
-
-casings_eject = array_create(4);
-find_enemy_gun_create_coordinates(casings_eject, 15, 170, rotation_angle);
-
-gun_cooldown = 140;
-preparing_to_shoot_timer = gun_cooldown;
-shooting_range = vis_dist;
-gun_offset_counter = 0;
-fire_gun_offset = 40; 
-shooting_time_reset = fire_gun_offset * 4;
-shooting_time = shooting_time_reset;
-shooting_cooldown_timer = 120;
-
-
+if (hp == starting_hp) health_state = ENEMY_HEALTH_STATE.HIGH;
 
 ////determine how much lead time to give the enemy when tracking player. Between 0 and 1.
 prediction_multiplier = (is_smart) ? 1 : 0;
 
 
-
-////level and health information
-//max_level = 5;
-
-
-
-base_damage = 2;
-base_damage = base_damage * power(level,2);
-damage = base_damage * power(level,2);
 //shields = hp/2;
 
 
-/// Draw an infinitely long line that stops on collision
 function get_sight_line(x_start, y_start, angle, vis_dist, target_object) {
     var max_distance = vis_dist; // Large value to simulate infinity
     var step_size = 10;        // How fine the collision check is
@@ -366,6 +355,8 @@ firing_offset = firing_speed*0.5;
 
 function shoot_enemy_bullets(
 gun_barrel_coords, 
+right_angle,
+left_angle,
 firing_speed, 
 firing_offset, 
 damage
@@ -375,18 +366,18 @@ damage
 	//find_enemy_gun_create_coordinates(casings_eject, 15, 170);
 
 	var creator = id;
-	
+	var target_player = point_direction(gun_barrel_coords[0], gun_barrel_coords[1], obj_player_collision.x,obj_player_collision.y)+90;
 
+	
 	if(firing_speed == firing_speed_cooldown)
 	{
-		//eject_shells(casings_eject[0], casings_eject[1], rotation_angle-90);
-		create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], 0, 0, damage);
+		create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], right_angle, 0, damage);
 
 	}
 
 	else if(firing_speed == firing_offset)
 	{
-		create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], 0, 0, damage);
+		create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], left_angle, 0, damage);
 	}
 }
 
