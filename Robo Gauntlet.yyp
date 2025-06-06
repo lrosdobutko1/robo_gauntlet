@@ -71,6 +71,7 @@
     {"id":{"name":"spr_explode2","path":"sprites/spr_explode2/spr_explode2.yy",},},
     {"id":{"name":"spr_laser","path":"sprites/spr_laser/spr_laser.yy",},},
     {"id":{"name":"spr_muzzle_flash","path":"sprites/spr_muzzle_flash/spr_muzzle_flash.yy",},},
+    {"id":{"name":"spr_obstacle","path":"sprites/spr_obstacle/spr_obstacle.yy",},},
     {"id":{"name":"spr_player_collision","path":"sprites/spr_player_collision/spr_player_collision.yy",},},
     {"id":{"name":"spr_player_guns","path":"sprites/spr_player_guns/spr_player_guns.yy",},},
     {"id":{"name":"spr_player_legs","path":"sprites/spr_player_legs/spr_player_legs.yy",},},

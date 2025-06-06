@@ -1,18 +1,23 @@
-xTo = follow.x;
-yTo = follow.y;
+//update destination
 
-x += (xTo -x)/10;
-y += (yTo -y)/10;
+if (instance_exists(follow))
+{
+	x_to = follow.x;
+	y_to = follow.y;
+}
 
-camera_set_view_pos(view_camera[0],x-(camWidth*0.5),y-(camHeight*0.5));
+x += (x_to - x)/10;
+y += (y_to - y)/10;
+
+x = clamp(x, cam_w_half+500, room_width-cam_w_half);
+y = clamp(y, cam_h_half+250, room_height-cam_h_half);
+
+
+camera_set_view_pos(cam,x-(cam_w_half),y-(cam_h_half));
+
+
 
 layer_x(background,x/2);
 layer_y(background,y/2);
 
 
-//screenshake
-//if (obj_player_guns.firing)
-//{
-// x += random_range(-2,2);
-// y += random_range(-2,2);
-//}
