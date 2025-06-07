@@ -17,7 +17,12 @@ explode_sprite = explosion_sprites[irandom(array_length(explosion_sprites)-1)];
 explode_rotation = irandom_range(0,359);
 
 torso = spr_enemy1_torso;
-rotation_angle = irandom_range(0,360);
+rotation_cooldown = irandom_range(120, 1200);
+rotating = false;
+rotation_accel = 0;
+new_rotation = 0;
+starting_rotation = irandom_range(0,360);
+rotation_angle = starting_rotation;
 current_angle = rotation_angle;
 target_angle = angle_difference(rotation_angle,current_angle);
 

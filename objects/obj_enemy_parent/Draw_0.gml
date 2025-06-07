@@ -24,8 +24,8 @@ else if (health_state == ENEMY_HEALTH_STATE.DEAD)
 }
 
 
-//if (path_exists(path))
-//draw_path(path,x,y,true);
+if (path_exists(path))
+draw_path(path,x,y,true);
 	
 /*draw other elements*/
 //get_sight_line(x,y, rotation_angle, vis_dist, obj_obstacle);
