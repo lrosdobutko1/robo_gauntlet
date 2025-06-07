@@ -194,4 +194,4 @@ if(firing_speed != firing_speed_cooldown)
 }
 
 
-show_debug_message("player level: " + +string(level) + " health: " + string(hp) + "/" + string(starting_hp) + " damage: " + string(damage));
+//show_debug_message("player level: " + +string(level) + " health: " + string(hp) + "/" + string(starting_hp) + " damage: " + string(damage));

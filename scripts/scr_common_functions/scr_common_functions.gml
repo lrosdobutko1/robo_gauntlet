@@ -37,15 +37,18 @@ function create_bullet(creator, x_coord, y_coord, firing_angle_offset, gun_type,
 
 function camera_shake()
 {	
-	global.shake_call_count += 1;
+	if (!global.shaking)
+	{
+
+	global.shaking = true;
 	
-	var shake_coefficient = max(1 - (distance_to_object(obj_player_collision) / 300) * 0.9, 0.1);
-	var camera_shake_x = random_range(-5,5)
-	var camera_shake_y = random_range(-5,5)
+	var shake_coefficient = max((1 - (distance_to_object(obj_player_collision) / 300)), 0.05);
+	var camera_shake_x = random_range(-10,10);
+	var camera_shake_y = random_range(-10,10);
 	obj_camera.x += camera_shake_x * shake_coefficient;
 	obj_camera.y += camera_shake_y * shake_coefficient;
-	//show_debug_message(global.shake_call_count);
-		
+}
+
 }
 
 

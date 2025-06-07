@@ -93,7 +93,7 @@ player_rocket_cooldown = 2400;
 player_rocket_timer = player_rocket_cooldown;
 rockets_ready = true;
 
-rocket_offset_cd = 60;
+rocket_offset_cd = 240;
 rocket_offset = rocket_offset_cd;
 
 gun_barrels = array_create(4);
@@ -218,7 +218,7 @@ no_of_bullets,
 damage
 )
 {
-	find_gun_create_coordinates(gun_barrels, 25, 65);
+	find_gun_create_coordinates(gun_barrels, 26, 60);
 	find_gun_create_coordinates(casings_eject, 15, 170);
 	bullet_loop_create_start = 0 - ((no_of_bullets - 1) / 2)
 	var creator = id;

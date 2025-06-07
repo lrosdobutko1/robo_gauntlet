@@ -13,6 +13,7 @@ y_to = ystart;
 
 
 global.shake_call_count = 0;
+global.shaking = false;
 
 if (layer_exists("Background"))
 {

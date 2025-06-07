@@ -37,6 +37,7 @@ switch (health_state)
 	}
 	case ENEMY_HEALTH_STATE.DESTROYED:
 	{
+		global.shaking = false;
 		instance_destroy();
 		break;
 	}

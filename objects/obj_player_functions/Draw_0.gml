@@ -80,3 +80,6 @@ else
 	draw_sprite_ext(explode_sprite,explode_anim,x,y,3,3,random_range(0,359),c_white,1)
 	explode_anim += 0.5;
 }
+//var triangle = [];
+// find_gun_create_coordinates(triangle, 28, 60);
+//draw_triangle(x,y,triangle[0], triangle[1], triangle[2], triangle[3],5)
