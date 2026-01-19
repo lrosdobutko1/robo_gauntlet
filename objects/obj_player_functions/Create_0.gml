@@ -5,8 +5,12 @@ experience_points = 0;
 enemy_kills = 0;
 
 base_hp = 40;
-starting_hp = (base_hp * level) + power(level,level);
-hp = starting_hp;
+max_hp = (base_hp * level) + power(level,level);
+current_hp = max_hp;
+
+base_shields = 20;
+max_shields = (max_hp/2);
+current_shields = max_shields;
 
 base_damage = 10;
 damage = base_damage * (0.05 * level);
@@ -74,7 +78,6 @@ damage = 1;
 gun_counter = 0;
 gun_anim = 0;
 
-player_rocket_cooldown = 600;
 
 gun_select_keys = 0;
 
@@ -93,7 +96,7 @@ player_rocket_cooldown = 2400;
 player_rocket_timer = player_rocket_cooldown;
 rockets_ready = true;
 
-rocket_offset_cd = 240;
+rocket_offset_cd = 60;
 rocket_offset = rocket_offset_cd;
 
 gun_barrels = array_create(4);

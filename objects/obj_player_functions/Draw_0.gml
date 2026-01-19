@@ -48,7 +48,7 @@ if (health_state != PLAYER_HEALTH_STATE.DEAD && health_state != PLAYER_HEALTH_ST
 	rotation_angle,
 	c_white,1);
 
-	draw_text(x+10, y+10, "FPS: " + string(fps_real));
+	//draw_text(x+10, y+10, "FPS: " + string(fps_real));
 
 	if (player_gun_type != PLAYER_GUN_TYPE.BLASTER)
 	{
@@ -69,7 +69,7 @@ if (health_state != PLAYER_HEALTH_STATE.DEAD && health_state != PLAYER_HEALTH_ST
 		var torso = spr_player_torso;
 		var sprite_color = (c_white);
 		flash --;
-		shader_set(sh_white_flash);
+		shader_set(sdr_white_flash);
 		draw_sprite_ext(torso, 0, x, y, image_scale, image_scale, rotation_angle, sprite_color, 1);
 		shader_reset();
 	}

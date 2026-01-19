@@ -103,7 +103,7 @@ if (hit != noone)
 {
 	if (hit != creator) 
 	{
-		hit.hp -= damage;
+		hit.current_hp -= damage;
 		if variable_instance_exists(hit.id,"flash")
 		{
 			hit.flash = 2;

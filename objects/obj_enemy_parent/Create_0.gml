@@ -90,6 +90,7 @@ damage = base_damage * power(level,2);
 
 enum ENEMY_HEALTH_STATE
 {
+	MAX,
 	HIGH,
 	MED,
 	LOW,
@@ -100,9 +101,9 @@ enum ENEMY_HEALTH_STATE
 
 base_hp = 40;
 starting_hp = (base_hp * level) + power(level,level);
-hp = starting_hp;
+current_hp = starting_hp;
 
-if (hp == starting_hp) health_state = ENEMY_HEALTH_STATE.HIGH;
+if (current_hp == starting_hp) health_state = ENEMY_HEALTH_STATE.MAX;
 
 ////determine how much lead time to give the enemy when tracking player. Between 0 and 1.
 prediction_multiplier = (is_smart) ? 1 : 0;
@@ -385,6 +386,38 @@ damage
 		create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], left_angle, 0, damage);
 	}
 }
+
+
+function random_search_rotation(is_rotating, rotation_cool_down, rotation_angle)
+{
+	if (rotation_cooldown <= 0)
+	{
+	    if (!rotating) 
+	    {
+	        new_rotation = random_range(0, 359);
+	    }
+
+	    var angle_diff = angle_difference(new_rotation, rotation_angle);
+
+	    if (abs(angle_diff) >= 5)
+	    {
+	        rotating = true;
+			rotation_accel += 0.02;
+			if (rotation_accel >= 1) rotation_accel = 1;
+	        rotation_angle += sign(angle_diff) * rotation_accel;
+	    }
+	    else 
+	    {
+	        rotating = false;
+			rotation_accel = 0;
+	        rotation_cooldown = irandom_range(120, 12000);
+	    }
+	}
+	return rotation_angle;
+}
+
+
+
 
 //function basic_chase_player(point_x, point_y, move_speed)
 //{
