@@ -84,7 +84,6 @@
     {"id":{"name":"obj_solid_objects","path":"objects/obj_solid_objects/obj_solid_objects.yy",},},
     {"id":{"name":"obj_spark_emitter","path":"objects/obj_spark_emitter/obj_spark_emitter.yy",},},
     {"id":{"name":"obj_spark","path":"objects/obj_spark/obj_spark.yy",},},
-    {"id":{"name":"obj_test_bullet","path":"objects/obj_test_bullet/obj_test_bullet.yy",},},
     {"id":{"name":"obj_wall_parent","path":"objects/obj_wall_parent/obj_wall_parent.yy",},},
     {"id":{"name":"obj_wall","path":"objects/obj_wall/obj_wall.yy",},},
     {"id":{"name":"test_object","path":"objects/test_object/test_object.yy",},},

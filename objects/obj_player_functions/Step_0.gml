@@ -69,83 +69,80 @@ else if (keyboard_check_pressed(ord("5")))	gun_select_keys = 5;
 else if (keyboard_check_pressed(ord("6")))	gun_select_keys = 6;
 
 
-//if (gun_select_keys != prev_gun) {
-//    switch (gun_select_keys)
-//    {
-//        case 1: 
-//		{
-//			player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
-//			firing_speed_cooldown = 40;
-//			firing_offset = firing_speed_cooldown * 0.50;
-//			no_of_bullets = 1;
-//			firing_angle_offset = 0;
-//			break;
-//		}
+if (gun_select_keys != prev_gun) {
+    switch (gun_select_keys)
+    {
+        case 1: 
+		{
+			player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
+			firing_speed_cooldown = 40;
+			firing_offset = firing_speed_cooldown * 0.50;
+			no_of_bullets = 1;
+			firing_angle_offset = 0;
+			break;
+		}
 		
-//        case 2: 
-//		{
-//			player_gun_type = PLAYER_GUN_TYPE.SHOTGUN;
-//			firing_speed_cooldown = 120;
-//			no_of_bullets = 3;
-//			firing_angle_offset = 9;
-//			damage = player_gun_type;
-//			break;
-//		}
+        case 2: 
+		{
+			player_gun_type = PLAYER_GUN_TYPE.SHOTGUN;
+			firing_speed_cooldown = 120;
+			no_of_bullets = 3;
+			firing_angle_offset = 9;
+			damage = player_gun_type;
+			break;
+		}
 		
-//		case 3: 
-//		{
-//			player_gun_type = PLAYER_GUN_TYPE.GRENADE;
-//			firing_speed_cooldown = 280;
-//			firing_offset = firing_speed_cooldown * 0.50;
-//			no_of_bullets = 1;
-//			firing_angle_offset = 0;
-//			damage = player_gun_type;
-//			break;
-//		}
+		case 3: 
+		{
+			player_gun_type = PLAYER_GUN_TYPE.GRENADE;
+			firing_speed_cooldown = 280;
+			firing_offset = firing_speed_cooldown * 0.50;
+			no_of_bullets = 1;
+			firing_angle_offset = 0;
+			damage = player_gun_type;
+			break;
+		}
 		
-//		case 4: 
-//		{
-//			player_gun_type = PLAYER_GUN_TYPE.LASER;
-//			firing_angle_offset = 0;
-//			break;
-//		}
+		case 4: 
+		{
+			player_gun_type = PLAYER_GUN_TYPE.LASER;
+			firing_angle_offset = 0;
+			break;
+		}
 		
-//		case 5: 
-//		{
-//			player_gun_type = PLAYER_GUN_TYPE.BLASTER;
-//			gun_anim = 5;
-//			firing_speed_cooldown = 30;
-//			no_of_bullets = 1;
-//			firing_angle_offset = 0;
-//			damage = player_gun_type;
-//			break;
-//		}
+		case 5: 
+		{
+			player_gun_type = PLAYER_GUN_TYPE.BLASTER;
+			gun_anim = 5;
+			firing_speed_cooldown = 30;
+			no_of_bullets = 1;
+			firing_angle_offset = 0;
+			damage = player_gun_type;
+			break;
+		}
 		
-//		case 6: 
-//		{
-//			player_gun_type = PLAYER_GUN_TYPE.FLAMER;
-//			gun_anim = 8;
-//			firing_speed_cooldown = 4;
-//			no_of_bullets = 1;
-//			firing_angle_offset = 0;
-//			damage = player_gun_type/20;
-//			break;
-//		}
-//    }
-//}
+		case 6: 
+		{
+			player_gun_type = PLAYER_GUN_TYPE.FLAMER;
+			gun_anim = 8;
+			firing_speed_cooldown = 4;
+			no_of_bullets = 1;
+			firing_angle_offset = 0;
+			damage = player_gun_type/20;
+			break;
+		}
+    }
+}
 
 //fire primary
-//if (mouse_check_button(1))
-//{
-//	firing = true;
-//}
-//else
-//{
-//	firing = false;
-//}
-
-if (mouse_check_button_pressed(1)) firing = true;
-else firing = false;
+if (mouse_check_button(1))
+{
+	firing = true;
+}
+else
+{
+	firing = false;
+}
 
 ///fire secondary
 if (mouse_check_button(2) && rockets_ready)
@@ -172,27 +169,21 @@ else
 	}
 }
 
-//if (firing)
-//{
-//	shoot_player_bullets(gun_barrels, firing_speed, firing_offset, player_gun_type, firing_angle_offset, no_of_bullets, damage);
-//	firing_speed --;
+if (firing)
+{
+	shoot_player_bullets(gun_barrels, firing_speed, firing_offset, player_gun_type, firing_angle_offset, no_of_bullets, damage);
+	firing_speed --;
 	
 
-//	if (player_gun_type == PLAYER_GUN_TYPE.MACHINEGUN)
-//	{
-//		gun_anim += 0.33;
-//		if (gun_anim >= 4) gun_anim = 0;
-//	}
-//	else if (player_gun_type == PLAYER_GUN_TYPE.BLASTER) 
-//	{
-//		gun_anim += 0.15;
-//		if (gun_anim >= (sprite_get_number(spr_player_guns) - 1)) gun_anim = 5;
-//	}
-//}
-
-if (firing) {
-	with (instance_create_layer(mouse_x,mouse_y,"wall_layer",obj_test_bullet)) {
-		image_angle = point_direction(obj_player_functions.x, obj_player_functions.y, mouse_x, mouse_y);
+	if (player_gun_type == PLAYER_GUN_TYPE.MACHINEGUN)
+	{
+		gun_anim += 0.33;
+		if (gun_anim >= 4) gun_anim = 0;
+	}
+	else if (player_gun_type == PLAYER_GUN_TYPE.BLASTER) 
+	{
+		gun_anim += 0.15;
+		if (gun_anim >= (sprite_get_number(spr_player_guns) - 1)) gun_anim = 5;
 	}
 }
 

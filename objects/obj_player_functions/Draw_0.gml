@@ -83,3 +83,4 @@ else
 //var triangle = [];
 // find_gun_create_coordinates(triangle, 28, 60);
 //draw_triangle(x,y,triangle[0], triangle[1], triangle[2], triangle[3],5)
+
