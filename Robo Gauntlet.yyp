@@ -392,6 +392,7 @@
     {"id":{"name":"spr_test_bullet_1","path":"sprites/spr_test_bullet_1/spr_test_bullet_1.yy",},},
     {"id":{"name":"spr_test_bullet","path":"sprites/spr_test_bullet/spr_test_bullet.yy",},},
     {"id":{"name":"spr_wall","path":"sprites/spr_wall/spr_wall.yy",},},
+    {"id":{"name":"spr_white_pixel","path":"sprites/spr_white_pixel/spr_white_pixel.yy",},},
     {"id":{"name":"sprite_spr_basic_floor_tileset_1","path":"sprites/sprite_spr_basic_floor_tileset_1/sprite_spr_basic_floor_tileset_1.yy",},},
     {"id":{"name":"sprite_spr_basic_floor_tileset","path":"sprites/sprite_spr_basic_floor_tileset/sprite_spr_basic_floor_tileset.yy",},},
     {"id":{"name":"Sprite13hgfhfghf","path":"sprites/Sprite13hgfhfghf/Sprite13hgfhfghf.yy",},},

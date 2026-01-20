@@ -11,22 +11,39 @@ shield_percent = current_shield / max_shields;
 if (shield_percent <= 0) shield_percent = 0;
 if (shield_percent >= 1) shield_percent = 1;
 
+//shield_color_offset = player.current_shields / player. max_shields;
+//shield_bar_color = make_colour_rgb(max_color * (1-shield_color_offset), max_color * shield_color_offset, max_color * shield_color_offset);
+
+var t = player.current_shields / player.max_shields;
+
+// slow near full, fast near empty
+t = power(t, 0.75); // try 2–4
+
+shield_bar_color = make_colour_rgb(
+    max_color * (1 - t),
+    max_color * t,
+    max_color * t
+);
+
+set_gradient_shader(bar, shield_bar_color, c_white, 1);
+
 current_bar_length = max_bar_length * shield_percent;
 draw_sprite_ext(bar,0,186,95,current_bar_length,1,0,c_white,1);
 
-set_gradient_shader(border, c_ltgray,c_dkgray);
+shader_reset();
+
+set_gradient_shader(border, c_ltgray, c_dkgray, 0);
 draw_sprite_ext(border, 0, gui_position.self_x, gui_position.self_y, 1, 1, 0, c_white, 1);
 
 shader_reset();
 
-set_gradient_shader(orb, c_ltgray,c_dkgray);
+set_gradient_shader(orb, c_ltgray, c_dkgray, 0);
 draw_sprite_ext(orb, 0, gui_position.self_x, gui_position.self_y, 1, 1, 0, c_white, 1);
 shader_reset();
 
 //draw_sprite_ext(spr_player_health_spinner,0,gui_position.self_x,gui_position.self_y,1,1,rotation,c_white,1);
 draw_set_color(c_white);
 draw_arc_thick_rounded(gui_position.self_x, gui_position.self_y, 70, 8, -135 + rotation, 270, 64);
-
 
 draw_set_font(fnt_hyper_oxide);
 draw_set_halign(fa_center);
@@ -43,8 +60,6 @@ c_red,1);
 
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
-
-
 
 if (took_damage) damage_counter_value --;
 if (damage_counter_value <= 0) {
