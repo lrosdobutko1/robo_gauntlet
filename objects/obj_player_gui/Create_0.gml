@@ -26,8 +26,17 @@ rotation = 0;
 
 max_color = 255;
 shield_color_offset = player.current_shields / player. max_shields;
-shield_bar_color = make_colour_rgb(max_color * (1-shield_color_offset), max_color * shield_color_offset, max_color * shield_color_offset);
+shield_bar_start_color = make_colour_rgb(
+	max_color * (1-shield_color_offset), 
+	max_color * shield_color_offset, 
+	max_color * shield_color_offset
+);
 
+shield_bar_end_color = make_colour_rgb(
+	max_color * (1-shield_color_offset), 
+	max_color * (1-shield_color_offset), 
+	max_color * (1-shield_color_offset)
+);
 
 gui_position = {
 	self_x: 100,
