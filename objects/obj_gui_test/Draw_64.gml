@@ -8,7 +8,7 @@ if(!has_rendered)
 	draw_clear_alpha(c_black, 1);
 	
 	var _temp_layer = layer_create(0, "text");
-	draw_set_font(fnt_hyper_oxide);
+	draw_set_font(fnt_hyper_oxide_32);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
 	draw_set_colour(c_white);

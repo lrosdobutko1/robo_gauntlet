@@ -38,12 +38,18 @@ shield_bar_end_color = make_colour_rgb(
 	max_color * (1-shield_color_offset)
 );
 
-gui_position = {
-	self_x: 100,
-	self_y: 100,
-	offset_x: 5,
-	offset_y: 5
+
+function GuiPositions(_x, _y){
+	return {
+		self_x: _x,
+		self_y: _y,
+		offset_x: 5,
+		offset_y: 10,
+		weapon_label_x: _x+650,
+		weapon_label_y: _y-58
 	};
+}
+gui_position = GuiPositions(100, 100);
 	
 uUv          = shader_get_uniform(sdr_gradient, "uUv");
 uOffset      = shader_get_uniform(sdr_gradient, "uOffset");

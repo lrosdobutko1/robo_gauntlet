@@ -48,7 +48,7 @@ shader_reset();
 draw_set_color(c_white);
 draw_arc_thick_rounded(gui_position.self_x, gui_position.self_y, 70, 8, -135 + rotation, 270, 64);
 
-draw_set_font(fnt_hyper_oxide);
+draw_set_font(fnt_hyper_oxide_32);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
 
@@ -61,7 +61,8 @@ c_grey,
 c_blue,
 c_red,1);
 
-draw_text_colour()
+draw_set_font(fnt_hyper_oxide_16);
+draw_text_colour(gui_position.weapon_label_x,gui_position.weapon_label_y,obj_player_functions.current_weapon.name,c_white, c_white, c_white, c_white, 1);
 
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);

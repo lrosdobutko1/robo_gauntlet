@@ -71,6 +71,8 @@ enum PLAYER_GUN_TYPE
 	FLAMER,
 };
 
+
+
 //Player Weapon Selection code
 #region
 /// @function weapon_base
@@ -89,25 +91,16 @@ function weapon_base(_name, _dmg, _bullets, _firing_speed, _speed_offset, _bulle
 		name: _name,
         damage: _dmg,
         num_bullets: _bullets,
-        firing_speed: _speed,
+        firing_speed: _firing_speed,
 		firing_speed_offset: _speed_offset,
 		bullet_angle: _bullet_angle,
         sprite: _sprite
     };
 }
 
-player_weapons = {
-    autocannon:		weapon_base("AutoCannon", 1, 1, 40, 0.5, 0, spr_player_gun_bullet),
-    shotgun:		weapon_base("Shotgun", 1, 3, 120, 0, 9, spr_player_gun_bullet),
-    grenade:		weapon_base("Grenades", 5, 1, 280, 0.5, 0, spr_player_gun_grenade),
-	laser:			weapon_base("Laser", 5,  1, 1, 0, 0, spr_player_gun_laser),
-	blaster:		weapon_base("Blaster", 5, 1, 50, 0, 0, spr_player_gun_blaster),
-	flamer:			weapon_base("Flamethrower", 5, 1, 4, 0, 0, spr_player_gun_flame)
-};
-
 /// @function weapon_base
 /// @description Creates a base weapon definition.
-/// @param {struct}
+/// @param {struct} _base The base weapon to be later modified by the player
 /// @returns {struct} Weapon base stats struct
 function weapon_instance_from_base(_base)
 {
@@ -121,6 +114,25 @@ function weapon_instance_from_base(_base)
         _base.sprite
     );
 }
+
+player_weapons = {
+    autocannon:		weapon_base("AutoCannon", 1, 1, 40, 0.5, 0, spr_player_gun_bullet),
+    shotgun:		weapon_base("Shotgun", 1, 3, 120, 0, 9, spr_player_gun_bullet),
+    grenade:		weapon_base("Grenades", 5, 1, 280, 0.5, 0, spr_player_gun_grenade),
+	laser:			weapon_base("Laser", 5,  1, 1, 0, 0, spr_player_gun_laser),
+	blaster:		weapon_base("Blaster", 5, 1, 50, 0, 0, spr_player_gun_blaster),
+	flamer:			weapon_base("Flamethrower", 5, 1, 4, 0, 0, spr_player_gun_flame)
+};
+
+weapon_slots = [
+    noone, // index 0 unused
+    player_weapons.autocannon,
+    player_weapons.shotgun,
+    player_weapons.grenade,
+    player_weapons.laser,
+    player_weapons.blaster,
+    player_weapons.flamer
+];
 
 
 //*****replace player_gun_type later*****//

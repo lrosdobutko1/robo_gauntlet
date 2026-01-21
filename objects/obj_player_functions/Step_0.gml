@@ -51,87 +51,26 @@ switch (health_state)
 	
 }
 
-
 //moving
 x = obj_player_collision.x;
 y = obj_player_collision.y;
 
 //shooting
-
 var prev_gun = gun_select_keys; // Store previous selection
 
 // Check for key press
-if (keyboard_check_pressed(ord("1")))		gun_select_keys = 1;
-else if (keyboard_check_pressed(ord("2")))	gun_select_keys = 2;
-else if (keyboard_check_pressed(ord("3")))	gun_select_keys = 3;
-else if (keyboard_check_pressed(ord("4")))	gun_select_keys = 4;
-else if (keyboard_check_pressed(ord("5")))	gun_select_keys = 5;
-else if (keyboard_check_pressed(ord("6")))	gun_select_keys = 6;
-
-
-if (gun_select_keys != prev_gun) {
-    switch (gun_select_keys)
+for (var i = 1; i <= array_length(weapon_slots)-1; i++)
+{
+    if (keyboard_check_pressed(ord(string(i))))
     {
-        case 1: 
-		{
-			player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
-			firing_speed_cooldown = 40;
-			firing_offset = firing_speed_cooldown * 0.50;
-			no_of_bullets = 1;
-			firing_angle_offset = 0;
-			break;
-		}
-		
-        case 2: 
-		{
-			player_gun_type = PLAYER_GUN_TYPE.SHOTGUN;
-			firing_speed_cooldown = 120;
-			no_of_bullets = 3;
-			firing_angle_offset = 9;
-			damage = player_gun_type;
-			break;
-		}
-		
-		case 3: 
-		{
-			player_gun_type = PLAYER_GUN_TYPE.GRENADE;
-			firing_speed_cooldown = 280;
-			firing_offset = firing_speed_cooldown * 0.50;
-			no_of_bullets = 1;
-			firing_angle_offset = 0;
-			damage = player_gun_type;
-			break;
-		}
-		
-		case 4: 
-		{
-			player_gun_type = PLAYER_GUN_TYPE.LASER;
-			firing_angle_offset = 0;
-			break;
-		}
-		
-		case 5: 
-		{
-			player_gun_type = PLAYER_GUN_TYPE.BLASTER;
-			gun_anim = 5;
-			firing_speed_cooldown = 30;
-			no_of_bullets = 1;
-			firing_angle_offset = 0;
-			damage = player_gun_type;
-			break;
-		}
-		
-		case 6: 
-		{
-			player_gun_type = PLAYER_GUN_TYPE.FLAMER;
-			gun_anim = 8;
-			firing_speed_cooldown = 4;
-			no_of_bullets = 1;
-			firing_angle_offset = 0;
-			damage = player_gun_type/20;
-			break;
-		}
+        gun_select_keys = i;
+        break;
     }
+}
+
+if (gun_select_keys != prev_gun)
+{
+    current_weapon = weapon_slots[gun_select_keys];
 }
 
 //fire primary
@@ -171,7 +110,13 @@ else
 
 if (firing)
 {
-	shoot_player_bullets(gun_barrels, firing_speed, firing_offset, player_gun_type, firing_angle_offset, no_of_bullets, damage);
+	shoot_player_bullets(gun_barrels, 
+	current_weapon.firing_speed, 
+	current_weapon.firing_offset, 
+	current_weapon, 
+	firing_angle_offset, 
+	no_of_bullets, 
+	damage);
 	firing_speed --;
 	
 

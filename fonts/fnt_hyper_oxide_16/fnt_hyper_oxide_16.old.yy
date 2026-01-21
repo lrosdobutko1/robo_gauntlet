@@ -1,6 +1,6 @@
 {
   "$GMFont":"",
-  "%Name":"fnt_hyper_oxide",
+  "%Name":"fnt_hyper_oxide_16",
   "AntiAlias":1,
   "applyKerning":0,
   "ascender":40,
@@ -87,7 +87,7 @@
   "last":0,
   "lineHeight":48,
   "maintainGms1Font":false,
-  "name":"fnt_hyper_oxide",
+  "name":"fnt_hyper_oxide_16",
   "parent":{
     "name":"Fonts",
     "path":"folders/Fonts.yy",
