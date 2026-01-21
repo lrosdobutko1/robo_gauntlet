@@ -71,13 +71,67 @@ enum PLAYER_GUN_TYPE
 	FLAMER,
 };
 
+//Player Weapon Selection code
+#region
+/// @function weapon_base
+/// @description Creates a base weapon definition.
+/// @param {string} _name Weapon display name
+/// @param {real}   _dmg Damage per bullet
+/// @param {real}   _bullets Number of bullets fired
+/// @param {real}   _speed Frames between shots
+/// @param {real}   _speed_offset Fire-rate modifier
+/// @param {real}   _bullet_angle Spread angle in degrees
+/// @param {asset}  _sprite Projectile sprite
+/// @returns {struct} Weapon base stats struct
+function weapon_base(_name, _dmg, _bullets, _firing_speed, _speed_offset, _bullet_angle, _sprite)
+{
+    return {
+		name: _name,
+        damage: _dmg,
+        num_bullets: _bullets,
+        firing_speed: _speed,
+		firing_speed_offset: _speed_offset,
+		bullet_angle: _bullet_angle,
+        sprite: _sprite
+    };
+}
+
+player_weapons = {
+    autocannon:		weapon_base("AutoCannon", 1, 1, 40, 0.5, 0, spr_player_gun_bullet),
+    shotgun:		weapon_base("Shotgun", 1, 3, 120, 0, 9, spr_player_gun_bullet),
+    grenade:		weapon_base("Grenades", 5, 1, 280, 0.5, 0, spr_player_gun_grenade),
+	laser:			weapon_base("Laser", 5,  1, 1, 0, 0, spr_player_gun_laser),
+	blaster:		weapon_base("Blaster", 5, 1, 50, 0, 0, spr_player_gun_blaster),
+	flamer:			weapon_base("Flamethrower", 5, 1, 4, 0, 0, spr_player_gun_flame)
+};
+
+/// @function weapon_base
+/// @description Creates a base weapon definition.
+/// @param {struct}
+/// @returns {struct} Weapon base stats struct
+function weapon_instance_from_base(_base)
+{
+    return weapon_base(
+        _base.name,
+        _base.damage,
+        _base.num_bullets,
+        _base.firing_speed,
+        _base.firing_speed_offset,
+        _base.bullet_angle,
+        _base.sprite
+    );
+}
+
+
+//*****replace player_gun_type later*****//
+current_weapon = weapon_instance_from_base(player_weapons.autocannon);
 player_gun_type = PLAYER_GUN_TYPE.MACHINEGUN;
 
+#endregion
 damage = 1;
 
 gun_counter = 0;
 gun_anim = 0;
-
 
 gun_select_keys = 0;
 

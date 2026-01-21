@@ -15,7 +15,7 @@ shield_color_offset_start = shield_percent;
 shield_color_offset_end = shield_percent;
 
 shield_color_offset_start = power(shield_color_offset_start, 0.8);
-shield_color_offset_end = power(shield_color_offset_end, 0.6);
+shield_color_offset_end = power(shield_color_offset_end, 0.4);
 
 shield_bar_start_color = make_colour_rgb(
     max_color * (1 - shield_color_offset_start),
@@ -61,8 +61,12 @@ c_grey,
 c_blue,
 c_red,1);
 
+draw_text_colour()
+
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
+
+
 
 if (took_damage) damage_counter_value --;
 if (damage_counter_value <= 0) {
