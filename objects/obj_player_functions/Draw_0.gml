@@ -50,7 +50,7 @@ if (health_state != PLAYER_HEALTH_STATE.DEAD && health_state != PLAYER_HEALTH_ST
 
 	//draw_text(x+10, y+10, "FPS: " + string(fps_real));
 
-	if (player_gun_type != PLAYER_GUN_TYPE.BLASTER)
+	if (player_gun_type != current_weapon.)
 	{
 		if (muzzle_flash_frame >= 7) muzzle_flash_frame = 0;
 	}
