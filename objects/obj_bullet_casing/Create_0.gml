@@ -4,7 +4,7 @@ direction = image_angle;
 smoke = false;
 image_scale = 0;
 life_time = 0;
-if (obj_player_functions.player_gun_type == PLAYER_GUN_TYPE.FLAMER) smoke = true;
+if (obj_player_functions.current_weapon == current_weapon.FLAMER) smoke = true;
 
 if (smoke)
 {

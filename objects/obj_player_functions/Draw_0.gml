@@ -23,6 +23,7 @@ if (health_state != PLAYER_HEALTH_STATE.DEAD && health_state != PLAYER_HEALTH_ST
 		if (leg_anim > (sprite_get_number(spr_player_legs) - 1)) leg_anim = 0;
 	}
 
+	//draw legs
 	draw_sprite_ext(
 	spr_player_legs,
 	leg_anim,
@@ -30,7 +31,8 @@ if (health_state != PLAYER_HEALTH_STATE.DEAD && health_state != PLAYER_HEALTH_ST
 	obj_player_functions.y,
 	image_scale,image_scale,
 	leg_angle,c_white,1);
-
+	
+	//draw guns
 	draw_sprite_ext(
 	spr_player_guns,gun_anim,
 	obj_player_functions.x,
@@ -39,7 +41,8 @@ if (health_state != PLAYER_HEALTH_STATE.DEAD && health_state != PLAYER_HEALTH_ST
 	image_scale,
 	rotation_angle,
 	c_white,1);
-
+	
+	//draw torso
 	draw_sprite_ext(
 	spr_player_torso,0,
 	obj_player_functions.x,
@@ -47,40 +50,4 @@ if (health_state != PLAYER_HEALTH_STATE.DEAD && health_state != PLAYER_HEALTH_ST
 	image_scale,image_scale,
 	rotation_angle,
 	c_white,1);
-
-	//draw_text(x+10, y+10, "FPS: " + string(fps_real));
-
-	if (player_gun_type != current_weapon.)
-	{
-		if (muzzle_flash_frame >= 7) muzzle_flash_frame = 0;
-	}
-	else if (player_gun_type == PLAYER_GUN_TYPE.BLASTER)
-	{
-		if (muzzle_flash_frame >= 10) muzzle_flash_frame = 8;
-	}
-
-	if (firing) muzzle_flash(gun_barrels, firing_speed, firing_offset, player_gun_type, muzzle_flash_frame);
-
-	muzzle_flash_frame ++;
-
-	//flash on hit
-	if (flash > 0)
-	{
-		var torso = spr_player_torso;
-		var sprite_color = (c_white);
-		flash --;
-		shader_set(sdr_white_flash);
-		draw_sprite_ext(torso, 0, x, y, image_scale, image_scale, rotation_angle, sprite_color, 1);
-		shader_reset();
-	}
 }
-
-else
-{
-	draw_sprite_ext(explode_sprite,explode_anim,x,y,3,3,random_range(0,359),c_white,1)
-	explode_anim += 0.5;
-}
-//var triangle = [];
-// find_gun_create_coordinates(triangle, 28, 60);
-//draw_triangle(x,y,triangle[0], triangle[1], triangle[2], triangle[3],5)
-

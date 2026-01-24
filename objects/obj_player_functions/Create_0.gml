@@ -60,16 +60,16 @@ walk_speed = 2;
 x = obj_player_collision.x;
 y = obj_player_collision.y;
 
-enum PLAYER_GUN_TYPE 
-{
-	NONE,
-	MACHINEGUN,
-	SHOTGUN,
-	GRENADE,
-	LASER,
-	BLASTER,	
-	FLAMER,
-};
+//enum current_weapon 
+//{
+//	NONE,
+//	MACHINEGUN,
+//	SHOTGUN,
+//	GRENADE,
+//	LASER,
+//	BLASTER,	
+//	FLAMER,
+//};
 
 
 //Player Weapon Selection code
@@ -86,7 +86,7 @@ enum PLAYER_GUN_TYPE
 /// @returns {struct} Weapon base stats struct
 function weapon_base(
 _weapon_name, 
-_dmg, 
+_base_dmg, 
 _weapon_level, 
 _bullets, 
 _firing_speed, 
@@ -97,8 +97,8 @@ _weapon_sprite
 ) {
     return {
 		weapon_name: _weapon_name,
-        damage: _dmg,
 		weapon_level: _weapon_level,
+		damage: _base_dmg,
         num_bullets: _bullets,
         firing_speed: _firing_speed,
 		firing_speed_offset: _speed_offset,
@@ -109,12 +109,12 @@ _weapon_sprite
 }
 
 player_weapons = {
-    autocannon:		weapon_base("AutoCannon", 1, 1, 1, 40, 0.5, 0, spr_player_gun_bullet),
-    shotgun:		weapon_base("Shotgun", 1, 1, 3, 120, 0, 9, spr_player_gun_shot),
-    grenade:		weapon_base("Grenades", 5, 1, 1, 280, 0.5, 0, spr_player_gun_grenade),
-	laser:			weapon_base("Laser", 5, 1, 1, 1, 0, 0, spr_player_gun_laser),
-	blaster:		weapon_base("Blaster", 5, 1, 1, 50, 0, 0, spr_player_gun_blaster),
-	flamer:			weapon_base("Flamethrower", 5, 1, 1, 4, 0, 0, spr_player_gun_flame)
+    autocannon:		weapon_base("AutoCannon", 1, 1, 1, 40, 0.5, 0, spr_player_gun_bullet, spr_player_guns_autocannon),
+    shotgun:		weapon_base("Shotgun", 1, 1, 3, 120, 0, 9, spr_player_gun_shot, spr_player_guns_shotgun),
+    grenade:		weapon_base("Grenades", 5, 1, 1, 280, 0.5, 0, spr_player_gun_grenade, spr_player_guns_grenade),
+	laser:			weapon_base("Laser", 5, 1, 1, 1, 0, 0, spr_player_gun_laser, spr_player_guns_laser),
+	blaster:		weapon_base("Blaster", 5, 1, 1, 50, 0, 0, spr_player_gun_blaster, spr_player_guns_blaster),
+	flamer:			weapon_base("Flamethrower", 5, 1, 1, 4, 0, 0, spr_player_gun_flame, spr_player_guns_flamer)
 };
 
 /// @function weapon_base
@@ -131,7 +131,8 @@ function weapon_instance_from_base(_base)
         _base.firing_speed,
         _base.firing_speed_offset,
         _base.bullet_angle,
-        _base.sprite
+        _base.bullet_sprite,
+		_base.weapon_sprite
     );
 }
 
@@ -145,8 +146,9 @@ weapon_slots = [
     player_weapons.flamer
 ];
 
-//*****replace player_gun_type later*****//
+//*****replace current_weapon later*****//
 current_weapon = weapon_slots[1];
+
 
 #endregion
 damage = 1;
@@ -301,42 +303,57 @@ damage
 	bullet_loop_create_start = 0 - ((no_of_bullets - 1) / 2)
 	var creator = id;
 	
-	if (current_weapon != PLAYER_GUN_TYPE.SHOTGUN && player_gun_type != PLAYER_GUN_TYPE.FLAMER)
+	if (current_weapon != player_weapons.shotgun && current_weapon != player_weapons.flamer)
 	{
 		draw_sprite_ext(spr_muzzle_flash,1,gun_barrels[0],gun_barrels[1],1,1,rotation_angle,c_white,1);
 		draw_sprite_ext(spr_muzzle_flash,1,gun_barrels[2],gun_barrels[3],1,1,rotation_angle,c_white,1);
 	}
-	if(firing_speed == firing_speed_cooldown)
+	if(firing_speed == current_weapon.firing_speed)
 	{
-		eject_shells(casings_eject[0], casings_eject[1], rotation_angle-90);
-		if(player_gun_type == PLAYER_GUN_TYPE.SHOTGUN || 
-		player_gun_type == PLAYER_GUN_TYPE.BLASTER ||
-		player_gun_type == PLAYER_GUN_TYPE.FLAMER)
+		eject_shells(
+		casings_eject[0], 
+		casings_eject[1], 
+		rotation_angle-90);
+		if(current_weapon == player_weapons.shotgun || 
+		current_weapon == player_weapons.blaster ||
+		current_weapon == player_weapons.flamer)
 		eject_shells(casings_eject[2], casings_eject[3], rotation_angle+90);
 		for (var i = bullet_loop_create_start; i < bullet_loop_create_start + no_of_bullets; i++)
 		{
-			create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], firing_angle_offset*i, gun_type, damage);
+			create_bullet(
+			creator, 
+			gun_barrel_coords[0], 
+			gun_barrel_coords[1], 
+			firing_angle_offset*i, 
+			gun_type, 
+			damage);
 
-			if (player_gun_type == PLAYER_GUN_TYPE.SHOTGUN || 
-			player_gun_type == PLAYER_GUN_TYPE.BLASTER ||
-			player_gun_type == PLAYER_GUN_TYPE.FLAMER)
+			if (current_weapon == player_weapons.shotgun || 
+			current_weapon == player_weapons.blaster ||
+			current_weapon == player_weapons.flamer)
 			{
-				if (player_gun_type != PLAYER_GUN_TYPE.FLAMER)
+				if (current_weapon != player_weapons.flamer)
 				{
 				draw_sprite_ext(spr_muzzle_flash,1,gun_barrels[0],gun_barrels[1],1,1,rotation_angle,c_white,1);
 				draw_sprite_ext(spr_muzzle_flash,1,gun_barrels[2],gun_barrels[3],1,1,rotation_angle,c_white,1);
 				}
 				//muzzle_flash()
-				create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], firing_angle_offset*i, gun_type, damage);
+				create_bullet(
+				creator, 
+				gun_barrel_coords[2], 
+				gun_barrel_coords[3], 
+				firing_angle_offset*i, 
+				gun_type, 
+				damage);
 			}
 		}
 
 	}
 	else if(firing_speed == firing_offset)
 	{
-		if (player_gun_type != PLAYER_GUN_TYPE.SHOTGUN && 
-		player_gun_type != PLAYER_GUN_TYPE.BLASTER && 
-		player_gun_type != PLAYER_GUN_TYPE.FLAMER)
+		if (current_weapon != player_weapons.shotgun && 
+		current_weapon != player_weapons.blaster && 
+		current_weapon != player_weapons.flamer)
 		{
 			eject_shells(casings_eject[2], casings_eject[3], rotation_angle+90);
 			create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], firing_angle_offset*0, gun_type, damage);
@@ -354,9 +371,9 @@ muzzle_flash_frame
 )
 {
 
-	if (player_gun_type != PLAYER_GUN_TYPE.SHOTGUN && 
-	player_gun_type != PLAYER_GUN_TYPE.FLAMER && 
-	player_gun_type != PLAYER_GUN_TYPE.GRENADE)
+	if (current_weapon != player_weapons.shotgun && 
+	current_weapon != player_weapons.flamer && 
+	current_weapon != player_weapons.grenade)
 	{
 		draw_sprite_ext(spr_muzzle_flash,muzzle_flash_frame,gun_barrel_coords[0],gun_barrel_coords[1],1,1,rotation_angle,c_white,1);
 		draw_sprite_ext(spr_muzzle_flash,muzzle_flash_frame,gun_barrel_coords[2],gun_barrel_coords[3],1,1,rotation_angle,c_white,1);
@@ -364,11 +381,11 @@ muzzle_flash_frame
 	
 	if(firing_speed == firing_speed_cooldown)
 	{
-		if (player_gun_type == PLAYER_GUN_TYPE.SHOTGUN || 
-		player_gun_type == PLAYER_GUN_TYPE.BLASTER ||
-		player_gun_type == PLAYER_GUN_TYPE.FLAMER)
+		if (current_weapon == player_weapons.shotgun || 
+		current_weapon == player_weapons.blaster ||
+		current_weapon == player_weapons.flamer)
 		{
-			if (player_gun_type != PLAYER_GUN_TYPE.FLAMER)
+			if (current_weapon != player_weapons.flamer)
 			{
 				draw_sprite_ext(spr_muzzle_flash,muzzle_flash_frame,gun_barrel_coords[0],gun_barrel_coords[1],1,1,rotation_angle,c_white,1);
 				draw_sprite_ext(spr_muzzle_flash,muzzle_flash_frame,gun_barrel_coords[2],gun_barrel_coords[3],1,1,rotation_angle,c_white,1);
@@ -378,48 +395,3 @@ muzzle_flash_frame
 	}
 	
 }
-
-
-
-
-//function draw_rotating_square(x, y, s1, s2) {
-//    // Calculate the angle from the point to the mouse cursor and negate it
-//    var angle = -point_direction(x, y, mouse_x, mouse_y);
-
-//    // Calculate half the side length for convenience
-//    var half_1 = s1 / 2;
-//	var half_2 = s2 / 2;
-
-//    // Define the four corners of the square relative to the center
-//    var x0 = -half_1;
-//    var y0 = -half_2;
-//    var x1 =  half_1;
-//    var y1 = -half_2;
-//    var x2 =  half_1;
-//    var y2 =  half_2;
-//    var x3 = -half_1;
-//    var y3 =  half_2;
-
-//    // Rotate each corner around the center
-//    var cos_a = dcos(angle);
-//    var sin_a = dsin(angle);
-
-//    var rx0 = x + x0 * cos_a - y0 * sin_a;
-//    var ry0 = y + x0 * sin_a + y0 * cos_a;
-
-//    var rx1 = x + x1 * cos_a - y1 * sin_a;
-//    var ry1 = y + x1 * sin_a + y1 * cos_a;
-
-//    var rx2 = x + x2 * cos_a - y2 * sin_a;
-//    var ry2 = y + x2 * sin_a + y2 * cos_a;
-
-//    var rx3 = x + x3 * cos_a - y3 * sin_a;
-//    var ry3 = y + x3 * sin_a + y3 * cos_a;
-
-//    // Draw the square by connecting the corners
-//    draw_line(rx0, ry0, rx1, ry1);
-//    draw_line(rx1, ry1, rx2, ry2);
-//    draw_line(rx2, ry2, rx3, ry3);
-//    draw_line(rx3, ry3, rx0, ry0);
-//}
-

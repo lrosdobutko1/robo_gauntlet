@@ -71,7 +71,6 @@
     {"id":{"name":"obj_explosions","path":"objects/obj_explosions/obj_explosions.yy",},},
     {"id":{"name":"obj_global_timer","path":"objects/obj_global_timer/obj_global_timer.yy",},},
     {"id":{"name":"obj_gui_test","path":"objects/obj_gui_test/obj_gui_test.yy",},},
-    {"id":{"name":"obj_hud","path":"objects/obj_hud/obj_hud.yy",},},
     {"id":{"name":"obj_menu","path":"objects/obj_menu/obj_menu.yy",},},
     {"id":{"name":"obj_obstacle","path":"objects/obj_obstacle/obj_obstacle.yy",},},
     {"id":{"name":"obj_pathfinding","path":"objects/obj_pathfinding/obj_pathfinding.yy",},},

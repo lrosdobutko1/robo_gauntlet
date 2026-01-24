@@ -120,12 +120,12 @@ if (firing)
 	firing_speed --;
 	
 
-	if (player_gun_type == PLAYER_GUN_TYPE.MACHINEGUN)
+	if (current_weapon == player_weapons.autocannon)
 	{
 		gun_anim += 0.33;
 		if (gun_anim >= 4) gun_anim = 0;
 	}
-	else if (player_gun_type == PLAYER_GUN_TYPE.BLASTER) 
+	else if (current_weapon == player_weapons.blaster) 
 	{
 		gun_anim += 0.15;
 		if (gun_anim >= (sprite_get_number(spr_player_guns) - 1)) gun_anim = 5;
