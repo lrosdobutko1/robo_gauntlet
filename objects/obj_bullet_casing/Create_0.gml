@@ -4,7 +4,7 @@ direction = image_angle;
 smoke = false;
 image_scale = 0;
 life_time = 0;
-if (obj_player_functions.current_weapon == current_weapon.FLAMER) smoke = true;
+if (obj_player_functions.current_weapon == current_weapon.flamer) smoke = true;
 
 if (smoke)
 {
@@ -23,5 +23,3 @@ rotation_speed = random_range(-10,10);
 
 image_scalar =1;
 scale_direction = 1;
-
-

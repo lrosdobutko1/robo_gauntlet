@@ -51,3 +51,4 @@ if (health_state != PLAYER_HEALTH_STATE.DEAD && health_state != PLAYER_HEALTH_ST
 	rotation_angle,
 	c_white,1);
 }
+

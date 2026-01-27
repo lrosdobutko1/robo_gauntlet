@@ -14,7 +14,7 @@ current_shield = player.current_shields;
 max_shields = player.max_shields;
 shield_percent = current_shield / max_shields;
 
-max_bar_length = 265 * shield_percent;
+max_bar_length = 345 * shield_percent;
 current_bar_length = max_bar_length;
 
 took_damage = false;

@@ -35,23 +35,18 @@ if (diag_mov > 0) {
     v_move /= diag_mov;
 }
 
-h_speed = h_move * walk_speed * global.delta_multiplier;
-v_speed = v_move * walk_speed * global.delta_multiplier;
+health_multiplier = obj_player_functions.current_hp/obj_player_functions.max_hp;
+
+
+
+h_speed = h_move * walk_speed * health_multiplier * global.delta_multiplier;
+v_speed = v_move * walk_speed * health_multiplier * global.delta_multiplier;
+
 
 var next_x = x + h_speed;
 var next_y = y + v_speed;
 
 var angle_diff = angle_difference(image_angle, point_direction(x,y,next_x,next_y)-90);
-
-////animate legs
-//if (h_speed != 0 || v_speed != 0)
-//{
-//	moving = true;
-//}
-//else 
-//{
-//	moving = false;
-//}
 
 
 //collision detection

@@ -26,6 +26,8 @@ h_speed = 0;
 v_speed = 0;
 
 walk_speed = 2;
+speed_multiplier = 1;
+health_multiplier = 1;
 
 damage_player = function(damage)
 {

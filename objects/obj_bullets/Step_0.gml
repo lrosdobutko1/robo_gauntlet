@@ -15,8 +15,6 @@ if (instance_exists(obj_player_functions))
 				bullet_speed = 7;
 				choose_sprite_index = gun_type;
 				collision_offset = 8;
-				bounding_box_size_h = 24;
-				bounding_box_size_v = 2;
 				break;
 			}
 	
@@ -24,8 +22,6 @@ if (instance_exists(obj_player_functions))
 			{
 				bullet_speed = 7;
 				choose_sprite_index = gun_type;
-				bounding_box_size_h = 13;
-				bounding_box_size_v = 4;
 				break;
 			}
 	
@@ -39,9 +35,7 @@ if (instance_exists(obj_player_functions))
 				bullet_speed += 0.05;
 				if (bullet_speed >= 7) bullet_speed = 7;
 				choose_sprite_index = gun_type;
-				collision_offset = 8;
-				bounding_box_size_h = 14;
-				bounding_box_size_v = 4;			
+				collision_offset = 8;		
 				break;
 			}
 	
@@ -58,8 +52,6 @@ if (instance_exists(obj_player_functions))
 				bullet_speed = 7;
 				choose_sprite_index = gun_type;	
 				collision_offset = 8;
-				bounding_box_size_h = 22;
-				bounding_box_size_v = 4;
 				break;
 			}
 	
@@ -75,9 +67,6 @@ if (instance_exists(obj_player_functions))
 				}
 	
 				collision_offset = -4;
-			
-				bounding_box_size_h = 9;
-				bounding_box_size_v = 9;
 				break;
 			}
 		}
@@ -89,36 +78,34 @@ if (instance_exists(obj_player_functions))
 		choose_sprite_index = 1;
 
 		bullet_speed = 6;
-		bounding_box_size_h = 24;
-		bounding_box_size_v = 2;
 		damage_to_player = 2;
 	}
 }
 
 if (life_timer <= 0) instance_destroy();
 
-var hit = collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_entities);
+//var hit = collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_entities);
 
-if (hit != noone) 
-{
-	if (hit != creator) 
-	{
-		hit.current_hp -= damage;
-		if variable_instance_exists(hit.id,"flash")
-		{
-			hit.flash = 2;
-		}
-	}
+//if (hit != noone) 
+//{
+//	if (hit != creator) 
+//	{
+//		hit.current_hp -= damage;
+//		if variable_instance_exists(hit.id,"flash")
+//		{
+//			hit.flash = 2;
+//		}
+//	}
 	
-	if (gun_type != 6) instance_destroy();
-}
+//	if (gun_type != 6) instance_destroy();
+//}
 
 //wall collision
-var hit_wall = collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_obstacle);
-if (hit_wall !=noone)
-{
-	instance_destroy();
-}
+//var hit_wall = collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_obstacle);
+//if (hit_wall !=noone)
+//{
+//	instance_destroy();
+//}
 
 speed = bullet_speed * global.delta_multiplier;
 
