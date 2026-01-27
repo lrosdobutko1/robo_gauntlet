@@ -226,8 +226,6 @@ if (instance_exists(obj_player_functions))
 			health_state = ENEMY_HEALTH_STATE.DEAD;
 		}
 	}
-
-	//show_debug_message("level: " + +string(level) + " health: " + string(hp) + "/" + string(starting_hp) + " damage: " + string(damage));
 	
 }
 

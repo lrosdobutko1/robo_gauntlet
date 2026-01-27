@@ -1,88 +1,10 @@
-life_timer --;
-image_yscale = image_scale;
-image_xscale = image_scale;
+//life_timer --;
+//image_yscale = image_scale;
+//image_xscale = image_scale;
 
 
 //bullets created by player
-if (instance_exists(obj_player_functions))
-{
-	if (creator == obj_player_functions.id)
-	{
-		switch (gun_type)
-		{
-			case 1:
-			{
-				bullet_speed = 7;
-				choose_sprite_index = gun_type;
-				collision_offset = 8;
-				break;
-			}
-	
-				case 2:
-			{
-				bullet_speed = 7;
-				choose_sprite_index = gun_type;
-				break;
-			}
-	
-				case 3:
-			{
-				if (created)
-				{
-					bullet_speed = 1.5;
-					created = false;
-				}
-				bullet_speed += 0.05;
-				if (bullet_speed >= 7) bullet_speed = 7;
-				choose_sprite_index = gun_type;
-				collision_offset = 8;		
-				break;
-			}
-	
-				case 4:
-			{
-				bullet_speed = 7;
-				choose_sprite_index = gun_type;
-				collision_offset = 8;
-				break;
-			}	
-				
-			case 5:
-			{
-				bullet_speed = 7;
-				choose_sprite_index = gun_type;	
-				collision_offset = 8;
-				break;
-			}
-	
-			case 6:
-			{
-				bullet_speed = 7;
-				frame_skip ++;
-				if (frame_skip >=3) 
-				{
-					if (choose_sprite_index != sprite_get_number(spr_bullets_3)-1)
-					choose_sprite_index ++ ;
-					frame_skip = 0;
-				}
-	
-				collision_offset = -4;
-				break;
-			}
-		}
-	}
-
-	//bullets created by enemies
-	else
-	{
-		choose_sprite_index = 1;
-
-		bullet_speed = 6;
-		damage_to_player = 2;
-	}
-}
-
-if (life_timer <= 0) instance_destroy();
+//if (life_timer <= 0) instance_destroy();
 
 //var hit = collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_entities);
 
@@ -107,7 +29,7 @@ if (life_timer <= 0) instance_destroy();
 //	instance_destroy();
 //}
 
-speed = bullet_speed * global.delta_multiplier;
+//speed = bullet_speed * global.delta_multiplier;
 
 //collision with walls using ray-casting
 //if (created)

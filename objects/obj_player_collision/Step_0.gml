@@ -72,5 +72,3 @@ x += h_speed;
 y += v_speed;
 
 if (!instance_exists(obj_player_functions)) instance_destroy();
-
-//show_debug_message(hp);

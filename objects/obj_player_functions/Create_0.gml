@@ -109,7 +109,7 @@ _weapon_sprite
 }
 
 player_weapons = {
-    autocannon:		weapon_base("AutoCannon", 1, 1, 1, 40, 0.5, 0,  spr_player_bullet_cannon, spr_player_guns_autocannon),
+    autocannon:		weapon_base("AutoCannon", 1, 1, 1, 20, 0.5, 0,  spr_player_bullet_cannon, spr_player_guns_autocannon),
     shotgun:		weapon_base("Shotgun", 1, 1, 3, 120, 0, 9,  spr_player_bullet_shot, spr_player_guns_shotgun),
     grenade:		weapon_base("Grenades", 5, 1, 1, 280, 0.5, 0,  spr_player_bullet_grenade, spr_player_guns_grenade),
 	laser:			weapon_base("Laser", 5, 1, 1, 1, 0, 0,  spr_player_bullet_laser, spr_player_guns_laser),
@@ -149,7 +149,6 @@ weapon_slots = [
 //*****replace current_weapon later*****//
 current_weapon = weapon_slots[1];
 
-
 #endregion
 damage = 1;
 
@@ -162,12 +161,9 @@ firing = false;
 firing_rockets = false;
 firing_angle = image_angle;
 
-firing_speed_cooldown = 40;
-firing_speed = firing_speed_cooldown;
-firing_offset = firing_speed*0.5;
-firing_angle_offset = 2.5;
-no_of_bullets = 1;
-angle_offset = 0;
+firing_speed_cooldown = current_weapon.firing_speed;
+
+firing_offset = round(current_weapon.firing_speed*current_weapon.firing_speed_offset);
 
 player_rocket_cooldown = 2400;
 player_rocket_timer = player_rocket_cooldown;
@@ -285,93 +281,6 @@ function eject_shells(x_coord, y_coord, angle_offset)
 			casing.direction = angle_offset + random_range(-15,15);
 			casing.image_angle = direction;
 		}
-}
-
-bullet_loop_create_start = 0;
-
-function shoot_player_bullets(
-gun_barrel_coords, 
-firing_speed, 
-firing_offset, 
-gun_type,
-firing_angle_offset,
-no_of_bullets,
-damage
-)
-{
-
-	bullet_loop_create_start = 0 - ((no_of_bullets - 1) / 2)
-	var creator = id;
-	
-	for (var i = bullet_loop_create_start; i = no_of_bullets; i++)
-	{
-			create_bullet(
-			creator, 
-			gun_barrel_coords[0], 
-			gun_barrel_coords[1], 
-			firing_angle_offset*i, 
-			gun_type, 
-			damage);
-	}
-	
-	
-	
-	//if (current_weapon != player_weapons.shotgun && current_weapon != player_weapons.flamer)
-	//{
-	//	draw_sprite_ext(spr_muzzle_flash,1,gun_barrels[0],gun_barrels[1],1,1,rotation_angle,c_white,1);
-	//	draw_sprite_ext(spr_muzzle_flash,1,gun_barrels[2],gun_barrels[3],1,1,rotation_angle,c_white,1);
-	//}
-	//if(firing_speed == current_weapon.firing_speed)
-	//{
-	//	eject_shells(
-	//	casings_eject[0], 
-	//	casings_eject[1], 
-	//	rotation_angle-90);
-	//	if(current_weapon == player_weapons.shotgun || 
-	//	current_weapon == player_weapons.blaster ||
-	//	current_weapon == player_weapons.flamer)
-	//	eject_shells(casings_eject[2], casings_eject[3], rotation_angle+90);
-	//	for (var i = bullet_loop_create_start; i < bullet_loop_create_start + no_of_bullets; i++)
-	//	{
-	//		create_bullet(
-	//		creator, 
-	//		gun_barrel_coords[0], 
-	//		gun_barrel_coords[1], 
-	//		firing_angle_offset*i, 
-	//		gun_type, 
-	//		damage);
-
-	//		if (current_weapon == player_weapons.shotgun || 
-	//		current_weapon == player_weapons.blaster ||
-	//		current_weapon == player_weapons.flamer)
-	//		{
-	//			if (current_weapon != player_weapons.flamer)
-	//			{
-	//			draw_sprite_ext(spr_muzzle_flash,1,gun_barrels[0],gun_barrels[1],1,1,rotation_angle,c_white,1);
-	//			draw_sprite_ext(spr_muzzle_flash,1,gun_barrels[2],gun_barrels[3],1,1,rotation_angle,c_white,1);
-	//			}
-	//			//muzzle_flash()
-	//			create_bullet(
-	//			creator, 
-	//			gun_barrel_coords[2], 
-	//			gun_barrel_coords[3], 
-	//			firing_angle_offset*i, 
-	//			gun_type, 
-	//			damage);
-	//		}
-	//	}
-
-	//}
-	//else if(firing_speed == firing_offset)
-	//{
-	//	if (current_weapon != player_weapons.shotgun && 
-	//	current_weapon != player_weapons.blaster && 
-	//	current_weapon != player_weapons.flamer)
-	//	{
-	//		eject_shells(casings_eject[2], casings_eject[3], rotation_angle+90);
-	//		create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], firing_angle_offset*0, gun_type, damage);
-	//	}
-	//}
 }
 
 

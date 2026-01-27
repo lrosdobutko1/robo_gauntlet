@@ -1,24 +1,24 @@
 
 //gun_type = 0;
-frame_skip = 0;
+//frame_skip = 0;
 
-sprite = spr_bullets_3;
-choose_sprite_index = 6;
-collision_offset = 0;
-image_scale = 2;
+//sprite = spr_bullets_3;
+//choose_sprite_index = 6;
+//collision_offset = 0;
+//image_scale = 2;
 
-direction_angle = 0;
+//direction_angle = 0;
 
-image_speed = 0;
+//image_speed = 0;
 
-life_timer = 100;
+//life_timer = 100;
 
-//sprite_set_offset
-//(
-//spr_bullets,
-//sprite_get_width(spr_bullets)/2,
-//sprite_get_height(spr_bullets)
-//);
+////sprite_set_offset
+////(
+////spr_bullets,
+////sprite_get_width(spr_bullets)/2,
+////sprite_get_height(spr_bullets)
+////);
 
 
 function create_bullet_types(_name, _damage, _sprite){
@@ -31,20 +31,20 @@ function create_bullet_types(_name, _damage, _sprite){
 
 bullet_types = {
 	autocannon: create_bullet_types("Autocannon", 1, spr_player_bullet_cannon),	
-	shotgun: create_bullet_types("Shotgun", 1, spr_player_bullet_cannon),
-	grenade: create_bullet_types("Grenade", 5, spr_player_bullet_cannon),
-	laser: create_bullet_types("Laser", 10, spr_player_bullet_cannon),
+	shotgun: create_bullet_types("Shotgun", 1, spr_player_bullet_shot),
+	grenade: create_bullet_types("Grenade", 5, spr_player_bullet_grenade),
+	laser: create_bullet_types("Laser", 10, spr_player_bullet_laser),
 	blaster: create_bullet_types("Blaster", 2, spr_player_bullet_blaster),
 	flamer: create_bullet_types("Flamer", 1, spr_player_bullet_flame),
 };
 
-current_bullet = bullet_types.autocannon;
+current_bullet_type = bullet_types.autocannon;
 
-damage_to_player = current_bullet.damage;
+//damage_to_player = current_bullet_type.damage;
 
-damage_to_enemy = 0;
-crit = damage_to_enemy * 2.5;
-bullet_speed = 0;
+//damage_to_enemy = 0;
+//crit = damage_to_enemy * 2.5;
+//bullet_speed = 0;
 
 //wall_collision = get_bullet_sight_line(x,y, direction_angle, obj_obstacle, collision_offset);
 //end_x = wall_collision[0];
@@ -79,8 +79,8 @@ bullet_speed = 0;
 //    return [x_end, y_end];
 //}
 
-created = true;
-speed = bullet_speed * global.delta_multiplier + random_range(-2,2);
+//created = true;
+//speed = bullet_speed * global.delta_multiplier + random_range(-2,2);
 
 
 //function collision_box_size(x, y, creator, side_length_1, side_length_2, obj_to_check) 

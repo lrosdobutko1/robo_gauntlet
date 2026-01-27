@@ -108,43 +108,49 @@ else
 	}
 }
 
-show_debug_message("Not shootin");
+
 if (firing)
 {
+	if (firing_speed_cooldown <= 0) {
 	
-	find_gun_create_coordinates(gun_barrels, 26, 60);
-	find_gun_create_coordinates(casings_eject, 15, 170);
+		find_gun_create_coordinates(gun_barrels, 26, 60);
+		find_gun_create_coordinates(casings_eject, 15, 170);
 	
-	shoot_bullets(
-	id,
-	gun_barrels, 
-	current_weapon.firing_speed, 
-	current_weapon.firing_speed_offset, 
-	current_weapon, 
-	current_weapon.bullet_angle, 
-	current_weapon.num_bullets, 
-	damage);
+		shoot_bullets(
+		id,
+		gun_barrels[0],
+		gun_barrels[1],
+		current_weapon.firing_speed, 
+		current_weapon.firing_speed_offset, 
+		current_weapon, 
+		current_weapon.bullet_angle, 
+		current_weapon.num_bullets, 
+		damage
+		);
+		
+		shoot_bullets(
+		id,
+		gun_barrels[2],
+		gun_barrels[3],
+		current_weapon.firing_speed, 
+		current_weapon.firing_speed_offset, 
+		current_weapon, 
+		current_weapon.bullet_angle, 
+		current_weapon.num_bullets, 
+		damage
+		);
+		
+		firing_speed_cooldown = current_weapon.firing_speed;
 	
-	firing_speed --;
-	
-	
-	//if (current_weapon == player_weapons.autocannon)
-	//{
-	//	gun_anim += 0.33;
-	//	if (gun_anim >= 4) gun_anim = 0;
-	//}
-	//else if (current_weapon == player_weapons.blaster) 
-	//{
-	//	gun_anim += 0.15;
-	//	if (gun_anim >= (sprite_get_number(spr_player_guns) - 1)) gun_anim = 5;
-	//}
+	}
 }
 
-if(firing_speed != firing_speed_cooldown)
-{
-	firing_speed --;
-	if (firing_speed <= 0) firing_speed = firing_speed_cooldown;
-}
+firing_speed_cooldown --
+
+//if(firing_speed != firing_speed_cooldown)
+//{
+//	current_weapon.firing_speed --;
+//	if (firing_speed <= 0) firing_speed = firing_speed_cooldown;
+//}
 
 
-//show_debug_message("player level: " + +string(level) + " health: " + string(hp) + "/" + string(max_hp) + " damage: " + string(damage));
