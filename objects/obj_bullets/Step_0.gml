@@ -1,53 +1,36 @@
-//life_timer --;
-//image_yscale = image_scale;
-//image_xscale = image_scale;
+if (current_bullet_type == bullet_types.flamer && life_timer < 0) instance_destroy();
+
+if (life_timer > 0) life_timer --;
 
 
-//bullets created by player
-//if (life_timer <= 0) instance_destroy();
 
-//var hit = collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_entities);
 
-//if (hit != noone) 
-//{
-//	if (hit != creator) 
-//	{
-//		hit.current_hp -= damage;
-//		if variable_instance_exists(hit.id,"flash")
-//		{
-//			hit.flash = 2;
-//		}
-//	}
+#region Destroy bullets past the screen edge
+var px = obj_player_functions.x;
+var py = obj_player_functions.y;
+if (
+    abs(x - px) > room_width/2 ||
+    abs(y - py) > room_height/2
+) {
+    instance_destroy();
+
+}
+#region	
+
+
+#region Collision with walls
+if (place_meeting(x+hspeed, y, obj_obstacle)) {
+	while (!place_meeting(x+sign(hspeed),y, obj_obstacle)) x = x + sign(hspeed);
 	
-//	if (gun_type != 6) instance_destroy();
-//}
+	instance_destroy();
+}
 
-//wall collision
-//var hit_wall = collision_box_size(x, y, creator, bounding_box_size_h, bounding_box_size_v, obj_obstacle);
-//if (hit_wall !=noone)
-//{
-//	instance_destroy();
-//}
+if (place_meeting(x, y + vspeed, obj_obstacle)) {
+	while (!place_meeting(x, y+sign(vspeed), obj_obstacle)) y = y + sign(vspeed);
+	
+	instance_destroy();
+}
+#endregion
 
-//speed = bullet_speed * global.delta_multiplier;
+show_debug_message(life_timer);
 
-//collision with walls using ray-casting
-//if (created)
-//{
-//	wall_collision = get_bullet_sight_line(x,y, direction_angle, obj_obstacle, collision_offset);
-//	end_x = wall_collision[0];
-//	end_y = wall_collision[1];
-//}
-//created = false;
-
-//if (abs(x - end_x) < speed && abs(y - end_y) < speed)
-//{
-//    instance_destroy();
-//}
-
-//if (distance_to_point(end_x, end_y) <= speed)
-//{
-//	move_towards_point(end_x, end_y, speed);
-//}
-
-//collision with walls using custom bounding box

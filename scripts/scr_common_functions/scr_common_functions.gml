@@ -34,7 +34,6 @@ function create_bullet(_creator, _x_coord, _y_coord, _firing_angle_offset, _gun_
 	
 	// Prevent trying to use a non-existent creator
     if (!instance_exists(_creator)) return;
-
 	
 	var bullets = instance_create_layer(
 	_x_coord,
@@ -42,21 +41,18 @@ function create_bullet(_creator, _x_coord, _y_coord, _firing_angle_offset, _gun_
 	layer,
 	obj_bullets)
 	{
-		bullets.bullet_speed = 8 + random_range(-0.5, 0.5);
-		bullets.speed = bullets.bullet_speed;
-		//bullets.direction_angle = _creator.rotation_angle + _firing_angle_offset;
+		bullets.creator = _creator; // Store gun reference
+		bullets.speed = 8;
 		bullets.direction = _creator.rotation_angle + _firing_angle_offset;
 		bullets.image_angle = _creator.rotation_angle + _firing_angle_offset;
 		bullets.x = _x_coord;
 		bullets.y = _y_coord;
-		bullets.creator = _creator; // Store gun reference
-		if (_creator == obj_player_functions.id) {
-			bullets.current_bullet_type = _gun_type;
-			bullets.image_index = spr_player_bullet_cannon;
+		bullets.current_bullet_type = _creator.current_weapon.bullet_type;	
+		bullets.sprite_index = bullets.current_bullet_type.sprite;
+		if (bullets.current_bullet_type == bullet_types.flamer) {
+			bullets.life_timer = 20;
 		}
-		else bullets._gun_type = noone;
-		bullets.damage = _damage;
-		bullets.image_speed = 0;
+		else bullets.life_timer = 0;
 	}	
 }
 
@@ -74,8 +70,6 @@ function camera_shake()
 	var camera_shake_y = random_range(-10,10);
 	obj_camera.x += camera_shake_x * shake_coefficient;
 	obj_camera.y += camera_shake_y * shake_coefficient;
-}
+	}
 
 }
-
-

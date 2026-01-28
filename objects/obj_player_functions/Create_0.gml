@@ -85,56 +85,76 @@ y = obj_player_collision.y;
 /// @param {asset}  _sprite Projectile sprite
 /// @returns {struct} Weapon base stats struct
 function weapon_base(
-_weapon_name, 
-_base_dmg, 
-_weapon_level, 
-_num_bullets, 
-_firing_speed, 
-_speed_offset, 
-_bullet_angle, 
-_bullet_sprite,
-_weapon_sprite
+    _weapon_name, 
+    _base_dmg, 
+    _weapon_level, 
+    _num_bullets, 
+    _firing_speed, 
+    _speed_offset, 
+    _bullet_angle, 
+	_bullet_speed,
+    _bullet_type,
+    _weapon_sprite
 ) {
     return {
-		weapon_name:			_weapon_name,
-		damage:					_base_dmg,
-		weapon_level:			_weapon_level,
-        num_bullets:			_num_bullets,
-        firing_speed:			_firing_speed,
-		firing_speed_offset:	_speed_offset,
-		bullet_angle:			_bullet_angle,
-        bullet_sprite:			_bullet_sprite,
-		weapon_sprite:			_weapon_sprite
+        weapon_name:            _weapon_name,
+        damage:                 _base_dmg,
+        weapon_level:           _weapon_level,
+        num_bullets:            _num_bullets,
+        firing_speed:           _firing_speed,
+        firing_speed_offset:    _speed_offset,
+        bullet_angle:           _bullet_angle,
+		bullet_speed:			_bullet_speed,
+        bullet_type:            _bullet_type,
+        weapon_sprite:          _weapon_sprite
     };
 }
 
+
+function create_bullet_types(_name, _damage, _sprite){
+    return {
+        bullet_name: _name,
+        damage: _damage,
+        sprite: _sprite
+    };
+}
+
+bullet_types = {
+    autocannon: create_bullet_types("Autocannon", 1, spr_player_bullet_cannon),
+    shotgun:    create_bullet_types("Shotgun",    1, spr_player_bullet_shot),
+    grenade:    create_bullet_types("Grenade",    5, spr_player_bullet_grenade),
+    laser:      create_bullet_types("Laser",     10, spr_player_bullet_laser),
+    blaster:    create_bullet_types("Blaster",    2, spr_player_bullet_blaster),
+    flamer:     create_bullet_types("Flamer",     1, spr_player_bullet_flame),
+};
+
+
 player_weapons = {
-    autocannon:		weapon_base("AutoCannon", 1, 1, 1, 20, 0.5, 0,  spr_player_bullet_cannon, spr_player_guns_autocannon),
-    shotgun:		weapon_base("Shotgun", 1, 1, 3, 120, 0, 9,  spr_player_bullet_shot, spr_player_guns_shotgun),
-    grenade:		weapon_base("Grenades", 5, 1, 1, 280, 0.5, 0,  spr_player_bullet_grenade, spr_player_guns_grenade),
-	laser:			weapon_base("Laser", 5, 1, 1, 1, 0, 0,  spr_player_bullet_laser, spr_player_guns_laser),
-	blaster:		weapon_base("Blaster", 5, 1, 1, 50, 0, 0,  spr_player_bullet_blaster, spr_player_guns_blaster),
-	flamer:			weapon_base("Flamethrower", 5, 1, 1, 4, 0, 0,  spr_player_bullet_flame, spr_player_guns_flamer)
+    autocannon: weapon_base("AutoCannon",	1, 1, 1, 20,  0.5, 0, 8, bullet_types.autocannon, spr_player_guns_autocannon),
+    shotgun:    weapon_base("Shotgun",		1, 1, 3, 120, 1,   9, 8, bullet_types.shotgun,    spr_player_guns_shotgun),
+    grenade:    weapon_base("Grenades",		5, 1, 1, 160, 0.5, 0, 5, bullet_types.grenade,    spr_player_guns_grenade),
+    laser:      weapon_base("Laser",		5, 1, 1, 1,   1,   0, 6, bullet_types.laser,      spr_player_guns_laser),
+    blaster:    weapon_base("Blaster",		5, 1, 1, 50,  1,   0, 8, bullet_types.blaster,    spr_player_guns_blaster),
+    flamer:     weapon_base("Flamethrower",	5, 1, 1, 2,   1,   0, 4, bullet_types.flamer,     spr_player_guns_flamer)
 };
 
 /// @function weapon_base
 /// @description Creates a base weapon definition.
 /// @param {struct} _base The base weapon to be later modified by the player
 /// @returns {struct} Weapon base stats struct
-function weapon_instance_from_base(_base)
-{
-    return weapon_base(
-        _base.weapon_name,
-        _base.damage,
-		_base._weapon_level,
-        _base.num_bullets,
-        _base.firing_speed,
-        _base.firing_speed_offset,
-        _base.bullet_angle,
-        _base.bullet_sprite,
-		_base.weapon_sprite
-    );
-}
+//function weapon_instance_from_base(_base)
+//{
+//    return weapon_base(
+//        _base.weapon_name,
+//        _base.damage,
+//		_base._weapon_level,
+//        _base.num_bullets,
+//        _base.firing_speed,
+//        _base.firing_speed_offset,
+//        _base.bullet_angle,
+//		_base.weapon_sprite
+//    );
+//}
 
 weapon_slots = [
     noone, // index 0 unused
