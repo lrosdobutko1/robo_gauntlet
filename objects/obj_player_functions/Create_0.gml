@@ -92,7 +92,6 @@ function weapon_base(
     _firing_speed, 
     _speed_offset, 
     _bullet_angle, 
-	_bullet_speed,
     _bullet_type,
     _weapon_sprite
 ) {
@@ -104,38 +103,39 @@ function weapon_base(
         firing_speed:           _firing_speed,
         firing_speed_offset:    _speed_offset,
         bullet_angle:           _bullet_angle,
-		bullet_speed:			_bullet_speed,
         bullet_type:            _bullet_type,
         weapon_sprite:          _weapon_sprite
     };
 }
 
 
-function create_bullet_types(_name, _damage, _sprite){
+function create_bullet_types(_name, _damage, _speed, _timer, _sprite){
     return {
         bullet_name: _name,
         damage: _damage,
+		bullet_speed: _speed,
+		life_timer: _timer,
         sprite: _sprite
     };
 }
 
 bullet_types = {
-    autocannon: create_bullet_types("Autocannon", 1, spr_player_bullet_cannon),
-    shotgun:    create_bullet_types("Shotgun",    1, spr_player_bullet_shot),
-    grenade:    create_bullet_types("Grenade",    5, spr_player_bullet_grenade),
-    laser:      create_bullet_types("Laser",     10, spr_player_bullet_laser),
-    blaster:    create_bullet_types("Blaster",    2, spr_player_bullet_blaster),
-    flamer:     create_bullet_types("Flamer",     1, spr_player_bullet_flame),
+    autocannon: create_bullet_types("Autocannon", 1,  8,  -1,  spr_player_bullet_cannon),
+    shotgun:    create_bullet_types("Shotgun",    1,  8,  -1,  spr_player_bullet_shot),
+    grenade:    create_bullet_types("Grenade",    5,  5,  -1,  spr_player_bullet_grenade),
+    laser:      create_bullet_types("Laser",      10, 6,  -1,  spr_player_bullet_laser),
+    blaster:    create_bullet_types("Blaster",    2,  6,  -1,  spr_player_bullet_blaster),
+    flamer:     create_bullet_types("Flamer",     1,  4,  20, spr_player_bullet_flame),
 };
 
 
 player_weapons = {
-    autocannon: weapon_base("AutoCannon",	1, 1, 1, 20,  0.5, 0, 8, bullet_types.autocannon, spr_player_guns_autocannon),
-    shotgun:    weapon_base("Shotgun",		1, 1, 3, 120, 1,   9, 8, bullet_types.shotgun,    spr_player_guns_shotgun),
-    grenade:    weapon_base("Grenades",		5, 1, 1, 160, 0.5, 0, 5, bullet_types.grenade,    spr_player_guns_grenade),
-    laser:      weapon_base("Laser",		5, 1, 1, 1,   1,   0, 6, bullet_types.laser,      spr_player_guns_laser),
-    blaster:    weapon_base("Blaster",		5, 1, 1, 50,  1,   0, 8, bullet_types.blaster,    spr_player_guns_blaster),
-    flamer:     weapon_base("Flamethrower",	5, 1, 1, 2,   1,   0, 4, bullet_types.flamer,     spr_player_guns_flamer)
+    autocannon: weapon_base("AutoCannon",	1, 1, 1, 20,  0.5, 0, bullet_types.autocannon, spr_player_guns_autocannon),
+    shotgun:    weapon_base("Shotgun",		1, 1, 3, 120, 1,   9, bullet_types.shotgun,    spr_player_guns_shotgun),
+    grenade:    weapon_base("Grenades",		5, 1, 1, 160, 0.5, 0, bullet_types.grenade,    spr_player_guns_grenade),
+    laser:      weapon_base("Laser",		5, 1, 1, 1,   1,   0, bullet_types.laser,      spr_player_guns_laser),
+    blaster:    weapon_base("Blaster",		5, 1, 1, 50,  1,   0, bullet_types.blaster,    spr_player_guns_blaster),
+    flamer:     weapon_base("Flamethrower",	5, 1, 1, 2,   1,   0, bullet_types.flamer,     spr_player_guns_flamer)
 };
 
 /// @function weapon_base

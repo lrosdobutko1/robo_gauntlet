@@ -1,9 +1,6 @@
-if (current_bullet_type == bullet_types.flamer && life_timer < 0) instance_destroy();
+if (life_timer = 0) instance_destroy();
 
 if (life_timer > 0) life_timer --;
-
-
-
 
 #region Destroy bullets past the screen edge
 var px = obj_player_functions.x;

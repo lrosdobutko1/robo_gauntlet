@@ -42,17 +42,15 @@ function create_bullet(_creator, _x_coord, _y_coord, _firing_angle_offset, _gun_
 	obj_bullets)
 	{
 		bullets.creator = _creator; // Store gun reference
-		bullets.speed = 8;
+		bullets.current_bullet_type = _creator.current_weapon.bullet_type;	
+		bullets.speed = bullets.current_bullet_type.bullet_speed;
 		bullets.direction = _creator.rotation_angle + _firing_angle_offset;
 		bullets.image_angle = _creator.rotation_angle + _firing_angle_offset;
 		bullets.x = _x_coord;
 		bullets.y = _y_coord;
-		bullets.current_bullet_type = _creator.current_weapon.bullet_type;	
 		bullets.sprite_index = bullets.current_bullet_type.sprite;
-		if (bullets.current_bullet_type == bullet_types.flamer) {
-			bullets.life_timer = 20;
-		}
-		else bullets.life_timer = 0;
+		bullets.life_timer = bullets.current_bullet_type.life_timer;
+
 	}	
 }
 
