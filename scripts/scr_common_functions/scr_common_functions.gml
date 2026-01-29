@@ -1,10 +1,22 @@
+
+/// @function shoot_bullets
+/// @description Shoots a bullet of a given type, to be chosen dynamically
+/// @param {string} _creator The object that created the bullet
+/// @param {real}	_gun_barrel_x		    The x coordinate to create at
+/// @param {real}	_gun_barrel_y		    The y coordinate to create at
+/// @param {real}	_firing_speed		    The firing speed in frames
+/// @param {real}	_firing_offset		    The ratio to offset left and right firing
+/// @param {struct}	_gun_type			    The bullet type to set the bullet to on creation
+/// @param {real}	_firing_angle_offset	The angle to fire multiple bullets at
+/// @param {real}	_num_bullets			The number of bullets to create and fire
+/// @param {real}	_damage					The damage each bullet does on collision
 function shoot_bullets(
 _creator,
 _gun_barrel_x, 
 _gun_barrel_y,
 _firing_speed, 
 _firing_offset, 
-_gun_type,
+_bullet_type,
 _firing_angle_offset,
 _num_bullets,
 _damage
@@ -21,7 +33,7 @@ _damage
 	        _gun_barrel_x,
 	        _gun_barrel_y,
 	        angle,
-	        _gun_type,
+	        _bullet_type,
 	        _damage
 	    );
 	}
@@ -29,7 +41,18 @@ _damage
 }
 
 
-function create_bullet(_creator, _x_coord, _y_coord, _firing_angle_offset, _gun_type, _damage)
+function create_bullet_types(_name, _damage, _speed, _timer, _sprite){
+    return {
+        bullet_name: _name,
+        damage: _damage,
+		bullet_speed: _speed,
+		life_timer: _timer,
+        sprite: _sprite
+    };
+}
+
+
+function create_bullet(_creator, _x_coord, _y_coord, _firing_angle_offset, _bullet_type, _damage)
 {
 	
 	// Prevent trying to use a non-existent creator
@@ -41,8 +64,9 @@ function create_bullet(_creator, _x_coord, _y_coord, _firing_angle_offset, _gun_
 	layer,
 	obj_bullets)
 	{
-		bullets.creator = _creator; // Store gun reference
-		bullets.current_bullet_type = _creator.current_weapon.bullet_type;	
+		bullets.creator = _creator; 
+		
+		bullets.current_bullet_type = _creator.current_weapon.bullet_type;
 		bullets.direction = _creator.rotation_angle + _firing_angle_offset;
 		bullets.image_angle = _creator.rotation_angle + _firing_angle_offset;
 		bullets.x = _x_coord;

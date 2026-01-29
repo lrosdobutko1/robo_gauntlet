@@ -110,15 +110,15 @@ function weapon_base(
 }
 
 
-function create_bullet_types(_name, _damage, _speed, _timer, _sprite){
-    return {
-        bullet_name: _name,
-        damage: _damage,
-		bullet_speed: _speed,
-		life_timer: _timer,
-        sprite: _sprite
-    };
-}
+//function create_bullet_types(_name, _damage, _speed, _timer, _sprite){
+//    return {
+//        bullet_name: _name,
+//        damage: _damage,
+//		bullet_speed: _speed,
+//		life_timer: _timer,
+//        sprite: _sprite
+//    };
+//}
 
 bullet_types = {
     autocannon: create_bullet_types("Autocannon", 1,  8,  -1,  spr_player_bullet_cannon),
@@ -127,7 +127,7 @@ bullet_types = {
     laser:      create_bullet_types("Laser",      10, 6,  -1,  spr_player_bullet_laser),
     blaster:    create_bullet_types("Blaster",    2,  6,  -1,  spr_player_bullet_blaster),
     flamer:     create_bullet_types("Flamer",     1,  4,  20,  spr_player_bullet_flame),
-	rocket:     create_bullet_types("Rocket",     1,  4,  20,  spr_player_rocket),
+	rocket:     create_bullet_types("Rocket",     1,  4,  -1,  spr_player_rocket),
 };
 
 
@@ -138,7 +138,7 @@ player_weapons = {
     laser:      weapon_base("Laser",		5, 1, 1, 1,   1,   0, bullet_types.laser,      spr_player_guns_laser),
     blaster:    weapon_base("Blaster",		5, 1, 1, 50,  1,   0, bullet_types.blaster,    spr_player_guns_blaster),
     flamer:     weapon_base("Flamethrower",	5, 1, 1, 2,   1,   0, bullet_types.flamer,     spr_player_guns_flamer),
-	rockets:	weapon_base("Rockets",		1, 1, 1, 4,   1,   0, bullet_types.rocket,     spr_player_rocket)
+	rockets:	weapon_base("Rockets",		1, 1, 1, 40,  0.5, 0, bullet_types.rocket,     spr_player_rocket)
 };
 
 weapon_slots = [
@@ -153,6 +153,7 @@ weapon_slots = [
 
 //*****replace current_weapon later*****//
 current_weapon = weapon_slots[1];
+current_secondary_weapon = player_weapons.rockets;
 
 #endregion
 damage = 1;

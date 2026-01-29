@@ -1,4 +1,49 @@
-if (current_bullet_type.bullet_name !="Flamer") rotation = 0;
+
+show_debug_message("I am a " + current_bullet_type.bullet_name);
+
+if (current_bullet_type.bullet_name == bullet_types.rocket.bullet_name) {
+
+	
+	speed -= 0.05;
+	//if(speed <= 0) speed = 0;
+
+	life_time --;
+	activate_timer--;
+
+	if(life_time <= 0)
+	{
+		alive = false;
+	}
+
+	if (activate_timer <= 0) 
+	{
+		speed = 0;
+		active = true;
+	}
+
+	if (active)
+	{
+		image_speed = 1;
+		direction = image_angle;
+		if (alive)
+		speed = 12;
+		else speed = 0;
+	
+		if(alive) instance_create_layer(x,y,layer,obj_rocket_smoke);
+		if (instance_exists(obj_wall_parent))
+		{
+			target = instance_nearest(x,y, obj_wall_parent);
+			var angle_diff = angle_difference(image_angle, point_direction(x,y,target.x,target.y));
+			image_angle -= min(abs(angle_diff), turn_radius) * sign(angle_diff);
+			turn_radius += 0.01;
+		}
+	}
+}
+
+
+if (current_bullet_type != bullet_types.flamer) {
+	rotation = 0;
+}
 
 if (life_timer > 0) life_timer --;
 if (life_timer == 0) instance_destroy();

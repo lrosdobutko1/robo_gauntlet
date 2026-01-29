@@ -73,11 +73,49 @@ if (gun_select_keys != prev_gun)
     current_weapon = weapon_slots[gun_select_keys];
 }
 
+
+if (mouse_check_button(2)) {
+		
+	if (firing_speed_cooldown <= 0)
+    {
+        find_gun_create_coordinates(rocket_launchers,15,210);
+        shoot_bullets(
+            id,
+            rocket_launchers[0],
+            rocket_launchers[1],
+            current_secondary_weapon.firing_speed,
+            current_secondary_weapon.firing_speed_offset,
+            current_secondary_weapon,
+            current_secondary_weapon.bullet_angle,
+            current_secondary_weapon.num_bullets,
+            damage
+        );
+
+        firing_speed_cooldown = current_secondary_weapon.firing_speed;
+    }
+
+    if (firing_speed_cooldown == current_secondary_weapon.firing_speed * current_secondary_weapon.firing_speed_offset)
+    {
+        find_gun_create_coordinates(rocket_launchers,15,210);
+        shoot_bullets(
+            id,
+            rocket_launchers[2],
+            rocket_launchers[3],
+            current_secondary_weapon.firing_speed,
+            current_secondary_weapon.firing_speed_offset,
+            current_secondary_weapon,
+            current_secondary_weapon.bullet_angle,
+            current_secondary_weapon.num_bullets,
+            damage
+        );
+    }	
+}
+
 //fire primary
 if (mouse_check_button(1))
 {
 	//firing = true;
-	    if (firing_speed_cooldown <= 0)
+	if (firing_speed_cooldown <= 0)
     {
         find_gun_create_coordinates(gun_barrels, 26, 60);
         shoot_bullets(
@@ -110,55 +148,6 @@ if (mouse_check_button(1))
             damage
         );
     }
-}
-else
-{
-	firing = false;
-}
-
-///fire secondary
-if (mouse_check_button(2) && rockets_ready)
-{
-
-}
-
-
-
-if (firing)
-{
-    //if (firing_speed_cooldown <= 0)
-    //{
-    //    find_gun_create_coordinates(gun_barrels, 26, 60);
-    //    shoot_bullets(
-    //        id,
-    //        gun_barrels[0],
-    //        gun_barrels[1],
-    //        current_weapon.firing_speed,
-    //        current_weapon.firing_speed_offset,
-    //        current_weapon,
-    //        current_weapon.bullet_angle,
-    //        current_weapon.num_bullets,
-    //        damage
-    //    );
-
-    //    firing_speed_cooldown = current_weapon.firing_speed;
-    //}
-
-    //if (firing_speed_cooldown == current_weapon.firing_speed * current_weapon.firing_speed_offset)
-    //{
-    //    find_gun_create_coordinates(gun_barrels, 26, 60);
-    //    shoot_bullets(
-    //        id,
-    //        gun_barrels[2],
-    //        gun_barrels[3],
-    //        current_weapon.firing_speed,
-    //        current_weapon.firing_speed_offset,
-    //        current_weapon,
-    //        current_weapon.bullet_angle,
-    //        current_weapon.num_bullets,
-    //        damage
-    //    );
-    //}
 }
 
 firing_speed_cooldown --;
