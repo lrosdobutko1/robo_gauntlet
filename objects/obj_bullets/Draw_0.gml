@@ -6,7 +6,7 @@ x,
 y, 
 1, 
 1, 
-image_angle,
+image_angle+rotation,
 c_white, 
 1
 );

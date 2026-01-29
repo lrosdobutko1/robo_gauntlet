@@ -43,17 +43,17 @@ function create_bullet(_creator, _x_coord, _y_coord, _firing_angle_offset, _gun_
 	{
 		bullets.creator = _creator; // Store gun reference
 		bullets.current_bullet_type = _creator.current_weapon.bullet_type;	
-		bullets.speed = bullets.current_bullet_type.bullet_speed;
 		bullets.direction = _creator.rotation_angle + _firing_angle_offset;
 		bullets.image_angle = _creator.rotation_angle + _firing_angle_offset;
 		bullets.x = _x_coord;
 		bullets.y = _y_coord;
 		bullets.sprite_index = bullets.current_bullet_type.sprite;
 		bullets.life_timer = bullets.current_bullet_type.life_timer;
-
+		bullets.speed = bullets.current_bullet_type.bullet_speed;
+		if (bullets.current_bullet_type.bullet_name == "Flamer") bullets.rotation = random(359);
+		else rotation = 0;
 	}	
 }
-
 
 
 function camera_shake()

@@ -76,41 +76,8 @@ if (gun_select_keys != prev_gun)
 //fire primary
 if (mouse_check_button(1))
 {
-	firing = true;
-}
-else
-{
-	firing = false;
-}
-
-///fire secondary
-if (mouse_check_button(2) && rockets_ready)
-{
-	firing_rockets = true;
-	rockets_ready = false;
-}
-
-if(firing_rockets) 
-{
-	shoot_rockets(rocket_offset);
-	rocket_offset --;
-	player_rocket_timer -= obj_global_timer.delta;
-	if rocket_offset <= 0 firing_rockets = false;
-}
-else
-{
-	rocket_offset = rocket_offset_cd;
-	if (!rockets_ready) player_rocket_timer -= obj_global_timer.delta;
-	if (player_rocket_timer <= 0)
-	{
-		rockets_ready = true;
-		player_rocket_timer = player_rocket_cooldown;
-	}
-}
-
-if (firing)
-{
-    if (firing_speed_cooldown <= 0)
+	//firing = true;
+	    if (firing_speed_cooldown <= 0)
     {
         find_gun_create_coordinates(gun_barrels, 26, 60);
         shoot_bullets(
@@ -143,6 +110,55 @@ if (firing)
             damage
         );
     }
+}
+else
+{
+	firing = false;
+}
+
+///fire secondary
+if (mouse_check_button(2) && rockets_ready)
+{
+
+}
+
+
+
+if (firing)
+{
+    //if (firing_speed_cooldown <= 0)
+    //{
+    //    find_gun_create_coordinates(gun_barrels, 26, 60);
+    //    shoot_bullets(
+    //        id,
+    //        gun_barrels[0],
+    //        gun_barrels[1],
+    //        current_weapon.firing_speed,
+    //        current_weapon.firing_speed_offset,
+    //        current_weapon,
+    //        current_weapon.bullet_angle,
+    //        current_weapon.num_bullets,
+    //        damage
+    //    );
+
+    //    firing_speed_cooldown = current_weapon.firing_speed;
+    //}
+
+    //if (firing_speed_cooldown == current_weapon.firing_speed * current_weapon.firing_speed_offset)
+    //{
+    //    find_gun_create_coordinates(gun_barrels, 26, 60);
+    //    shoot_bullets(
+    //        id,
+    //        gun_barrels[2],
+    //        gun_barrels[3],
+    //        current_weapon.firing_speed,
+    //        current_weapon.firing_speed_offset,
+    //        current_weapon,
+    //        current_weapon.bullet_angle,
+    //        current_weapon.num_bullets,
+    //        damage
+    //    );
+    //}
 }
 
 firing_speed_cooldown --;

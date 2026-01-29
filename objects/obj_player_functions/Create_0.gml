@@ -78,10 +78,11 @@ y = obj_player_collision.y;
 /// @description Creates a base weapon definition.
 /// @param {string} _name Weapon display name
 /// @param {real}   _dmg Damage per bullet
-/// @param {real}   _bullets Number of bullets fired
-/// @param {real}   _speed Frames between shots
-/// @param {real}   _speed_offset Fire-rate modifier
+/// @param {real}   num_bullets Number of bullets fired
+/// @param {real}   firing_speed Frames between shots
+/// @param {real}   firing_speed_offset offsets left and right guns
 /// @param {real}   _bullet_angle Spread angle in degrees
+/// @param {struct}   _bullet_type Type of bullet to be fired
 /// @param {asset}  _sprite Projectile sprite
 /// @returns {struct} Weapon base stats struct
 function weapon_base(
@@ -125,7 +126,8 @@ bullet_types = {
     grenade:    create_bullet_types("Grenade",    5,  5,  -1,  spr_player_bullet_grenade),
     laser:      create_bullet_types("Laser",      10, 6,  -1,  spr_player_bullet_laser),
     blaster:    create_bullet_types("Blaster",    2,  6,  -1,  spr_player_bullet_blaster),
-    flamer:     create_bullet_types("Flamer",     1,  4,  20, spr_player_bullet_flame),
+    flamer:     create_bullet_types("Flamer",     1,  4,  20,  spr_player_bullet_flame),
+	rocket:     create_bullet_types("Rocket",     1,  4,  20,  spr_player_rocket),
 };
 
 
@@ -135,26 +137,9 @@ player_weapons = {
     grenade:    weapon_base("Grenades",		5, 1, 1, 160, 0.5, 0, bullet_types.grenade,    spr_player_guns_grenade),
     laser:      weapon_base("Laser",		5, 1, 1, 1,   1,   0, bullet_types.laser,      spr_player_guns_laser),
     blaster:    weapon_base("Blaster",		5, 1, 1, 50,  1,   0, bullet_types.blaster,    spr_player_guns_blaster),
-    flamer:     weapon_base("Flamethrower",	5, 1, 1, 2,   1,   0, bullet_types.flamer,     spr_player_guns_flamer)
+    flamer:     weapon_base("Flamethrower",	5, 1, 1, 2,   1,   0, bullet_types.flamer,     spr_player_guns_flamer),
+	rockets:	weapon_base("Rockets",		1, 1, 1, 4,   1,   0, bullet_types.rocket,     spr_player_rocket)
 };
-
-/// @function weapon_base
-/// @description Creates a base weapon definition.
-/// @param {struct} _base The base weapon to be later modified by the player
-/// @returns {struct} Weapon base stats struct
-//function weapon_instance_from_base(_base)
-//{
-//    return weapon_base(
-//        _base.weapon_name,
-//        _base.damage,
-//		_base._weapon_level,
-//        _base.num_bullets,
-//        _base.firing_speed,
-//        _base.firing_speed_offset,
-//        _base.bullet_angle,
-//		_base.weapon_sprite
-//    );
-//}
 
 weapon_slots = [
     noone, // index 0 unused

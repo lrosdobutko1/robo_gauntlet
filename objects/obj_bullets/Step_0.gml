@@ -1,33 +1,40 @@
-if (life_timer = 0) instance_destroy();
+if (current_bullet_type.bullet_name !="Flamer") rotation = 0;
 
 if (life_timer > 0) life_timer --;
+if (life_timer == 0) instance_destroy();
+//if (current_bullet_type.bullet_name == "Flamer") rotation++;
 
 #region Destroy bullets past the screen edge
+
 var px = obj_player_functions.x;
 var py = obj_player_functions.y;
-if (
-    abs(x - px) > room_width/2 ||
-    abs(y - py) > room_height/2
-) {
+if (abs(x - px) > room_width/2 || abs(y - py) > room_height/2) {
     instance_destroy();
-
 }
-#region	
+
+#endregion	
 
 
 #region Collision with walls
-if (place_meeting(x+hspeed, y, obj_obstacle)) {
-	while (!place_meeting(x+sign(hspeed),y, obj_obstacle)) x = x + sign(hspeed);
-	
-	instance_destroy();
-}
 
-if (place_meeting(x, y + vspeed, obj_obstacle)) {
-	while (!place_meeting(x, y+sign(vspeed), obj_obstacle)) y = y + sign(vspeed);
-	
-	instance_destroy();
+var hit = false;
+
+if (resolve_x_collision(hspeed, obj_obstacle)) hit = true;
+if (resolve_y_collision(vspeed, obj_obstacle)) hit = true;
+
+if (hit)
+{
+    if (current_bullet_type.bullet_name != "Flamer")
+    {
+        instance_destroy();
+    }
+    else
+    {
+        collision_timer--;
+        if (collision_timer <= 0) instance_destroy();
+    }
 }
 #endregion
 
-show_debug_message(life_timer);
+
 
