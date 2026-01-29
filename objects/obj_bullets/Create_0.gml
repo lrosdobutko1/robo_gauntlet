@@ -28,16 +28,6 @@ damage = 10;
 hit = false;
 
 
-bullet_types = {
-    autocannon: create_bullet_types("Autocannon", 1,  8,  -1,  spr_player_bullet_cannon),
-    shotgun:    create_bullet_types("Shotgun",    1,  8,  -1,  spr_player_bullet_shot),
-    grenade:    create_bullet_types("Grenade",    5,  5,  -1,  spr_player_bullet_grenade),
-    laser:      create_bullet_types("Laser",      10, 6,  -1,  spr_player_bullet_laser),
-    blaster:    create_bullet_types("Blaster",    2,  6,  -1,  spr_player_bullet_blaster),
-    flamer:     create_bullet_types("Flamer",     1,  4,  20,  spr_player_bullet_flame),
-	rocket:     create_bullet_types("Rocket",     1,  4,  -1,  spr_player_rocket),
-};
-
 function resolve_x_collision(_dx, _obj)
 {
     if (_dx == 0) return false;

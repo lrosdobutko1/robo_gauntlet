@@ -85,7 +85,7 @@ if (mouse_check_button(2)) {
             rocket_launchers[1],
             current_secondary_weapon.firing_speed,
             current_secondary_weapon.firing_speed_offset,
-            current_secondary_weapon,
+            current_secondary_weapon.bullet_type,
             current_secondary_weapon.bullet_angle,
             current_secondary_weapon.num_bullets,
             damage
@@ -103,7 +103,7 @@ if (mouse_check_button(2)) {
             rocket_launchers[3],
             current_secondary_weapon.firing_speed,
             current_secondary_weapon.firing_speed_offset,
-            current_secondary_weapon,
+            current_secondary_weapon.bullet_type,
             current_secondary_weapon.bullet_angle,
             current_secondary_weapon.num_bullets,
             damage
@@ -124,7 +124,7 @@ if (mouse_check_button(1))
             gun_barrels[1],
             current_weapon.firing_speed,
             current_weapon.firing_speed_offset,
-            current_weapon,
+            current_weapon.bullet_type,
             current_weapon.bullet_angle,
             current_weapon.num_bullets,
             damage
@@ -142,7 +142,7 @@ if (mouse_check_button(1))
             gun_barrels[3],
             current_weapon.firing_speed,
             current_weapon.firing_speed_offset,
-            current_weapon,
+            current_weapon.bullet_type,
             current_weapon.bullet_angle,
             current_weapon.num_bullets,
             damage

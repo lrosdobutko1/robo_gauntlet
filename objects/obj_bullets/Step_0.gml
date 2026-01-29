@@ -1,9 +1,8 @@
 
 show_debug_message("I am a " + current_bullet_type.bullet_name);
 
-if (current_bullet_type.bullet_name == bullet_types.rocket.bullet_name) {
 
-	
+if (current_bullet_type.bullet_name == "Rocket") {
 	speed -= 0.05;
 	//if(speed <= 0) speed = 0;
 
@@ -41,8 +40,9 @@ if (current_bullet_type.bullet_name == bullet_types.rocket.bullet_name) {
 }
 
 
-if (current_bullet_type != bullet_types.flamer) {
-	rotation = 0;
+if (current_bullet_type.bullet_name != "Flamer")
+{
+    rotation = 0;
 }
 
 if (life_timer > 0) life_timer --;

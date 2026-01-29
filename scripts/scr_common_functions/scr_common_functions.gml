@@ -1,4 +1,15 @@
 
+function create_bullet_types(_name, _damage, _speed, _timer, _sprite){
+    return {
+        bullet_name: _name,
+        damage: _damage,
+		bullet_speed: _speed,
+		life_timer: _timer,
+        sprite: _sprite
+    };
+}
+
+
 /// @function shoot_bullets
 /// @description Shoots a bullet of a given type, to be chosen dynamically
 /// @param {string} _creator The object that created the bullet
@@ -41,17 +52,6 @@ _damage
 }
 
 
-function create_bullet_types(_name, _damage, _speed, _timer, _sprite){
-    return {
-        bullet_name: _name,
-        damage: _damage,
-		bullet_speed: _speed,
-		life_timer: _timer,
-        sprite: _sprite
-    };
-}
-
-
 function create_bullet(_creator, _x_coord, _y_coord, _firing_angle_offset, _bullet_type, _damage)
 {
 	
@@ -66,7 +66,7 @@ function create_bullet(_creator, _x_coord, _y_coord, _firing_angle_offset, _bull
 	{
 		bullets.creator = _creator; 
 		
-		bullets.current_bullet_type = _creator.current_weapon.bullet_type;
+		bullets.current_bullet_type = _bullet_type;
 		bullets.direction = _creator.rotation_angle + _firing_angle_offset;
 		bullets.image_angle = _creator.rotation_angle + _firing_angle_offset;
 		bullets.x = _x_coord;
