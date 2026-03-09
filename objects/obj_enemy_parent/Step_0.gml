@@ -69,14 +69,6 @@ if (instance_exists(obj_player_functions))
 	player_current_x = obj_player_collision.x;
 	player_current_y = obj_player_collision.y;
 
-	find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
-
-	var aim_right = angle_difference(point_direction(gun_barrels[0], gun_barrels[1], obj_player_collision.x, obj_player_collision.y),rotation_angle);
-	var aim_left = angle_difference(point_direction(gun_barrels[2], gun_barrels[3], obj_player_collision.x, obj_player_collision.y),rotation_angle);
-
-	//chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
-	//created = false;
-
 	var sight_line = collision_line(x,y,player_current_x,player_current_y,obj_obstacle,false,true);
 
 	switch (shooting_state)
@@ -114,6 +106,7 @@ if (instance_exists(obj_player_functions))
 
 		case SHOOTING_STATE.SHOOTING:
 		{
+			find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
 
 			firing_speed --;
 			if (firing_speed <=0) firing_speed = firing_speed_cooldown;
@@ -122,7 +115,10 @@ if (instance_exists(obj_player_functions))
 			shooting_time --;
 			if (health_state != ENEMY_HEALTH_STATE.DEAD || health_state != ENEMY_HEALTH_STATE.DESTROYED)
 			{
-				shoot_enemy_bullets(gun_barrels,aim_right, aim_left,firing_speed,firing_offset, damage);
+				if (firing_speed == 1) shoot_bullets(id, gun_barrels[0],gun_barrels[1],noone,0,1,5);
+					
+				if (firing_speed = round(firing_speed_cooldown / 2)) shoot_bullets(id, gun_barrels[2],gun_barrels[3],noone,0,1,5);
+				
 			}
 			if (shooting_time <= 0)
 			{

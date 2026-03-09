@@ -1,6 +1,7 @@
 created = true;
 level = 1;
 
+
 suicidal = false;
 
 ////sprite info
@@ -359,33 +360,33 @@ firing_speed_cooldown = 40;
 firing_speed = firing_speed_cooldown;
 firing_offset = firing_speed*0.5;
 
-function shoot_enemy_bullets(
-gun_barrel_coords, 
-right_angle,
-left_angle,
-firing_speed, 
-firing_offset, 
-damage
-)
-{
-	find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
-	//find_enemy_gun_create_coordinates(casings_eject, 15, 170);
+//function shoot_enemy_bullets(
+//gun_barrel_coords, 
+//right_angle,
+//left_angle,
+//firing_speed, 
+//firing_offset, 
+//damage
+//)
+//{
+//	find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
+//	//find_enemy_gun_create_coordinates(casings_eject, 15, 170);
 
-	var creator = id;
-	var target_player = point_direction(gun_barrel_coords[0], gun_barrel_coords[1], obj_player_collision.x,obj_player_collision.y)+90;
+//	var creator = id;
+//	var target_player = point_direction(gun_barrel_coords[0], gun_barrel_coords[1], obj_player_collision.x,obj_player_collision.y)+90;
 
 	
-	if(firing_speed == firing_speed_cooldown)
-	{
-		create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], right_angle, 0, damage);
+//	if(firing_speed == firing_speed_cooldown)
+//	{
+//		create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], right_angle, 0, damage);
 
-	}
+//	}
 
-	else if(firing_speed == firing_offset)
-	{
-		create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], left_angle, 0, damage);
-	}
-}
+//	else if(firing_speed == firing_offset)
+//	{
+//		create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], left_angle, 0, damage);
+//	}
+//}
 
 
 function random_search_rotation(is_rotating, rotation_cool_down, rotation_angle)

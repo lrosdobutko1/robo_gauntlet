@@ -4,7 +4,9 @@ show_debug_message("I am a " + current_bullet_type.bullet_name);
 
 if (current_bullet_type.bullet_name == "Rocket") {
 	speed -= 0.05;
-	//if(speed <= 0) speed = 0;
+	
+	image_xscale = image_size;
+	image_yscale = image_size;
 
 	life_time --;
 	activate_timer--;
@@ -62,12 +64,10 @@ if (abs(x - px) > room_width/2 || abs(y - py) > room_height/2) {
 
 #region Collision with walls
 
-var hit = false;
+var hit_wall = ( (resolve_x_collision(hspeed, obj_obstacle)) || (resolve_y_collision(vspeed, obj_obstacle)) );
 
-if (resolve_x_collision(hspeed, obj_obstacle)) hit = true;
-if (resolve_y_collision(vspeed, obj_obstacle)) hit = true;
 
-if (hit)
+if (hit_wall)
 {
     if (current_bullet_type.bullet_name != "Flamer")
     {
@@ -81,5 +81,23 @@ if (hit)
 }
 #endregion
 
+#region collision with enemies
 
+var hit_enemy = ( (resolve_x_collision(hspeed, obj_enemy_parent)) || (resolve_y_collision(vspeed, obj_enemy_parent)) );
+
+if (hit_enemy)
+{
+    if (current_bullet_type.bullet_name != "Flamer")
+    {
+		
+        instance_destroy();
+    }
+    else
+    {
+        collision_timer--;
+        if (collision_timer <= 0) instance_destroy();
+    }
+}
+
+#endregion
 

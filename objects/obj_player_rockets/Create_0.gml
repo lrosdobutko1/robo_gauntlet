@@ -11,6 +11,7 @@ active = false;
 launch_speed = random_range(1,2);
 turn_radius = 2;
 speed = launch_speed;
+target = noone;
 
 if (instance_exists(obj_enemy_1))
 {
