@@ -77,10 +77,10 @@ draw_set_valign(fa_top);
 
 
 
-if (took_damage) damage_counter_value --;
-if (damage_counter_value <= 0) {
-	took_damage = false;
-	damage_counter_value = damage_counter;
-}
-if(!took_damage) player.current_shields += 0.01;
-if (player.current_shields >= player.max_shields) player.current_shields = player.max_shields;
+//if (took_damage) damage_counter_value --;
+//if (damage_counter_value <= 0) {
+//	took_damage = false;
+//	damage_counter_value = damage_counter;
+//}
+//if(!took_damage) player.current_shields += 0.01;
+//if (player.current_shields >= player.max_shields) player.current_shields = player.max_shields;

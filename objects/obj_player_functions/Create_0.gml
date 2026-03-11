@@ -8,9 +8,14 @@ base_hp = 40;
 max_hp = (base_hp * level) + power(level,level);
 current_hp = max_hp;
 
-base_shields = 20;
-max_shields = (max_hp/2);
+
+base_shields = 20 + level;
+max_shields = (base_shields + max_hp/2);
 current_shields = max_shields;
+shield_absorb_rate = 0.25 + level*0.03;
+shield_recharge_rate = 0.005;
+max_shield_recharge_cooldown = 240;
+shield_recharge_cooldown = 0;
 
 base_damage = 10;
 damage = base_damage * (0.05 * level);
@@ -323,3 +328,8 @@ muzzle_flash_frame
 	}
 	
 }
+
+
+
+
+

@@ -110,7 +110,6 @@ if (mouse_check_button(2)) {
 //fire primary
 if (mouse_check_button(1))
 {
-	//firing = true;
 	if (firing_speed_cooldown <= 0)
     {
         find_gun_create_coordinates(gun_barrels, 26, 60);
@@ -142,4 +141,15 @@ if (mouse_check_button(1))
     }
 }
 
+if (current_shields < max_shields && shield_recharge_cooldown <= 0 ) {
+	current_shields = min(max_shields, current_shields + shield_recharge_rate);
+}
+
+
+
+if (shield_recharge_cooldown > 0)
+shield_recharge_cooldown --;
+
+if (firing_speed_cooldown > 0)
 firing_speed_cooldown --;
+

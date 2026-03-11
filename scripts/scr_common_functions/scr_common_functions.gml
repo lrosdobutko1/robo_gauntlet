@@ -116,17 +116,25 @@ function camera_shake()
 
 }
 
-function cause_damage(_damage_amount) {
+function calculate_damage(_target, _damage_amount) {
 	
-	self.hp -= _damage_amount;
-	self.flash = 4;
+	var shield_damage = _damage_amount;
+	var health_damage = _damage_amount;
+	var shield_rollover = 0;
+	
+	if (_target.current_shields > 0) {
+		shield_rollover = max(0,shield_damage - _target.current_shields);
+		health_damage = _damage_amount * _target.shield_absorb_rate + shield_rollover;
+	}
+	
+	else
+	health_damage = _damage_amount;
+	
+	_target.current_shields = max(0, _target.current_shields - shield_damage);
+	_target.current_hp -= health_damage;
+	_target.shield_recharge_cooldown = _target.max_shield_recharge_cooldown;
 	
 }
-
-
-
-
-
 
 
 

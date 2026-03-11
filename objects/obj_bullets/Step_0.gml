@@ -1,6 +1,4 @@
 
-show_debug_message("I am a " + current_bullet_type.bullet_name);
-
 
 if (current_bullet_type.bullet_name == "Rocket") {
 	speed -= 0.05;
@@ -64,11 +62,17 @@ if (abs(x - px) > room_width/2 || abs(y - py) > room_height/2) {
 
 #region Collision with walls
 
-var hit_wall = ( (resolve_x_collision(hspeed, obj_obstacle)) || (resolve_y_collision(vspeed, obj_obstacle)) );
+var hit_wall = resolve_x_collision(hspeed, obj_obstacle);
 
-
-if (hit_wall)
+if (hit_wall == noone)
 {
+    hit_wall = resolve_y_collision(vspeed, obj_obstacle);
+}
+
+
+if (hit_wall != noone)
+{
+	show_debug_message( "I hit a " + object_get_name(hit_wall.object_index) )
     if (current_bullet_type.bullet_name != "Flamer")
     {
         instance_destroy();
@@ -83,13 +87,20 @@ if (hit_wall)
 
 #region collision with enemies
 
-var hit_enemy = ( (resolve_x_collision(hspeed, obj_enemy_parent)) || (resolve_y_collision(vspeed, obj_enemy_parent)) );
+var hit_enemy = resolve_x_collision(hspeed, enemy);
 
-if (hit_enemy)
+if (hit_enemy == noone)
 {
+    hit_enemy = resolve_y_collision(vspeed, enemy);
+}
+
+if (hit_enemy != noone)
+{
+	show_debug_message( "I hit a " + object_get_name(hit_enemy.object_index) )
+	
     if (current_bullet_type.bullet_name != "Flamer")
     {
-		
+		calculate_damage(hit_enemy, damage)
         instance_destroy();
     }
     else

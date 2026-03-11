@@ -214,11 +214,11 @@ if (instance_exists(obj_player_functions))
 	previous_player_x = obj_player_collision.x;
 	previous_player_y = obj_player_collision.y;
 
-	var hit_player = (instance_place(x,y, obj_player_collision))
+	var hit_player = (instance_place(x,y, obj_player_functions))
 	{
-		if (hit_player == obj_player_collision.id)
+		if (hit_player == obj_player_functions.id)
 		{
-			if (explode_anim == 0) hit_player.damage_player(10);
+			if (explode_anim == 0) cause_damage(hit_player, 10);
 			health_state = ENEMY_HEALTH_STATE.DEAD;
 		}
 	}
@@ -229,3 +229,6 @@ else
 {
 	if(path_exists(path)) path_delete(path);
 } 
+
+show_debug_message("shields: " + string(current_shields));
+show_debug_message("health: " + string(current_hp));

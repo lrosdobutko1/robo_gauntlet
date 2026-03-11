@@ -1,7 +1,6 @@
 created = true;
 level = 1;
 
-
 suicidal = false;
 
 ////sprite info
@@ -104,13 +103,22 @@ base_hp = 40;
 starting_hp = (base_hp * level) + power(level,level);
 current_hp = starting_hp;
 
+base_shields = 20 + level;
+max_shields = (base_shields + starting_hp/2);
+current_shields = max_shields;
+shield_absorb_rate = 0.1 + level*0.03;
+shield_recharge_rate = 0.001;
+max_shield_recharge_cooldown = 480;
+shield_recharge_cooldown = 0;
+
+
 if (current_hp == starting_hp) health_state = ENEMY_HEALTH_STATE.MAX;
 
 ////determine how much lead time to give the enemy when tracking player. Between 0 and 1.
 prediction_multiplier = (is_smart) ? 1 : 0;
 
 
-//shields = hp/2;
+
 
 
 function get_sight_line(x_start, y_start, angle, vis_dist, target_object) {
