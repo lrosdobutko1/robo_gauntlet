@@ -99,7 +99,7 @@ enum ENEMY_HEALTH_STATE
 	DESTROYED,
 }
 
-base_hp = 40;
+base_hp = 80;
 starting_hp = (base_hp * level) + power(level,level);
 current_hp = starting_hp;
 
@@ -116,9 +116,6 @@ if (current_hp == starting_hp) health_state = ENEMY_HEALTH_STATE.MAX;
 
 ////determine how much lead time to give the enemy when tracking player. Between 0 and 1.
 prediction_multiplier = (is_smart) ? 1 : 0;
-
-
-
 
 
 function get_sight_line(x_start, y_start, angle, vis_dist, target_object) {

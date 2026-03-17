@@ -1,8 +1,8 @@
 //speed = 0;
 //image_index = 0;
 
-//life_time = 150;
-//activate_timer = 40;
+life_time = 150;
+activate_timer = 40;
 //image_size = 0.25;
 //image_xscale = 1;
 //image_yscale = 1;
@@ -10,26 +10,30 @@
 ////image_speed = 0;
 //image_index = 0;
 
-//active = false;
-//launch_speed = random_range(1,2);
-//turn_radius = 2;
-//speed = launch_speed;
+active = false;
+launch_speed = random_range(1,2);
+turn_radius = 2;
+speed = launch_speed;
 
-//if (instance_exists(obj_wall_parent))
-//{
-//	target = instance_nearest(x,y, obj_wall_parent);
-//}
+if (instance_exists(obj_enemy_parent))
+{
+	target = instance_nearest(x,y, obj_enemy_parent);
+}
+else target = noone;
 
-//alive = true;
-//explode_anim = 0;
-//damage = 10;
-//hit = false;
+alive = true;
+explode_anim = 0;
+damage = 10;
+hit = false;
+
 
 enemy = (creator.object_index == obj_player_functions) ? obj_enemy_parent : obj_player_functions;
 
 enemy_default = {
     default_bullet: create_bullet_types("Default", 1, 8, -1, spr_player_bullet_cannon),
 	}
+
+
 
 function resolve_x_collision(_dx, _obj)
 {
@@ -57,6 +61,11 @@ if (creator != obj_player_functions.id) {
 } else {
     current_bullet_type = bullet_type;
 }
+
+if (current_bullet_type.bullet_name == "Rocket")
+    image_size = 0.25;
+else
+    image_size = 1;
 
 // Set direction and appearance
 direction    = creator.rotation_angle + angle_offset;

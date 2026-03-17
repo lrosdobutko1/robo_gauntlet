@@ -84,3 +84,43 @@ draw_set_valign(fa_top);
 //}
 //if(!took_damage) player.current_shields += 0.01;
 //if (player.current_shields >= player.max_shields) player.current_shields = player.max_shields;
+
+draw_triangle(
+power_triangle.top.tx,
+power_triangle.top.ty,
+power_triangle.right.rx,
+power_triangle.right.ry,
+power_triangle.left.lx,
+power_triangle.left.ly,
+1
+);
+
+var mouse_gui_x = device_mouse_x_to_gui(0);
+var mouse_gui_y = device_mouse_y_to_gui(0);
+
+if (point_distance(mouse_gui_x,
+mouse_gui_y, 
+power_triangle_center[0], 
+power_triangle_center[1]
+) <= power_triangle_center_radius)
+{
+	if (mouse_check_button(1)) {
+		power_triangle_center_is_grabbed = true;
+
+	}
+	else power_triangle_center_is_grabbed = false;
+}
+
+if (power_triangle_center_is_grabbed)
+{
+	power_triangle_center[0] = mouse_gui_x;
+	power_triangle_center[1] = mouse_gui_y;
+}
+
+draw_circle(
+power_triangle_center[0],
+power_triangle_center[1],
+10,
+1);
+show_debug_message(power_triangle_center_is_grabbed);
+

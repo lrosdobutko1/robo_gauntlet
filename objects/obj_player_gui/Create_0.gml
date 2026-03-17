@@ -176,3 +176,32 @@ function draw_arc_thick_rounded(x, y, radius, thickness, start_angle, arc_angle,
         false
     );
 }
+
+power_triangle_radius = 250;
+power_triangle_center = [600, 600];
+power_triangle_center_radius = 10;
+theta = 90;
+var theta_r = degtorad(theta);
+
+power_triangle_center_is_grabbed = false;
+
+power_triangle = {
+    top: {
+        tx: power_triangle_center[0] + power_triangle_radius * cos(theta_r),
+        ty: power_triangle_center[1] + power_triangle_radius * sin(theta_r)
+    },
+    right: {
+        rx: power_triangle_center[0] + power_triangle_radius * cos(theta_r + degtorad(120)),
+        ry: power_triangle_center[1] + power_triangle_radius * sin(theta_r + degtorad(120))
+    },
+    left: {
+        lx: power_triangle_center[0] + power_triangle_radius * cos(theta_r + degtorad(240)),
+        ly: power_triangle_center[1] + power_triangle_radius * sin(theta_r + degtorad(240))
+    }
+};
+
+
+
+	
+	
+	

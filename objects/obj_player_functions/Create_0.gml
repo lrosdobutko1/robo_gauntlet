@@ -193,30 +193,30 @@ rocket_launchers = array_create(4);
 muzzle_flash_frame = 0;
 
 
-function find_gun_create_coordinates(coords, radius, spread_angle)
-{
+//function find_gun_create_coordinates(coords, radius, spread_angle)
+//{
 	
-	//find the coordinates to create bullets at by calculating isoscoles triangle
-	var x_fixed = x;
-	var y_fixed = y;
+//	//find the coordinates to create bullets at by calculating isoscoles triangle
+//	var x_fixed = x;
+//	var y_fixed = y;
 
-	// Triangle parameters
-	radius = radius * image_scale; // Distance from the fixed point to the other two points
-	spread_angle = spread_angle; // Spread angle between the two equal points (in degrees)
+//	// Triangle parameters
+//	radius = radius * image_scale; // Distance from the fixed point to the other two points
+//	spread_angle = spread_angle; // Spread angle between the two equal points (in degrees)
 
-	// Direction to the mouse
-	var angle_to_mouse = point_direction(x_fixed, y_fixed, mouse_x, mouse_y);
+//	// Direction to the mouse
+//	var angle_to_mouse = point_direction(x_fixed, y_fixed, mouse_x, mouse_y);
 
-	// Calculate the positions of the two equal points
-	var angle1 = angle_to_mouse - spread_angle / 2; // First point's angle
-	var angle2 = angle_to_mouse + spread_angle / 2; // Second point's angle
+//	// Calculate the positions of the two equal points
+//	var angle1 = angle_to_mouse - spread_angle / 2; // First point's angle
+//	var angle2 = angle_to_mouse + spread_angle / 2; // Second point's angle
 
-	coords[0] = x_fixed + lengthdir_x(radius, angle1);
-	coords[1] = y_fixed + lengthdir_y(radius, angle1);
-	coords[2] = x_fixed + lengthdir_x(radius, angle2);
-	coords[3] = y_fixed + lengthdir_y(radius, angle2);
+//	coords[0] = x_fixed + lengthdir_x(radius, angle1);
+//	coords[1] = y_fixed + lengthdir_y(radius, angle1);
+//	coords[2] = x_fixed + lengthdir_x(radius, angle2);
+//	coords[3] = y_fixed + lengthdir_y(radius, angle2);
 	
-}
+//}
 
 
 function shoot_rockets(rocket_offset)

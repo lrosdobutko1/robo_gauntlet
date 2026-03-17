@@ -1,3 +1,28 @@
+function find_gun_create_coordinates(coords, radius, spread_angle)
+{
+	
+	//find the coordinates to create bullets at by calculating isoscoles triangle
+	var x_fixed = x;
+	var y_fixed = y;
+
+	// Triangle parameters
+	radius = radius * image_scale; // Distance from the fixed point to the other two points
+	spread_angle = spread_angle; // Spread angle between the two equal points (in degrees)
+
+	// Direction to the mouse
+	var angle_to_mouse = point_direction(x_fixed, y_fixed, mouse_x, mouse_y);
+
+	// Calculate the positions of the two equal points
+	var angle1 = angle_to_mouse - spread_angle / 2; // First point's angle
+	var angle2 = angle_to_mouse + spread_angle / 2; // Second point's angle
+
+	coords[0] = x_fixed + lengthdir_x(radius, angle1);
+	coords[1] = y_fixed + lengthdir_y(radius, angle1);
+	coords[2] = x_fixed + lengthdir_x(radius, angle2);
+	coords[3] = y_fixed + lengthdir_y(radius, angle2);
+	
+}
+
 
 function create_bullet_types(_name, _damage, _speed, _timer, _sprite){
     return {
@@ -65,38 +90,14 @@ _damage)
     _y_coord,
     layer,
     obj_bullets,
-    {
+	{
         creator:		_creator,
         bullet_type:	_bullet_type,
         angle_offset:	_firing_angle_offset,
         damage:    _damage
-    }
-);
+		}
+	);
 	
-	
-	//var bullets = instance_create_layer(
-	//_x_coord,
-	//_y_coord,
-	//layer,
-	//obj_bullets)
-	//{
-	//	bullets.creator = _creator; 
-		
-	//	if (bullets.creator != obj_player_functions.id) 
-	//	bullets.current_bullet_type = bullets.enemy_default
-	//	else
-	//	bullets.current_bullet_type = _bullet_type;
-		
-	//	bullets.direction = _creator.rotation_angle  + _firing_angle_offset;
-	//	bullets.image_angle = _creator.rotation_angle + _firing_angle_offset;
-	//	bullets.x = _x_coord;
-	//	bullets.y = _y_coord;
-	//	bullets.sprite_index = bullets.current_bullet_type.sprite;
-	//	bullets.life_timer = bullets.current_bullet_type.life_timer;
-	//	bullets.speed = bullets.current_bullet_type.bullet_speed;
-	//	if (bullets.current_bullet_type.bullet_name == "Flamer") bullets.rotation = random(359);
-	//	else rotation = 0;
-	//}	
 }
 
 

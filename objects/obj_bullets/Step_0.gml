@@ -29,9 +29,9 @@ if (current_bullet_type.bullet_name == "Rocket") {
 		else speed = 0;
 	
 		if(alive) instance_create_layer(x,y,layer,obj_rocket_smoke);
-		if (instance_exists(obj_wall_parent))
+		if (instance_exists(obj_enemy_parent))
 		{
-			target = instance_nearest(x,y, obj_wall_parent);
+			target = instance_nearest(x,y, obj_enemy_parent);
 			var angle_diff = angle_difference(image_angle, point_direction(x,y,target.x,target.y));
 			image_angle -= min(abs(angle_diff), turn_radius) * sign(angle_diff);
 			turn_radius += 0.01;
@@ -72,7 +72,7 @@ if (hit_wall == noone)
 
 if (hit_wall != noone)
 {
-	show_debug_message( "I hit a " + object_get_name(hit_wall.object_index) )
+
     if (current_bullet_type.bullet_name != "Flamer")
     {
         instance_destroy();
