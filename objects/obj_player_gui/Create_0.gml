@@ -177,31 +177,79 @@ function draw_arc_thick_rounded(x, y, radius, thickness, start_angle, arc_angle,
     );
 }
 
-power_triangle_radius = 250;
+power_triangle_radius = 150;
 power_triangle_center = [600, 600];
 power_triangle_center_radius = 10;
-theta = 90;
-var theta_r = degtorad(theta);
+theta = 0;
+theta_r = degtorad(theta);
 
 power_triangle_center_is_grabbed = false;
 
+
+p_t_top				= [power_triangle_center[0] + power_triangle_radius * cos(theta_r), power_triangle_center[1] + power_triangle_radius * sin(theta_r)];
+p_t_right			= [power_triangle_center[0] + power_triangle_radius * cos(theta_r + degtorad(120)), power_triangle_center[1] + power_triangle_radius * sin(theta_r + degtorad(120))];
+p_t_left			= [power_triangle_center[0] + power_triangle_radius * cos(theta_r + degtorad(240)), power_triangle_center[1] + power_triangle_radius * sin(theta_r + degtorad(240))];
+p_t_top_right		= [(p_t_top[0] + p_t_right[0])/2, (p_t_top[1] + p_t_right[1])/2];
+p_t_right_left		= [(p_t_right[0] + p_t_left[0])/2, (p_t_right[1] + p_t_left[1])/2];
+p_t_left_top		= [(p_t_left[0] + p_t_top[0])/2, (p_t_left[1] + p_t_top[1])/2];
+p_t_center			= power_triangle_center;
+p_t_current_center	= [p_t_center[0],p_t_center[1]];
+
 power_triangle = {
-    top: {
-        tx: power_triangle_center[0] + power_triangle_radius * cos(theta_r),
-        ty: power_triangle_center[1] + power_triangle_radius * sin(theta_r)
-    },
-    right: {
-        rx: power_triangle_center[0] + power_triangle_radius * cos(theta_r + degtorad(120)),
-        ry: power_triangle_center[1] + power_triangle_radius * sin(theta_r + degtorad(120))
-    },
-    left: {
-        lx: power_triangle_center[0] + power_triangle_radius * cos(theta_r + degtorad(240)),
-        ly: power_triangle_center[1] + power_triangle_radius * sin(theta_r + degtorad(240))
-    }
+	top:    p_t_top, 
+	right:  p_t_right,
+	left:   p_t_left,
+	top_right: p_t_top_right,
+	right_left: p_t_right_left,
+	left_top: p_t_left_top,
+	center: p_t_current_center
 };
 
+p_t_w_line_length = point_distance(p_t_top[0], p_t_top[1], p_t_current_center[0], p_t_current_center[1]);
+p_t_s_line_length = point_distance(p_t_right[0], p_t_right[1], p_t_current_center[0], p_t_current_center[1]);
+p_t_e_line_length = point_distance(p_t_left[0], p_t_left[1], p_t_current_center[0], p_t_current_center[1]);
 
+p_t_lines = {
+	weapons: { 
+		top: power_triangle.top,
+		center: power_triangle.center,
+		length: p_t_w_line_length
+		},
+	shields: {
+		top: power_triangle.right,
+		center: power_triangle.center,
+		length: p_t_s_line_length
+		
+	},
+	engines: {
+		top: power_triangle.left,
+		center: power_triangle.center,
+		length: p_t_e_line_length
+	}
+}
 
+power_triangle_center_coords = ["center", "top", "right", "left", "top right", "right left", "left top"]; 
+
+p_t_points = [
+p_t_top,
+p_t_right,
+p_t_left,
+p_t_top_right,		
+p_t_right_left,		
+p_t_left_top,		
+p_t_center,			
+p_t_current_center	
+];
+
+power_triangle_center_coords_index = 0;
+
+function cycle_power_triangle(_array, _index) {
 	
+	if (_index > _array.array_length(_array)) _index = 0;
+		
+}
+	
+	
+
 	
 	

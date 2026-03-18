@@ -52,3 +52,4 @@ if (health_state != PLAYER_HEALTH_STATE.DEAD && health_state != PLAYER_HEALTH_ST
 	c_white,1);
 }
 
+draw_triangle(x,y, gun_barrels[0], gun_barrels[1], gun_barrels[2], gun_barrels[3], 1);

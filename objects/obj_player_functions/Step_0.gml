@@ -73,73 +73,88 @@ if (gun_select_keys != prev_gun)
     current_weapon = weapon_slots[gun_select_keys];
 }
 
-
-if (mouse_check_button(2)) {
-		
-	if (firing_speed_cooldown <= 0)
-    {
-        find_gun_create_coordinates(rocket_launchers,15,210);
-        shoot_bullets(
-            id,
-            rocket_launchers[0],
-            rocket_launchers[1],
-            current_secondary_weapon.bullet_type,
-            current_secondary_weapon.bullet_angle,
-            current_secondary_weapon.num_bullets,
-            damage
-        );
-
-        firing_speed_cooldown = current_secondary_weapon.firing_speed;
-    }
-
-    if (firing_speed_cooldown == current_secondary_weapon.firing_speed * current_secondary_weapon.firing_speed_offset)
-    {
-        find_gun_create_coordinates(rocket_launchers,15,210);
-        shoot_bullets(
-            id,
-            rocket_launchers[2],
-            rocket_launchers[3],
-            current_secondary_weapon.bullet_type,
-            current_secondary_weapon.bullet_angle,
-            current_secondary_weapon.num_bullets,
-            damage
-        );
-    }	
-}
-
-//fire primary
-if (mouse_check_button(1))
+var mouse_gui_x = device_mouse_x_to_gui(0);
+var mouse_gui_y = device_mouse_y_to_gui(0);
+if (!point_in_triangle(
+mouse_gui_x,
+mouse_gui_y,
+obj_player_gui.power_triangle.top[0],
+obj_player_gui.power_triangle.top[1],
+obj_player_gui.power_triangle.right[0],
+obj_player_gui.power_triangle.right[1],
+obj_player_gui.power_triangle.left[0],
+obj_player_gui.power_triangle.left[1]
+))
 {
-	if (firing_speed_cooldown <= 0)
-    {
-        find_gun_create_coordinates(gun_barrels, 26, 60);
-        shoot_bullets(
-            id,
-            gun_barrels[0],
-            gun_barrels[1],
-            current_weapon.bullet_type,
-            current_weapon.bullet_angle,
-            current_weapon.num_bullets,
-            damage
-        );
+	can_shoot = true;
+	
+	if (mouse_check_button(2)) {
+		find_gun_create_coordinates(rocket_launchers,15,210);
+		if (firing_speed_cooldown <= 0)
+	    {
+	        
+	        shoot_bullets(
+	            id,
+	            rocket_launchers[0],
+	            rocket_launchers[1],
+	            current_secondary_weapon.bullet_type,
+	            current_secondary_weapon.bullet_angle,
+	            current_secondary_weapon.num_bullets,
+	            damage
+	        );
 
-        firing_speed_cooldown = current_weapon.firing_speed;
-    }
+	        firing_speed_cooldown = current_secondary_weapon.firing_speed;
+	    }
 
-    if (firing_speed_cooldown == current_weapon.firing_speed * current_weapon.firing_speed_offset)
-    {
-        find_gun_create_coordinates(gun_barrels, 26, 60);
-        shoot_bullets(
-            id,
-            gun_barrels[2],
-            gun_barrels[3],
-            current_weapon.bullet_type,
-            current_weapon.bullet_angle,
-            current_weapon.num_bullets,
-            damage
-        );
-    }
+	    if (firing_speed_cooldown == current_secondary_weapon.firing_speed * current_secondary_weapon.firing_speed_offset)
+	    {
+	        
+	        shoot_bullets(
+	            id,
+	            rocket_launchers[2],
+	            rocket_launchers[3],
+	            current_secondary_weapon.bullet_type,
+	            current_secondary_weapon.bullet_angle,
+	            current_secondary_weapon.num_bullets,
+	            damage
+	        );
+	    }	
+	}
+
+	//fire primary
+	if (mouse_check_button(1))
+	{
+		find_gun_create_coordinates(gun_barrels, 26, 60);
+		if (firing_speed_cooldown <= 0)
+	    {
+	        shoot_bullets(
+	            id,
+	            gun_barrels[0],
+	            gun_barrels[1],
+	            current_weapon.bullet_type,
+	            current_weapon.bullet_angle,
+	            current_weapon.num_bullets,
+	            damage
+	        );
+
+	        firing_speed_cooldown = current_weapon.firing_speed;
+	    }
+
+	    if (firing_speed_cooldown == current_weapon.firing_speed * current_weapon.firing_speed_offset)
+	    {
+	        shoot_bullets(
+	            id,
+	            gun_barrels[2],
+	            gun_barrels[3],
+	            current_weapon.bullet_type,
+	            current_weapon.bullet_angle,
+	            current_weapon.num_bullets,
+	            damage
+	        );
+	    }
+	}
 }
+else can_shoot = false;
 
 if (current_shields < max_shields && shield_recharge_cooldown <= 0 ) {
 	current_shields = min(max_shields, current_shields + shield_recharge_rate);

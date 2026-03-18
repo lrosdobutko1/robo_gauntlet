@@ -86,41 +86,95 @@ draw_set_valign(fa_top);
 //if (player.current_shields >= player.max_shields) player.current_shields = player.max_shields;
 
 draw_triangle(
-power_triangle.top.tx,
-power_triangle.top.ty,
-power_triangle.right.rx,
-power_triangle.right.ry,
-power_triangle.left.lx,
-power_triangle.left.ly,
+power_triangle.top[0],
+power_triangle.top[1],
+power_triangle.right[0],
+power_triangle.right[1],
+power_triangle.left[0],
+power_triangle.left[1],
 1
 );
+
 
 var mouse_gui_x = device_mouse_x_to_gui(0);
 var mouse_gui_y = device_mouse_y_to_gui(0);
 
 if (point_distance(mouse_gui_x,
 mouse_gui_y, 
-power_triangle_center[0], 
-power_triangle_center[1]
+p_t_current_center[0], 
+p_t_current_center[1]
 ) <= power_triangle_center_radius)
 {
 	if (mouse_check_button(1)) {
 		power_triangle_center_is_grabbed = true;
-
 	}
 	else power_triangle_center_is_grabbed = false;
 }
 
 if (power_triangle_center_is_grabbed)
 {
-	power_triangle_center[0] = mouse_gui_x;
-	power_triangle_center[1] = mouse_gui_y;
+    if (point_in_triangle(
+        mouse_gui_x,
+        mouse_gui_y,
+        power_triangle.top[0],
+		power_triangle.top[1],
+        power_triangle.right[0],
+		power_triangle.right[1],
+        power_triangle.left[0],
+		power_triangle.left[1]
+    )) {
+        p_t_current_center[0] = mouse_gui_x;
+        p_t_current_center[1] = mouse_gui_y;
+    }
+    else {
+        power_triangle_center_is_grabbed = false;
+    }
 }
 
+
+if keyboard_check_pressed(ord("C")){
+show_debug_message("pressed C");
+};
+
 draw_circle(
-power_triangle_center[0],
-power_triangle_center[1],
+p_t_current_center[0],
+p_t_current_center[1],
 10,
 1);
-show_debug_message(power_triangle_center_is_grabbed);
+
+draw_line(
+p_t_lines.weapons.top[0],
+p_t_lines.weapons.top[1],
+p_t_lines.weapons.center[0],
+p_t_lines.weapons.center[1]
+);
+
+draw_line(
+p_t_lines.shields.top[0],
+p_t_lines.shields.top[1],
+p_t_lines.shields.center[0],
+p_t_lines.shields.center[1]
+);
+
+draw_line(
+p_t_lines.engines.top[0],
+p_t_lines.engines.top[1],
+p_t_lines.engines.center[0],
+p_t_lines.engines.center[1]
+);
+
+
+if (p_t_current_center[0] != p_t_center[0] || p_t_current_center[1] != p_t_center[1]) {
+	show_debug_message("not center");	
+}
+else show_debug_message("center");	
+
+p_t_w_line_length = point_distance(p_t_top[0], p_t_top[1], p_t_current_center[0], p_t_current_center[1]);
+p_t_s_line_length = point_distance(p_t_right[0], p_t_right[1], p_t_current_center[0], p_t_current_center[1]);
+p_t_e_line_length = point_distance(p_t_left[0], p_t_left[1], p_t_current_center[0], p_t_current_center[1]);
+
+debug = $"line lengths:" + "\n" +
+$"weaponss: {p_t_lines.weapons.length}" + "\n";
+
+show_debug_message(debug);
 

@@ -218,7 +218,7 @@ muzzle_flash_frame = 0;
 	
 //}
 
-
+can_shoot = false;
 function shoot_rockets(rocket_offset)
 {
 	var rocket_cycle_countdown = rocket_offset;
@@ -255,7 +255,6 @@ function shoot_rockets(rocket_offset)
 		}	
 	}
 }
-
 
 function get_sight_line(x_start, y_start, angle, target_object) {
     var max_distance = 800; // Large value to simulate infinity
