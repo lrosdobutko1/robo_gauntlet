@@ -5,14 +5,13 @@ orb = spr_player_health_orb;
 spinner = spr_player_health_spinner;
 bar = spr_player_shield_bar;
 
+current_hp = 0;
+max_hp = 0;
+hp_percent = 1;
 
-current_hp = player.current_hp;
-max_hp = player.max_hp;
-hp_percent = current_hp / max_hp;
-
-current_shield = player.current_shields;
-max_shields = player.max_shields;
-shield_percent = current_shield / max_shields;
+current_shield = 0;
+max_shields = 0;
+shield_percent = 1;
 
 max_bar_length = 345 * shield_percent;
 current_bar_length = max_bar_length;
@@ -25,12 +24,14 @@ damage_counter_value = damage_counter;
 rotation = 0;
 
 max_color = 255;
-shield_color_offset = player.current_shields / player. max_shields;
+shield_color_offset = 0;
 shield_bar_start_color = make_colour_rgb(
 	max_color * (1-shield_color_offset), 
 	max_color * shield_color_offset, 
 	max_color * shield_color_offset
 );
+
+
 
 shield_bar_end_color = make_colour_rgb(
 	max_color * (1-shield_color_offset), 
@@ -209,24 +210,12 @@ p_t_w_line_length = point_distance(p_t_top[0], p_t_top[1], p_t_current_center[0]
 p_t_s_line_length = point_distance(p_t_right[0], p_t_right[1], p_t_current_center[0], p_t_current_center[1]);
 p_t_e_line_length = point_distance(p_t_left[0], p_t_left[1], p_t_current_center[0], p_t_current_center[1]);
 
-p_t_lines = {
-	weapons: { 
-		top: power_triangle.top,
-		center: power_triangle.center,
-		length: p_t_w_line_length
-		},
-	shields: {
-		top: power_triangle.right,
-		center: power_triangle.center,
-		length: p_t_s_line_length
-		
-	},
-	engines: {
-		top: power_triangle.left,
-		center: power_triangle.center,
-		length: p_t_e_line_length
-	}
-}
+max_p_t_line_length = point_distance(
+power_triangle.top[0], 
+power_triangle.top[1],
+power_triangle.right[0],
+power_triangle.right[1]
+);
 
 power_triangle_center_coords = ["center", "top", "right", "left", "top right", "right left", "left top"]; 
 

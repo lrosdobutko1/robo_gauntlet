@@ -1,3 +1,32 @@
+if (instance_exists(player)) {
+	current_hp = player.current_hp;
+	max_hp = player.max_hp;
+	hp_percent = current_hp / max_hp;
+
+	current_shield = player.current_shields;
+	max_shields = player.max_shields;
+	shield_percent = current_shield / max_shields;
+
+	max_bar_length = 345 * shield_percent;
+	current_bar_length = max_bar_length;
+
+	took_damage = false;
+
+	damage_counter = 240;
+	damage_counter_value = damage_counter;
+
+	rotation = 0;
+
+	max_color = 255;
+	shield_color_offset = player.current_shields / player. max_shields;
+	shield_bar_start_color = make_colour_rgb(
+		max_color * (1-shield_color_offset), 
+		max_color * shield_color_offset, 
+		max_color * shield_color_offset
+	);
+
+}
+
 var _rotation_offset = 1 - (obj_player_functions.current_hp / obj_player_functions.max_hp);
 rotation = (rotation > 359) ? 0 : rotation + (1.5 * _rotation_offset);
 
@@ -143,38 +172,40 @@ p_t_current_center[1],
 1);
 
 draw_line(
-p_t_lines.weapons.top[0],
-p_t_lines.weapons.top[1],
-p_t_lines.weapons.center[0],
-p_t_lines.weapons.center[1]
+power_triangle.top[0],
+power_triangle.top[1],
+p_t_current_center[0],
+p_t_current_center[1]
 );
 
 draw_line(
-p_t_lines.shields.top[0],
-p_t_lines.shields.top[1],
-p_t_lines.shields.center[0],
-p_t_lines.shields.center[1]
+power_triangle.right[0],
+power_triangle.right[1],
+p_t_current_center[0],
+p_t_current_center[1]
 );
 
 draw_line(
-p_t_lines.engines.top[0],
-p_t_lines.engines.top[1],
-p_t_lines.engines.center[0],
-p_t_lines.engines.center[1]
+power_triangle.left[0],
+power_triangle.left[1],
+p_t_current_center[0],
+p_t_current_center[1]
 );
 
 
 if (p_t_current_center[0] != p_t_center[0] || p_t_current_center[1] != p_t_center[1]) {
-	show_debug_message("not center");	
+	
 }
-else show_debug_message("center");	
+else {}
 
 p_t_w_line_length = point_distance(p_t_top[0], p_t_top[1], p_t_current_center[0], p_t_current_center[1]);
 p_t_s_line_length = point_distance(p_t_right[0], p_t_right[1], p_t_current_center[0], p_t_current_center[1]);
 p_t_e_line_length = point_distance(p_t_left[0], p_t_left[1], p_t_current_center[0], p_t_current_center[1]);
 
 debug = $"line lengths:" + "\n" +
-$"weaponss: {p_t_lines.weapons.length}" + "\n";
+$"weaponss: {p_t_w_line_length}" + "\n" +
+$"weaponss: {p_t_s_line_length}" + "\n" +
+$"weaponss: {p_t_e_line_length}" + "\n";
 
-show_debug_message(debug);
+//show_debug_message(max_p_t_line_length);
 

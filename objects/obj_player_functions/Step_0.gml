@@ -1,5 +1,15 @@
 
+if (instance_exists(obj_player_gui)) {
+	max_weapon_modifier = 1.5 - (obj_player_gui.p_t_w_line_length / obj_player_gui.max_p_t_line_length);
+	max_shield_modifier = 1.5 - (obj_player_gui.p_t_s_line_length / obj_player_gui.max_p_t_line_length);
+	max_engine_modifier = 1.5 - (obj_player_gui.p_t_e_line_length / obj_player_gui.max_p_t_line_length);
+}
 
+debug = $"w mod: {max_weapon_modifier} \n" +
+$"s mod: {max_shield_modifier} \n" +
+$"e mod: {max_engine_modifier} \n";
+
+show_debug_message(debug);
 
 if (current_hp == max_hp) health_state = PLAYER_HEALTH_STATE.FULL;
 if (current_hp < max_hp && current_hp > max_hp * 0.75) health_state = PLAYER_HEALTH_STATE.HIGH;
@@ -8,6 +18,8 @@ if (current_hp <= max_hp * 0.25 && current_hp > max_hp * 0.10) health_state = PL
 if (current_hp <= max_hp * 0.10 && current_hp > 0) health_state = PLAYER_HEALTH_STATE.CRITICAL;
 if (current_hp <= 0) health_state = PLAYER_HEALTH_STATE.DEAD;
 if (explode_anim >= (sprite_get_number(spr_explode1) - 1)) health_state = PLAYER_HEALTH_STATE.DESTROYED;
+
+
 
 
 switch (health_state)
@@ -89,10 +101,11 @@ obj_player_gui.power_triangle.left[1]
 	can_shoot = true;
 	
 	if (mouse_check_button(2)) {
+		
 		find_gun_create_coordinates(rocket_launchers,15,210);
+		
 		if (firing_speed_cooldown <= 0)
 	    {
-	        
 	        shoot_bullets(
 	            id,
 	            rocket_launchers[0],
@@ -134,13 +147,13 @@ obj_player_gui.power_triangle.left[1]
 	            current_weapon.bullet_type,
 	            current_weapon.bullet_angle,
 	            current_weapon.num_bullets,
-	            damage
+	            current_weapon.damage
 	        );
 
-	        firing_speed_cooldown = current_weapon.firing_speed;
+	        firing_speed_cooldown = round(current_weapon.firing_speed / max_weapon_modifier);
 	    }
 
-	    if (firing_speed_cooldown == current_weapon.firing_speed * current_weapon.firing_speed_offset)
+	    if (firing_speed_cooldown == round(current_weapon.firing_speed / max_weapon_modifier) * current_weapon.firing_speed_offset)
 	    {
 	        shoot_bullets(
 	            id,
@@ -149,7 +162,7 @@ obj_player_gui.power_triangle.left[1]
 	            current_weapon.bullet_type,
 	            current_weapon.bullet_angle,
 	            current_weapon.num_bullets,
-	            damage
+	            current_weapon.damage
 	        );
 	    }
 	}

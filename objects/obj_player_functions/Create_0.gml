@@ -8,7 +8,6 @@ base_hp = 40;
 max_hp = (base_hp * level) + power(level,level);
 current_hp = max_hp;
 
-
 base_shields = 20 + level;
 max_shields = (base_shields + max_hp/2);
 current_shields = max_shields;
@@ -16,9 +15,6 @@ shield_absorb_rate = 0.25 + level*0.03;
 shield_recharge_rate = 0.005;
 max_shield_recharge_cooldown = 240;
 shield_recharge_cooldown = 0;
-
-base_damage = 10;
-damage = base_damage * (0.05 * level);
 
 enum PLAYER_HEALTH_STATE
 {
@@ -44,17 +40,11 @@ image_xscale = image_scale;
 image_yscale = image_scale;
 flash = 0;
 
+#region	movement and animation
 rotation_angle = point_direction(x,y,mouse_x,mouse_y);
 leg_angle = 0;
 leg_anim = 0;
 
-
-//tile_map = layer_tilemap_get_id("level_tiles");
-
-//key_left = false;
-//key_right = false;
-//key_up = false;
-//key_down = false;
 moving = false;
 
 h_speed = 0;
@@ -64,17 +54,7 @@ walk_speed = 2;
 
 x = obj_player_collision.x;
 y = obj_player_collision.y;
-
-//enum current_weapon 
-//{
-//	NONE,
-//	MACHINEGUN,
-//	SHOTGUN,
-//	GRENADE,
-//	LASER,
-//	BLASTER,	
-//	FLAMER,
-//};
+#endregion
 
 
 //Player Weapon Selection code
@@ -115,16 +95,6 @@ function weapon_base(
 }
 
 
-//function create_bullet_types(_name, _damage, _speed, _timer, _sprite){
-//    return {
-//        bullet_name: _name,
-//        damage: _damage,
-//		bullet_speed: _speed,
-//		life_timer: _timer,
-//        sprite: _sprite
-//    };
-//}
-
 bullet_types = {
     autocannon: create_bullet_types("Autocannon", 1,  8,  -1,  spr_player_bullet_cannon),
     shotgun:    create_bullet_types("Shotgun",    1,  8,  -1,  spr_player_bullet_shot),
@@ -159,11 +129,16 @@ weapon_slots = [
 //*****replace current_weapon later*****//
 current_weapon = weapon_slots[1];
 current_secondary_weapon = player_weapons.rockets;
-
 #endregion
-damage = 1;
 
-gun_counter = 0;
+if (instance_exists(obj_player_gui)) {
+	max_weapon_modifier = 1.5 - (obj_player_gui.p_t_w_line_length / obj_player_gui.max_p_t_line_length);
+	max_shield_modifier = 1.5 - (obj_player_gui.p_t_s_line_length / obj_player_gui.max_p_t_line_length);
+	max_engine_modifier = 1.5 - (obj_player_gui.p_t_e_line_length / obj_player_gui.max_p_t_line_length);
+}
+
+damage_scale_modifier = 1 + (level * 0.5);
+
 gun_anim = 0;
 
 gun_select_keys = 0;
@@ -174,7 +149,6 @@ firing_angle = image_angle;
 
 firing_speed_cooldown = current_weapon.firing_speed;
 
-firing_offset = round(current_weapon.firing_speed*current_weapon.firing_speed_offset);
 
 player_rocket_cooldown = 2400;
 player_rocket_timer = player_rocket_cooldown;
@@ -192,141 +166,13 @@ casings_eject = array_create(4);
 rocket_launchers = array_create(4);
 muzzle_flash_frame = 0;
 
-
-//function find_gun_create_coordinates(coords, radius, spread_angle)
-//{
-	
-//	//find the coordinates to create bullets at by calculating isoscoles triangle
-//	var x_fixed = x;
-//	var y_fixed = y;
-
-//	// Triangle parameters
-//	radius = radius * image_scale; // Distance from the fixed point to the other two points
-//	spread_angle = spread_angle; // Spread angle between the two equal points (in degrees)
-
-//	// Direction to the mouse
-//	var angle_to_mouse = point_direction(x_fixed, y_fixed, mouse_x, mouse_y);
-
-//	// Calculate the positions of the two equal points
-//	var angle1 = angle_to_mouse - spread_angle / 2; // First point's angle
-//	var angle2 = angle_to_mouse + spread_angle / 2; // Second point's angle
-
-//	coords[0] = x_fixed + lengthdir_x(radius, angle1);
-//	coords[1] = y_fixed + lengthdir_y(radius, angle1);
-//	coords[2] = x_fixed + lengthdir_x(radius, angle2);
-//	coords[3] = y_fixed + lengthdir_y(radius, angle2);
-	
-//}
-
 can_shoot = false;
-function shoot_rockets(rocket_offset)
-{
-	var rocket_cycle_countdown = rocket_offset;
-
-	find_gun_create_coordinates(rocket_launchers,15,210)
-	
-	var creator = id;
-
-	if(rocket_cycle_countdown % 30 == 0)	
-	{
-		//right rocket
-		var right_rockets = instance_create_layer(
-		rocket_launchers[0],
-		rocket_launchers[1],
-		layer,
-		obj_player_rockets)
-		{
-			right_rockets.image_angle = rotation_angle;
-			right_rockets.direction = rotation_angle-90+(random_range(-15,15));
-		}	
-	}
-	else if(rocket_cycle_countdown % 20 == 0)
-	{
-
-		//left rocket
-		var left_rockets = instance_create_layer(
-		rocket_launchers[2],
-		rocket_launchers[3],
-		layer,
-		obj_player_rockets)
-		{
-			left_rockets.image_angle = rotation_angle;
-			left_rockets.direction = rotation_angle+90+(random_range(-15,15));
-		}	
-	}
-}
-
-function get_sight_line(x_start, y_start, angle, target_object) {
-    var max_distance = 800; // Large value to simulate infinity
-    var step_size = 2;        // How fine the collision check is
-    
-    var x_end = x_start;
-    var y_end = y_start;
-	var line_length = max_distance;
-    
-    for (var i = 0; i < max_distance; i += step_size) {
-        x_end = x_start + lengthdir_x(i, angle);
-        y_end = y_start + lengthdir_y(i, angle);
-        
-        // Pixel-perfect collision check
-        if (position_meeting(x_end, y_end, target_object)) {
-			line_length = i;
-            break; // Stop when collision is detected
-        }
-    }
-    return [x_end, y_end];
-	//return line_length;
-}
 
 
-function eject_shells(x_coord, y_coord, angle_offset)
-{
-		//eject casings
-		var casing = instance_create_layer(
-		x_coord,
-		y_coord,
-		layer,
-		obj_bullet_casing)
-		{
-			casing.direction = angle_offset + random_range(-15,15);
-			casing.image_angle = direction;
-		}
-}
 
 
-function muzzle_flash(
-gun_barrel_coords, 
-firing_speed, 
-firing_offset, 
-gun_type,
-muzzle_flash_frame
-)
-{
 
-	if (current_weapon != player_weapons.shotgun && 
-	current_weapon != player_weapons.flamer && 
-	current_weapon != player_weapons.grenade)
-	{
-		draw_sprite_ext(spr_muzzle_flash,muzzle_flash_frame,gun_barrel_coords[0],gun_barrel_coords[1],1,1,rotation_angle,c_white,1);
-		draw_sprite_ext(spr_muzzle_flash,muzzle_flash_frame,gun_barrel_coords[2],gun_barrel_coords[3],1,1,rotation_angle,c_white,1);
-	}
-	
-	if(firing_speed == firing_speed_cooldown)
-	{
-		if (current_weapon == player_weapons.shotgun || 
-		current_weapon == player_weapons.blaster ||
-		current_weapon == player_weapons.flamer)
-		{
-			if (current_weapon != player_weapons.flamer)
-			{
-				draw_sprite_ext(spr_muzzle_flash,muzzle_flash_frame,gun_barrel_coords[0],gun_barrel_coords[1],1,1,rotation_angle,c_white,1);
-				draw_sprite_ext(spr_muzzle_flash,muzzle_flash_frame,gun_barrel_coords[2],gun_barrel_coords[3],1,1,rotation_angle,c_white,1);
-			}
-			
-		}
-	}
-	
-}
+
 
 
 
