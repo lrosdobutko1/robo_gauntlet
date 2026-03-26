@@ -15,8 +15,6 @@ if (instance_exists(player)) {
 	damage_counter = 240;
 	damage_counter_value = damage_counter;
 
-	rotation = 0;
-
 	max_color = 255;
 	shield_color_offset = player.current_shields / player. max_shields;
 	shield_bar_start_color = make_colour_rgb(
@@ -84,7 +82,20 @@ draw_set_valign(fa_middle);
 draw_text_colour(
 gui_position.self_x - gui_position.offset_x, 
 gui_position.self_y - gui_position.offset_y, 
-round(hp_percent*100),
+$"{round(hp_percent*100)}",
+c_black,
+c_grey,
+c_blue,
+c_red,1);
+
+draw_set_font(fnt_arial_black_16);
+draw_set_halign(fa_center);
+draw_set_valign(fa_middle);
+
+draw_text_colour(
+gui_position.self_x - gui_position.offset_x, 
+gui_position.self_y - gui_position.offset_y+35, 
+"%",
 c_black,
 c_grey,
 c_blue,
@@ -134,10 +145,12 @@ p_t_current_center[0],
 p_t_current_center[1]
 ) <= power_triangle_center_radius)
 {
-	if (mouse_check_button(1)) {
+	if (mouse_check_button_pressed(1)) {
 		power_triangle_center_is_grabbed = true;
 	}
-	else power_triangle_center_is_grabbed = false;
+	if (mouse_check_button_released(1)) {
+    power_triangle_center_is_grabbed = false;
+}
 }
 
 if (power_triangle_center_is_grabbed)

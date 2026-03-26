@@ -58,6 +58,7 @@
   },
   "name":"Robo Gauntlet",
   "resources":[
+    {"id":{"name":"fnt_arial_black_16","path":"fonts/fnt_arial_black_16/fnt_arial_black_16.yy",},},
     {"id":{"name":"fnt_hyper_oxide_16","path":"fonts/fnt_hyper_oxide_16/fnt_hyper_oxide_16.yy",},},
     {"id":{"name":"fnt_hyper_oxide_32","path":"fonts/fnt_hyper_oxide_32/fnt_hyper_oxide_32.yy",},},
     {"id":{"name":"scribble_fallback_font","path":"fonts/scribble_fallback_font/scribble_fallback_font.yy",},},

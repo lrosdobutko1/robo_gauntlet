@@ -52,8 +52,8 @@ v_speed = 0;
 
 walk_speed = 2;
 
-x = obj_player_collision.x;
-y = obj_player_collision.y;
+//x = obj_player_collision.x;
+//y = obj_player_collision.y;
 #endregion
 
 

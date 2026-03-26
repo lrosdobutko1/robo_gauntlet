@@ -118,8 +118,13 @@ function camera_shake()
 }
 
 function calculate_damage(_target, _damage_amount) {
-	
+	show_debug_message($"health: {_target.current_hp} shields: {_target.current_shields} \n");
 	var shield_damage = _damage_amount;
+	
+	if (_target == obj_player_functions) {
+			shield_damage = _damage_amount / _target.max_shield_modifier;
+	}
+	
 	var health_damage = _damage_amount;
 	var shield_rollover = 0;
 	
@@ -134,6 +139,8 @@ function calculate_damage(_target, _damage_amount) {
 	_target.current_shields = max(0, _target.current_shields - shield_damage);
 	_target.current_hp -= health_damage;
 	_target.shield_recharge_cooldown = _target.max_shield_recharge_cooldown;
+	
+	show_debug_message($"health: {_target.current_hp} shields: {_target.current_shields} \n shields: {shield_damage} \n health: {health_damage}");
 	
 }
 

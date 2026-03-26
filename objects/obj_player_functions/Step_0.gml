@@ -5,11 +5,11 @@ if (instance_exists(obj_player_gui)) {
 	max_engine_modifier = 1.5 - (obj_player_gui.p_t_e_line_length / obj_player_gui.max_p_t_line_length);
 }
 
-debug = $"w mod: {max_weapon_modifier} \n" +
-$"s mod: {max_shield_modifier} \n" +
-$"e mod: {max_engine_modifier} \n";
+debug = $"weapon CD : {round(current_weapon.firing_speed / max_weapon_modifier)} \n" +
+$"weapon OS : {round(current_weapon.firing_speed * current_weapon.firing_speed_offset / max_weapon_modifier)}\n" +
+$"weapon Mod: {max_weapon_modifier}";
 
-show_debug_message(debug);
+show_debug_message(debug); 
 
 if (current_hp == max_hp) health_state = PLAYER_HEALTH_STATE.FULL;
 if (current_hp < max_hp && current_hp > max_hp * 0.75) health_state = PLAYER_HEALTH_STATE.HIGH;
@@ -18,7 +18,6 @@ if (current_hp <= max_hp * 0.25 && current_hp > max_hp * 0.10) health_state = PL
 if (current_hp <= max_hp * 0.10 && current_hp > 0) health_state = PLAYER_HEALTH_STATE.CRITICAL;
 if (current_hp <= 0) health_state = PLAYER_HEALTH_STATE.DEAD;
 if (explode_anim >= (sprite_get_number(spr_explode1) - 1)) health_state = PLAYER_HEALTH_STATE.DESTROYED;
-
 
 
 
@@ -153,7 +152,7 @@ obj_player_gui.power_triangle.left[1]
 	        firing_speed_cooldown = round(current_weapon.firing_speed / max_weapon_modifier);
 	    }
 
-	    if (firing_speed_cooldown == round(current_weapon.firing_speed / max_weapon_modifier) * current_weapon.firing_speed_offset)
+	    if (firing_speed_cooldown == round(current_weapon.firing_speed / max_weapon_modifier * current_weapon.firing_speed_offset))
 	    {
 	        shoot_bullets(
 	            id,
@@ -170,14 +169,13 @@ obj_player_gui.power_triangle.left[1]
 else can_shoot = false;
 
 if (current_shields < max_shields && shield_recharge_cooldown <= 0 ) {
-	current_shields = min(max_shields, current_shields + shield_recharge_rate);
+	current_shields = min(max_shields, current_shields + (shield_recharge_rate * max_shield_modifier));
 }
 
 
 
 if (shield_recharge_cooldown > 0)
-shield_recharge_cooldown --;
+shield_recharge_cooldown -= 0 * max_shield_modifier;
 
 if (firing_speed_cooldown > 0)
 firing_speed_cooldown --;
-
