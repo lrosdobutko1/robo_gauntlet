@@ -230,5 +230,3 @@ else
 	if(path_exists(path)) path_delete(path);
 } 
 
-show_debug_message("shields: " + string(current_shields));
-show_debug_message("health: " + string(current_hp));

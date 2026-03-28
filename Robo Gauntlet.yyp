@@ -394,6 +394,7 @@
     {"id":{"name":"spr_player_guns_laser","path":"sprites/spr_player_guns_laser/spr_player_guns_laser.yy",},},
     {"id":{"name":"spr_player_guns_shotgun","path":"sprites/spr_player_guns_shotgun/spr_player_guns_shotgun.yy",},},
     {"id":{"name":"spr_player_guns","path":"sprites/spr_player_guns/spr_player_guns.yy",},},
+    {"id":{"name":"spr_player_health_background","path":"sprites/spr_player_health_background/spr_player_health_background.yy",},},
     {"id":{"name":"spr_player_health_border","path":"sprites/spr_player_health_border/spr_player_health_border.yy",},},
     {"id":{"name":"spr_player_health_orb","path":"sprites/spr_player_health_orb/spr_player_health_orb.yy",},},
     {"id":{"name":"spr_player_health_spinner","path":"sprites/spr_player_health_spinner/spr_player_health_spinner.yy",},},

@@ -5,12 +5,6 @@ if (instance_exists(obj_player_gui)) {
 	max_engine_modifier = 1.5 - (obj_player_gui.p_t_e_line_length / obj_player_gui.max_p_t_line_length);
 }
 
-debug = $"weapon CD : {round(current_weapon.firing_speed / max_weapon_modifier)} \n" +
-$"weapon OS : {round(current_weapon.firing_speed * current_weapon.firing_speed_offset / max_weapon_modifier)}\n" +
-$"weapon Mod: {max_weapon_modifier}";
-
-show_debug_message(debug); 
-
 if (current_hp == max_hp) health_state = PLAYER_HEALTH_STATE.FULL;
 if (current_hp < max_hp && current_hp > max_hp * 0.75) health_state = PLAYER_HEALTH_STATE.HIGH;
 if (current_hp <= max_hp * 0.75 && current_hp > max_hp * 0.25) health_state = PLAYER_HEALTH_STATE.MED;
@@ -169,13 +163,13 @@ obj_player_gui.power_triangle.left[1]
 else can_shoot = false;
 
 if (current_shields < max_shields && shield_recharge_cooldown <= 0 ) {
-	current_shields = min(max_shields, current_shields + (shield_recharge_rate * max_shield_modifier));
+	current_shields = min(max_shields, current_shields + (shield_recharge_rate / max_shield_modifier));
 }
 
 
 
 if (shield_recharge_cooldown > 0)
-shield_recharge_cooldown -= 0 * max_shield_modifier;
+shield_recharge_cooldown -= 1 * max_shield_modifier;
 
 if (firing_speed_cooldown > 0)
 firing_speed_cooldown --;

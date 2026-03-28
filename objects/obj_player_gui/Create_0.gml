@@ -1,5 +1,6 @@
 player = obj_player_functions;
 
+bg = spr_player_health_background;
 border = spr_player_health_border;
 orb = spr_player_health_orb;
 spinner = spr_player_health_spinner;
@@ -46,11 +47,11 @@ function GuiPositions(_x, _y){
 		self_y: _y,
 		offset_x: 5,
 		offset_y: 10,
-		weapon_label_x: _x+650,
-		weapon_label_y: _y-58
+		weapon_label_x: _x+685,
+		weapon_label_y: _y-50,
 	};
 }
-gui_position = GuiPositions(100, 100);
+gui_position = GuiPositions(120, 120);
 	
 uUv          = shader_get_uniform(sdr_gradient, "uUv");
 uOffset      = shader_get_uniform(sdr_gradient, "uOffset");
@@ -147,9 +148,11 @@ function draw_arc_thick_rounded(x, y, radius, thickness, start_angle, arc_angle,
     draw_primitive_end();
     shader_reset();
 
-    // -------------------------------------------------
-    // Rounded end caps (match gradient color visually)
-    // -------------------------------------------------
+    /* 
+	**************************************************
+     Rounded end caps (match gradient color visually)
+    **************************************************
+	*/ 
 
     var cap_r = thickness * 0.5;
 
@@ -178,8 +181,8 @@ function draw_arc_thick_rounded(x, y, radius, thickness, start_angle, arc_angle,
     );
 }
 
-power_triangle_radius = 150;
-power_triangle_center = [600, 600];
+power_triangle_radius = 96;
+power_triangle_center = [gui_position.self_x+900, gui_position.self_y+2];
 power_triangle_center_radius = 10;
 theta = 0;
 theta_r = degtorad(theta);

@@ -97,7 +97,7 @@ if (hit_enemy == noone)
 if (hit_enemy != noone)
 {
 	
-	show_debug_message( "I hit a " + string(object_get_name(hit_enemy.object_index)) )
+
 	
     if (current_bullet_type.bullet_name != "Flamer")
     {
