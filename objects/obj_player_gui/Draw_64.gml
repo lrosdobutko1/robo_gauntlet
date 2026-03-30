@@ -113,22 +113,11 @@ c_white,
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
+var weapons_color = get_value_from_length(p_t_w_line_length, max_p_t_line_length);
+var shields_color = get_value_from_length(p_t_s_line_length, max_p_t_line_length);
+var engines_color = get_value_from_length(p_t_e_line_length, max_p_t_line_length);
 
-
-//if (took_damage) damage_counter_value --;
-//if (damage_counter_value <= 0) {
-//	took_damage = false;
-//	damage_counter_value = damage_counter;
-//}
-//if(!took_damage) player.current_shields += 0.01;
-//if (player.current_shields >= player.max_shields) player.current_shields = player.max_shields;
-
-var weapons_color = 255 * (1 - clamp(p_t_w_line_length / max_p_t_line_length,0,1)); //red
-var shields_color = 255 * (1 - clamp(p_t_s_line_length / max_p_t_line_length,0,1)); //blue
-var engines_color = 255 * (1 - clamp(p_t_e_line_length / max_p_t_line_length,0,1)); //green
 var triangle_color = make_colour_rgb(weapons_color, engines_color, shields_color);
-
-show_debug_message($"W: {weapons_color}, S: {shields_color}, E:{engines_color}");
 
 draw_line_width_colour(
 power_triangle.top[0],
@@ -175,6 +164,7 @@ p_t_current_center[1]
 	}
 	if (mouse_check_button_released(1)) {
     power_triangle_center_is_grabbed = false;
+	p_t_center_coords_index = 0;
 }
 }
 
@@ -199,9 +189,21 @@ if (power_triangle_center_is_grabbed)
 }
 
 
-if keyboard_check_pressed(ord("C")){
-show_debug_message("pressed C");
-};
+//cycle_power_triangle(p_t_points, p_t_center_coords_index);
+	if keyboard_check_pressed(ord("C")){
+		p_t_current_center = [p_t_points[p_t_center_coords_index][0], p_t_points[p_t_center_coords_index][1]]
+		show_debug_message(p_t_center_coords_index);
+		p_t_center_coords_index ++;
+		
+		if (p_t_center_coords_index > array_length(p_t_points)-1) {
+		p_t_center_coords_index = 0;
+		}
+		
+			
+	}
+	
+
+
 
 draw_circle_colour(
 p_t_current_center[0],
@@ -256,10 +258,7 @@ draw_text(p_t_top[0]+15, p_t_top[1]-9, "weapons");
 draw_text(p_t_left[0]-45, p_t_left[1]-28, "engines");
 draw_text(p_t_right[0]-45, p_t_right[1]+7, "shields");
 
-debug = $"line lengths:" + "\n" +
-$"weaponss: {p_t_w_line_length}" + "\n" +
-$"weaponss: {p_t_s_line_length}" + "\n" +
-$"weaponss: {p_t_e_line_length}" + "\n";
+
 
 
 

@@ -181,6 +181,24 @@ function draw_arc_thick_rounded(x, y, radius, thickness, start_angle, arc_angle,
     );
 }
 
+
+function get_value_from_length(_len, _max_len)
+{
+    len = clamp(_len, 0, _max_len);
+
+    var half = _max_len * 0.5;
+
+    // First half: constant
+    if (_len <= half)
+    {
+        return 255;
+    }
+
+    // Second half: linear drop
+    var t = (_len - half) / half; // normalized 0 → 1
+    return lerp(255, 0, t);
+}
+
 power_triangle_radius = 96;
 power_triangle_center = [gui_position.self_x+900, gui_position.self_y+2];
 power_triangle_center_radius = 10;
@@ -220,28 +238,19 @@ power_triangle.right[0],
 power_triangle.right[1]
 );
 
-power_triangle_center_coords = ["center", "top", "right", "left", "top right", "right left", "left top"]; 
-
 p_t_points = [
+p_t_center,
 p_t_top,
 p_t_right,
 p_t_left,
 p_t_top_right,		
 p_t_right_left,		
-p_t_left_top,		
-p_t_center,			
-p_t_current_center	
+p_t_left_top,			
 ];
 
-power_triangle_center_coords_index = 0;
+p_t_center_coords_index = 1;
 
-function cycle_power_triangle(_array, _index) {
-	
-	if (_index > _array.array_length(_array)) _index = 0;
-		
-}
-	
-	
+
 
 	
 	

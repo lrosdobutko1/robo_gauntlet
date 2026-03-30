@@ -163,7 +163,7 @@ obj_player_gui.power_triangle.left[1]
 else can_shoot = false;
 
 if (current_shields < max_shields && shield_recharge_cooldown <= 0 ) {
-	current_shields = min(max_shields, current_shields + (shield_recharge_rate / max_shield_modifier));
+	current_shields = min(max_shields, current_shields + (shield_recharge_rate * max_shield_modifier));
 }
 
 
