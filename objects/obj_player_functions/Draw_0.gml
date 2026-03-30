@@ -34,7 +34,8 @@ if (health_state != PLAYER_HEALTH_STATE.DEAD && health_state != PLAYER_HEALTH_ST
 	
 	//draw guns
 	draw_sprite_ext(
-	spr_player_guns,gun_anim,
+	current_weapon.weapon_sprite,
+	gun_anim,
 	obj_player_functions.x,
 	obj_player_functions.y,
 	image_scale,

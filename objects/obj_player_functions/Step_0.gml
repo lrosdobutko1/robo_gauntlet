@@ -130,9 +130,22 @@ obj_player_gui.power_triangle.left[1]
 	//fire primary
 	if (mouse_check_button(1))
 	{
+		gun_anim +=0.5;
+		
 		find_gun_create_coordinates(gun_barrels, 26, 60);
 		if (firing_speed_cooldown <= 0)
 	    {
+			//muzzle flash
+			shoot_bullets(
+	            id,
+	            gun_barrels[0],
+	            gun_barrels[1],
+	            bullet_types.muzzle_flash,
+	            current_weapon.bullet_angle,
+	            1,
+	            0
+	        );
+			//bullet
 	        shoot_bullets(
 	            id,
 	            gun_barrels[0],
@@ -148,6 +161,17 @@ obj_player_gui.power_triangle.left[1]
 
 	    if (firing_speed_cooldown == round(current_weapon.firing_speed / max_weapon_modifier * current_weapon.firing_speed_offset))
 	    {
+			//muzzle flash
+			shoot_bullets(
+	            id,
+	            gun_barrels[2],
+	            gun_barrels[3],
+	            bullet_types.muzzle_flash,
+	            current_weapon.bullet_angle,
+	            1,
+	            0
+	        );
+			//bullet
 	        shoot_bullets(
 	            id,
 	            gun_barrels[2],
@@ -165,6 +189,14 @@ else can_shoot = false;
 if (current_shields < max_shields && shield_recharge_cooldown <= 0 ) {
 	current_shields = min(max_shields, current_shields + (shield_recharge_rate * max_shield_modifier));
 }
+
+
+
+
+
+
+
+
 
 
 
