@@ -40,8 +40,8 @@ function create_bullet_types(_name, _damage, _speed, _timer, _sprite){
 /// @param {string} _creator The object that created the bullet
 /// @param {real}	_gun_barrel_x		    The x coordinate to create at
 /// @param {real}	_gun_barrel_y		    The y coordinate to create at
-/// @param {real}	_firing_offset		    The ratio to offset left and right firing
-/// @param {struct}	_gun_type			    The bullet type to set the bullet to on creation
+/// @param {struct}	bullet_type			    The bullet type to set the bullet to on creation
+/// @param {real}	_firing_angle			The primary angle to fire multiple bullets at
 /// @param {real}	_firing_angle_offset	The angle to fire multiple bullets at
 /// @param {real}	_num_bullets			The number of bullets to create and fire
 /// @param {real}	_damage					The damage each bullet does on collision
@@ -50,24 +50,28 @@ _creator,
 _gun_barrel_x, 
 _gun_barrel_y,
 _bullet_type,
+_firing_angle,
 _firing_angle_offset,
 _num_bullets,
-_damage
+_damage,
+_bullet_speed
 )
 {
 	var half = (_num_bullets - 1) / 2;
 
 	for (var i = 0; i < _num_bullets; i++)
 	{
-	    var angle = (i - half) * _firing_angle_offset;
+	    var angle_offset = (i - half) * _firing_angle_offset;
 
 	    create_bullet(
 	        _creator,
 	        _gun_barrel_x,
 	        _gun_barrel_y,
-	        angle,
+			_firing_angle,
+	        angle_offset,
 	        _bullet_type,
-	        _damage
+	        _damage,
+			_bullet_speed
 	    );
 	}
 }
@@ -77,9 +81,11 @@ function create_bullet(
 _creator, 
 _x_coord, 
 _y_coord, 
+_firing_angle,
 _firing_angle_offset, 
 _bullet_type, 
-_damage)
+_damage,
+_bullet_speed)
 {
 	
 	// Prevent trying to use a non-existent creator
@@ -94,7 +100,10 @@ _damage)
         creator:		_creator,
         bullet_type:	_bullet_type,
         angle_offset:	_firing_angle_offset,
-        damage:    _damage
+        damage:			_damage,
+		direction:		_firing_angle,
+		image_angle:    _firing_angle,
+		speed:			_bullet_speed
 		}
 	);
 	
@@ -144,14 +153,40 @@ function calculate_damage(_target, _damage_amount) {
 }
 
 
+/// @function Change_Position_Of_Object_Origin
+/// @description changes the origin of an object to be equal to the mouse X and Y coordinates if "grabbed"
+/// @param 
+/// @param 
+/// @returns void
 
+function Change_Position_Of_Object_Origin()
+{
+	if (position_meeting(mouse_x, mouse_y, test_object2))
+	{
+	    if (mouse_check_button_pressed(mb_left))
+	    {
+        
+	        var dx = mouse_x - x;
+	        var dy = mouse_y - y;
+        
+	        var dist = point_distance(0, 0, dx, dy);
+	        var dir  = point_direction(0, 0, dx, dy);
+        
+	        var local_dir = dir - image_angle;
 
+	        var local_x = lengthdir_x(dist, local_dir);
+	        var local_y = lengthdir_y(dist, local_dir);
+        
+	        var offset_x = local_x + sprite_xoffset;
+	        var offset_y = local_y + sprite_yoffset;
 
+	        sprite_set_offset(sprite_index, offset_x, offset_y);
 
-
-
-
-
+	        x = mouse_x;
+	        y = mouse_y;
+	    }
+	}
+}
 
 
 

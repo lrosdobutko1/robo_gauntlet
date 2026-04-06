@@ -13,7 +13,7 @@ activate_timer = 40;
 active = false;
 launch_speed = random_range(1,2);
 turn_radius = 2;
-speed = launch_speed;
+//speed = launch_speed;
 
 if (instance_exists(obj_enemy_parent))
 {
@@ -39,6 +39,7 @@ function resolve_x_collision(_dx, _obj)
 {
     if (_dx == 0) return noone;
 
+	while (instance_place(x +_dx, y, _obj) == noone)
     return instance_place(x + _dx, y, _obj);
 }
 
@@ -67,12 +68,10 @@ if (current_bullet_type.bullet_name == "Rocket")
 else
     image_size = 1;
 
-// Set direction and appearance
-direction    = creator.rotation_angle + angle_offset;
-image_angle  = creator.rotation_angle + angle_offset;
+
 sprite_index = current_bullet_type.sprite;
 life_timer   = current_bullet_type.life_timer;
-speed        = current_bullet_type.bullet_speed;
+//speed        = current_bullet_type.bullet_speed;
 
 // Rotation for flamer
 if (current_bullet_type.bullet_name == "Flamer") {

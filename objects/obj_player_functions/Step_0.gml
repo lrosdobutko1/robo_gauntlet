@@ -1,3 +1,4 @@
+weapon_anim_frame_number = sprite_get_number(current_weapon.weapon_sprite);
 
 if (instance_exists(obj_player_gui)) {
 	max_weapon_modifier = 1.5 - (obj_player_gui.p_t_w_line_length / obj_player_gui.max_p_t_line_length);
@@ -78,8 +79,57 @@ if (gun_select_keys != prev_gun)
     current_weapon = weapon_slots[gun_select_keys];
 }
 
+switch (current_weapon) {
+	case player_weapons.autocannon:
+	{
+		
+		if (firing)gun_anim += 0.5;	
+		break;
+	}
+	case player_weapons.shotgun:
+{
+    if (firing)
+    {
+        if (can_animate_guns)
+        {
+            gun_anim += 0.25;
+
+            if (gun_anim >= weapon_anim_frame_number)
+            {
+                gun_anim = weapon_anim_frame_number;
+                can_animate_guns = false;
+                anim_guns_counter = 0;
+            }
+        }
+        else
+        {
+            anim_guns_counter++;
+
+            if (anim_guns_counter >= current_weapon.firing_speed)
+            {
+                can_animate_guns = true;
+                gun_anim = 0; // restart animation
+				firing = false;
+            }
+        }
+    }
+
+    break;
+}
+}
+	
+	
+	
+
+
+
+//if (gun_anim >= weapon_anim_frame_number-1) gun_anim = 0;
+
+
+#region assume mouse is not within the power triangle area to be able to shoot
 var mouse_gui_x = device_mouse_x_to_gui(0);
 var mouse_gui_y = device_mouse_y_to_gui(0);
+
 if (!point_in_triangle(
 mouse_gui_x,
 mouse_gui_y,
@@ -95,6 +145,7 @@ obj_player_gui.power_triangle.left[1]
 	
 	if (mouse_check_button(2)) {
 		
+		
 		find_gun_create_coordinates(rocket_launchers,15,210);
 		
 		if (firing_speed_cooldown <= 0)
@@ -104,9 +155,11 @@ obj_player_gui.power_triangle.left[1]
 	            rocket_launchers[0],
 	            rocket_launchers[1],
 	            current_secondary_weapon.bullet_type,
+				rotation_angle,
 	            current_secondary_weapon.bullet_angle,
 	            current_secondary_weapon.num_bullets,
-	            damage
+	            damage,
+				current_secondary_weapon.bullet_type.bullet_speed
 	        );
 
 	        firing_speed_cooldown = current_secondary_weapon.firing_speed;
@@ -126,24 +179,45 @@ obj_player_gui.power_triangle.left[1]
 	        );
 	    }	
 	}
+	
 
 	//fire primary
 	if (mouse_check_button(1))
 	{
-		gun_anim +=0.5;
-		
+		firing = true;
+		var angle_variance_1 = 0//random_range(-12,12);
+		var speed_variance_1 = 0//random_range(-0.5,0.5);
+		var angle_variance_2 = 0//random_range(-12,12);
+		var speed_variance_2 = 0//random_range(-0.5,0.5);
+
 		find_gun_create_coordinates(gun_barrels, 26, 60);
+		find_gun_create_coordinates(casings_eject, 15, 190);
 		if (firing_speed_cooldown <= 0)
 	    {
+			
+			//shell casings
+			shoot_bullets(
+	            id,
+	            casings_eject[0],
+	            casings_eject[1],
+	            bullet_types.shell_casing,
+				rotation_angle - 90 + angle_variance_1,
+	            current_weapon.bullet_angle,
+	            1,
+	            0,
+				bullet_types.shell_casing.bullet_speed + speed_variance_1
+	        );
 			//muzzle flash
 			shoot_bullets(
 	            id,
 	            gun_barrels[0],
 	            gun_barrels[1],
 	            bullet_types.muzzle_flash,
-	            current_weapon.bullet_angle,
+				rotation_angle,
+	            0,
 	            1,
-	            0
+	            0,
+				current_weapon.bullet_type.bullet_speed
 	        );
 			//bullet
 	        shoot_bullets(
@@ -151,9 +225,11 @@ obj_player_gui.power_triangle.left[1]
 	            gun_barrels[0],
 	            gun_barrels[1],
 	            current_weapon.bullet_type,
+				rotation_angle,
 	            current_weapon.bullet_angle,
 	            current_weapon.num_bullets,
-	            current_weapon.damage
+	            current_weapon.damage,
+				current_weapon.bullet_type.bullet_speed
 	        );
 
 	        firing_speed_cooldown = round(current_weapon.firing_speed / max_weapon_modifier);
@@ -161,15 +237,31 @@ obj_player_gui.power_triangle.left[1]
 
 	    if (firing_speed_cooldown == round(current_weapon.firing_speed / max_weapon_modifier * current_weapon.firing_speed_offset))
 	    {
+			
+			
+			//shell casings
+			shoot_bullets(
+	            id,
+	            casings_eject[2],
+	            casings_eject[3],
+	            bullet_types.shell_casing,
+				rotation_angle + 90 + angle_variance_2,
+	            current_weapon.bullet_angle,
+	            1,
+	            0,
+				bullet_types.shell_casing.bullet_speed + speed_variance_2 
+	        );
 			//muzzle flash
 			shoot_bullets(
 	            id,
 	            gun_barrels[2],
 	            gun_barrels[3],
 	            bullet_types.muzzle_flash,
+				rotation_angle,
 	            current_weapon.bullet_angle,
 	            1,
-	            0
+	            0,
+				current_weapon.bullet_type.bullet_speed
 	        );
 			//bullet
 	        shoot_bullets(
@@ -177,26 +269,26 @@ obj_player_gui.power_triangle.left[1]
 	            gun_barrels[2],
 	            gun_barrels[3],
 	            current_weapon.bullet_type,
+				rotation_angle,
 	            current_weapon.bullet_angle,
 	            current_weapon.num_bullets,
-	            current_weapon.damage
+	            current_weapon.damage,
+				current_weapon.bullet_type.bullet_speed
 	        );
 	    }
 	}
+	else {
+		if (current_weapon != player_weapons.shotgun) firing = false; 
+		}
 }
+
 else can_shoot = false;
+
+#endregion
 
 if (current_shields < max_shields && shield_recharge_cooldown <= 0 ) {
 	current_shields = min(max_shields, current_shields + (shield_recharge_rate * max_shield_modifier));
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -205,3 +297,15 @@ shield_recharge_cooldown -= 1 * max_shield_modifier;
 
 if (firing_speed_cooldown > 0)
 firing_speed_cooldown --;
+
+
+
+
+
+
+
+
+
+
+
+

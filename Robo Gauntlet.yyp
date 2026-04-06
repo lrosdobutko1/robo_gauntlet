@@ -88,6 +88,7 @@
     {"id":{"name":"obj_wall_parent","path":"objects/obj_wall_parent/obj_wall_parent.yy",},},
     {"id":{"name":"obj_wall","path":"objects/obj_wall/obj_wall.yy",},},
     {"id":{"name":"test_object","path":"objects/test_object/test_object.yy",},},
+    {"id":{"name":"test_object2","path":"objects/test_object2/test_object2.yy",},},
     {"id":{"name":"UI","path":"objects/UI/UI.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"__Configuration__","path":"scripts/__Configuration__/__Configuration__.yy",},},

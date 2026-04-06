@@ -57,12 +57,13 @@ walk_speed = 2;
 #endregion
 
 
-//Player Weapon Selection code
-#region
+
+#region Player Weapon Selection code
 /// @function weapon_base
 /// @description Creates a base weapon definition.
 /// @param {string} _name Weapon display name
-/// @param {real}   _dmg Damage per bullet
+/// @param {real}   _dmg Base damage per bullet
+/// @param {real}   _level level modifier for bullet damage and firing speed
 /// @param {real}   num_bullets Number of bullets fired
 /// @param {real}   firing_speed Frames between shots
 /// @param {real}   firing_speed_offset offsets left and right guns
@@ -96,7 +97,7 @@ function weapon_base(
 
 
 bullet_types = {
-    autocannon:   create_bullet_types("Autocannon",   1,  8,  -1,  spr_player_bullet_cannon),
+    autocannon:   create_bullet_types("Autocannon",   1,  6,  -1,  spr_player_bullet_cannon),
     shotgun:      create_bullet_types("Shotgun",      1,  8,  -1,  spr_player_bullet_shot),
     grenade:      create_bullet_types("Grenade",      5,  5,  -1,  spr_player_bullet_grenade),
     laser:        create_bullet_types("Laser",        10, 6,  -1,  spr_player_bullet_laser),
@@ -104,6 +105,7 @@ bullet_types = {
     flamer:       create_bullet_types("Flamer",       1,  4,  20,  spr_player_bullet_flame),
 	rocket:		  create_bullet_types("Rocket",       1,  4,  -1,  spr_player_rocket),
 	muzzle_flash: create_bullet_types("Muzzle Flash", 0,  0,  3,  spr_muzzle_flash),
+	shell_casing: create_bullet_types("Shell Casing", 0,  1, -1,  spr_bullet_casing),
 };
 
 
@@ -132,6 +134,7 @@ current_weapon = weapon_slots[1];
 current_secondary_weapon = player_weapons.rockets;
 #endregion
 
+
 if (instance_exists(obj_player_gui)) {
 	max_weapon_modifier = 1.5 - (obj_player_gui.p_t_w_line_length / obj_player_gui.max_p_t_line_length);
 	max_shield_modifier = 1.5 - (obj_player_gui.p_t_s_line_length / obj_player_gui.max_p_t_line_length);
@@ -147,9 +150,11 @@ gun_select_keys = 0;
 firing = false;
 firing_rockets = false;
 firing_angle = image_angle;
+can_animate_guns = true;
+anim_guns_counter = current_weapon.firing_speed;
+weapon_anim_frame_number = 0;
 
 firing_speed_cooldown = current_weapon.firing_speed;
-
 
 player_rocket_cooldown = 2400;
 player_rocket_timer = player_rocket_cooldown;
@@ -159,8 +164,6 @@ rocket_offset_cd = 60;
 rocket_offset = rocket_offset_cd;
 
 gun_barrels = array_create(4);
-left_gun_barrel = array_create(2);
-right_gun_barrel = array_create(2);
 
 casings_eject = array_create(4);
 
