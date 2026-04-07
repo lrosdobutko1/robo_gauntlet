@@ -38,60 +38,39 @@ bullet_sprite
 //damage = 10;
 //hit = false;
 
+life_timer = bullet_type.life_timer;
+collision_timer = 6;
 
-//enemy = (creator.object_index == obj_player_functions) ? obj_enemy_parent : obj_player_functions;
+enemy = (creator.object_index == obj_player_functions) ? obj_enemy_parent : obj_player_functions;
 
-//enemy_default = {
-//    default_bullet: create_bullet_types("Default", 1, 8, -1, spr_player_bullet_cannon),
-//	}
+enemy_bullets = {
+    default_bullet: create_bullet_types(id, "Default", 1, 8, -1, spr_player_bullet_cannon),
+	}
 
-
-
-//function resolve_x_collision(_dx, _obj)
-//{
-//    if (_dx == 0) return noone;
-
-//	while (instance_place(x +_dx, y, _obj) == noone)
-//    return instance_place(x + _dx, y, _obj);
-//}
-
-//function resolve_y_collision(_dy, _obj)
-//{
-//    if (_dy == 0) return noone;
-
-//    return instance_place(x, y + _dy, _obj);
-//}
+// Resolve bullet type (enemy vs player)
+if (creator != obj_player_functions.id) {
+    current_bullet_type = enemy_bullets.default_bullet;
+	bullet_scale = 0.5
+	image_xscale = bullet_scale;
+	image_yscale = bullet_scale;
+} else {
+    current_bullet_type = bullet_type;
+}
 
 
-//collision_timer = 6;
+function resolve_x_collision(_dx, _obj)
+{
+    if (_dx == 0) return noone;
 
-//// Resolve bullet type (enemy vs player)
-//if (creator != obj_player_functions.id) {
-//    current_bullet_type = enemy_default.default_bullet;
-//	bullet_scale = 0.5
-//	image_xscale = bullet_scale;
-//	image_yscale = bullet_scale;
-//} else {
-//    current_bullet_type = bullet_type;
-//}
+	while (instance_place(x +_dx, y, _obj) == noone)
+    return instance_place(x + _dx, y, _obj);
+}
 
-//if (current_bullet_type.bullet_name == "Rocket")
-//    image_size = 0.25;
-//else
-//    image_size = 1;
+function resolve_y_collision(_dy, _obj)
+{
+    if (_dy == 0) return noone;
+
+    return instance_place(x, y + _dy, _obj);
+}
 
 
-//sprite_index = current_bullet_type.sprite;
-//life_timer   = current_bullet_type.life_timer;
-////speed        = current_bullet_type.bullet_speed;
-
-//// Rotation for flamer
-//if (current_bullet_type.bullet_name == "Flamer") {
-//    rotation = random(359);
-//} else {
-//    rotation = 0;
-//}
-
-
-
-//show_debug_message($"I am a {bullet_type.bullet_name}");

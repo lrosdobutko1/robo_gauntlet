@@ -185,10 +185,10 @@ obj_player_gui.power_triangle.left[1]
 	if (mouse_check_button(1))
 	{
 		firing = true;
-		var angle_variance_1 = 0//random_range(-12,12);
-		var speed_variance_1 = 0//random_range(-0.5,0.5);
-		var angle_variance_2 = 0//random_range(-12,12);
-		var speed_variance_2 = 0//random_range(-0.5,0.5);
+		var angle_variance_1 = random_range(-12,12);
+		var speed_variance_1 = random_range(-0.5,0.5);
+		var angle_variance_2 = random_range(-12,12);
+		var speed_variance_2 = random_range(-0.5,0.5);
 
 		find_gun_create_coordinates(gun_barrels, 26, 60);
 		find_gun_create_coordinates(casings_eject, 15, 190);
@@ -205,7 +205,24 @@ obj_player_gui.power_triangle.left[1]
 				0
 	        );
 			//muzzle flash
+			shoot_bullets(
+	            bullet_types.muzzle_flash,
+	            gun_barrels[0],
+				gun_barrels[1],
+				1,
+				rotation_angle,
+				0
+	        );
 			//shoot_bullets(
+			shoot_bullets(
+	            current_primary_weapon.bullet_type,
+	            gun_barrels[0],
+				gun_barrels[1],
+				current_primary_weapon.num_bullets,
+				rotation_angle,
+				current_primary_weapon.bullet_angle
+	        );
+			
 	        //    id,
 	        //    gun_barrels[0],
 	        //    gun_barrels[1],
@@ -234,7 +251,33 @@ obj_player_gui.power_triangle.left[1]
 
 	    if (firing_speed_cooldown == round(current_primary_weapon.firing_speed / max_weapon_modifier * current_primary_weapon.firing_speed_offset))
 	    {
-			
+			//shell casings
+			shoot_bullets(
+	            bullet_types.shell_casing,
+	            casings_eject[2],
+	            casings_eject[3],
+				1,
+				rotation_angle + 90 + angle_variance_2,
+				0
+	        );
+			//muzzle flash
+			shoot_bullets(
+	            bullet_types.muzzle_flash,
+	            gun_barrels[2],
+				gun_barrels[3],
+				1,
+				rotation_angle,
+				0
+	        );
+			//shoot_bullets(
+			shoot_bullets(
+	            current_primary_weapon.bullet_type,
+	            gun_barrels[2],
+				gun_barrels[3],
+				current_primary_weapon.num_bullets,
+				rotation_angle,
+				current_primary_weapon.bullet_angle
+	        );
 			
 			//shell casings
 			//shoot_bullets(

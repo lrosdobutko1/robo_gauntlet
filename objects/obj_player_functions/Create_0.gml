@@ -95,7 +95,7 @@ function weapon_base(
     };
 }
 
-
+// _creator, _name, _bullet_damage, _speed, _timer, _sprite
 bullet_types = {
     autocannon:   create_bullet_types(id, "Autocannon",   1,   6,  -1,  spr_player_bullet_cannon),
     shotgun:      create_bullet_types(id, "Shotgun",      2,   8,  -1,  spr_player_bullet_shot),

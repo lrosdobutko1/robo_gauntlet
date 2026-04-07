@@ -1,4 +1,57 @@
 
+//destroy bullets when their timer expires
+if (life_timer > -1) {
+	life_timer --;
+	if life_timer <- 0 instance_destroy();
+}
+
+// destroy bullets if they get too far out of the room.
+var px = obj_player_functions.x;
+var py = obj_player_functions.y;
+if (abs(x - px) > room_width/2 || abs(y - py) > room_height/2) {
+	instance_destroy();
+}
+
+switch (current_bullet_type.bullet_name) {
+	case "Autocannon":
+		show_debug_message("autocannon");
+		break;
+	
+	case "Shotgun":
+		show_debug_message("shotgun");
+		break;
+		
+	case "Grenade":
+		show_debug_message("autocannon");
+		break;
+	
+	case "Laser":
+		show_debug_message("shotgun");
+		break;
+		
+	case "Blaster":
+		show_debug_message("autocannon");
+		break;
+	
+	case "Flamer":
+	image_speed = 0.25;
+	image_angle ++;
+		show_debug_message("shotgun");
+		break;
+		
+	case "Rockets":
+		show_debug_message("shotgun");
+		break;
+		
+	case "Muzzle Flash":
+		show_debug_message("autocannon");
+		break;
+	
+	case "Shell Casing":
+		show_debug_message("shotgun");
+		break;		
+}
+
 //if (current_bullet_type.bullet_name != "Muzzle Flash") {
 
 //	//if (current_bullet_type.bullet_name == "Rocket") {
@@ -52,11 +105,7 @@
 
 //	#region Destroy bullets past the screen edge
 
-//	var px = obj_player_functions.x;
-//	var py = obj_player_functions.y;
-//	if (abs(x - px) > room_width/2 || abs(y - py) > room_height/2) {
-//	    instance_destroy();
-//	}
+
 
 //	#endregion	
 

@@ -1,1 +1,1 @@
-draw_sprite_ext(bullet_sprite,0,x,y,1,1,image_angle,c_white,1);
+draw_sprite_ext(bullet_sprite,image_index,x,y,1,1,firing_angle,c_white,1);

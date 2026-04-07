@@ -129,14 +129,12 @@ _firing_angle
         bullet_type:	_bullet_type,
         bullet_damage:	_bullet_type.bullet_damage,
 		direction:		_firing_angle,
-		image_angle:    _firing_angle,
+		firing_angle:    _firing_angle,
 		speed:			_bullet_type.bullet_speed,
 		bullet_sprite:	_bullet_type.sprite
 		}
 		
 	);
-	show_debug_message(_firing_angle);
-	
 }
 
 

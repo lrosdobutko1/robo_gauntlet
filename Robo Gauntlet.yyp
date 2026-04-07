@@ -377,7 +377,6 @@
     {"id":{"name":"spr_enemy1_torso","path":"sprites/spr_enemy1_torso/spr_enemy1_torso.yy",},},
     {"id":{"name":"spr_explode1","path":"sprites/spr_explode1/spr_explode1.yy",},},
     {"id":{"name":"spr_explode2","path":"sprites/spr_explode2/spr_explode2.yy",},},
-    {"id":{"name":"spr_laser","path":"sprites/spr_laser/spr_laser.yy",},},
     {"id":{"name":"spr_menu","path":"sprites/spr_menu/spr_menu.yy",},},
     {"id":{"name":"spr_muzzle_flash","path":"sprites/spr_muzzle_flash/spr_muzzle_flash.yy",},},
     {"id":{"name":"spr_obstacle","path":"sprites/spr_obstacle/spr_obstacle.yy",},},
