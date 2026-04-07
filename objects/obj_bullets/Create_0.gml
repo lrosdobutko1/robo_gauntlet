@@ -38,6 +38,8 @@ bullet_sprite
 //damage = 10;
 //hit = false;
 
+step_counter = 0;
+
 life_timer = bullet_type.life_timer;
 collision_timer = 6;
 
@@ -55,6 +57,60 @@ if (creator != obj_player_functions.id) {
 	image_yscale = bullet_scale;
 } else {
     current_bullet_type = bullet_type;
+}
+
+switch (current_bullet_type.bullet_name) {
+	case "Autocannon":
+		show_debug_message("autocannon");
+		break;
+	
+	case "Shotgun":
+		show_debug_message("shotgun");
+		break;
+		
+	case "Grenade":
+		show_debug_message("autocannon");
+		break;
+	
+	case "Laser":
+		show_debug_message("shotgun");
+		break;
+		
+	case "Blaster":
+		show_debug_message("autocannon");
+		break;
+	
+	case "Flamer":
+		image_speed = 0;
+		image_index = 5;
+		image_scale = .25;
+		image_xscale = image_scale;
+		image_yscale = image_scale;
+		h_speed = hspeed;
+		v_speed = vspeed;
+		show_debug_message("I am a flamer");
+
+		break;
+		
+	case "Rocket":
+	turn_radius = 8;
+	image_scale = 0.3;
+	//image_angle -= 90 + random_range(-45,45);
+	image_xscale = image_scale;
+	image_yscale = image_scale;
+		break;
+		
+	case "Muzzle Flash":
+	image_speed = 1;
+	if (obj_player_functions.current_primary_weapon.weapon_name != "Blaster")
+	image_index = irandom(7);
+	else image_index = irandom_range(8, 11);
+	break;
+	
+	case "Shell Casing":
+	
+		speed += random_range(-1,1);
+		break;		
 }
 
 

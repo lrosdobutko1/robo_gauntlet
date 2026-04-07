@@ -24,49 +24,6 @@ function find_gun_create_coordinates(coords, radius, spread_angle)
 }
 
 
-
-/// @function shoot_bullets
-/// @description Shoots a bullet of a given type, to be chosen dynamically
-/// @param {string} _creator The object that created the bullet
-/// @param {real}	_gun_barrel_x		    The x coordinate to create at
-/// @param {real}	_gun_barrel_y		    The y coordinate to create at
-/// @param {struct}	bullet_type			    The bullet type to set the bullet to on creation
-/// @param {real}	_firing_angle			The primary angle to fire multiple bullets at
-/// @param {real}	_firing_angle_offset	The angle to fire multiple bullets at
-/// @param {real}	_num_bullets			The number of bullets to create and fire
-/// @param {real}	_damage					The damage each bullet does on collision
-//function shoot_bullets(
-//_creator,
-//_gun_barrel_x, 
-//_gun_barrel_y,
-//_bullet_type,
-//_firing_angle,
-//_firing_angle_offset,
-//_num_bullets,
-//_damage,
-//_bullet_speed
-//)
-//{
-//	var half = (_num_bullets - 1) / 2;
-
-//	for (var i = 0; i < _num_bullets; i++)
-//	{
-//	    var angle_offset = (i - half) * _firing_angle_offset;
-
-//	    create_bullet(
-//	        _creator,
-//	        _gun_barrel_x,
-//	        _gun_barrel_y,
-//			_firing_angle,
-//	        angle_offset,
-//	        _bullet_type,
-//	        _damage,
-//			_bullet_speed
-//	    );
-//	}
-//}
-
-
 function create_bullet_types(_creator, _name, _bullet_damage, _speed, _timer, _sprite){
     return {
 		creator:	   _creator,
@@ -106,7 +63,6 @@ _firing_angle_offset
 }
 
 
-
 function create_bullet( 
 _bullet_type,
 _x_coord, 
@@ -129,7 +85,7 @@ _firing_angle
         bullet_type:	_bullet_type,
         bullet_damage:	_bullet_type.bullet_damage,
 		direction:		_firing_angle,
-		firing_angle:    _firing_angle,
+		image_angle:    _firing_angle,
 		speed:			_bullet_type.bullet_speed,
 		bullet_sprite:	_bullet_type.sprite
 		}

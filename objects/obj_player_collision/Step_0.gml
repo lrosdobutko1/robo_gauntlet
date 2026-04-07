@@ -67,4 +67,5 @@ if (place_meeting(x,y+v_speed,obj_wall_parent))
 x += h_speed;
 y += v_speed;
 
+
 if (!instance_exists(obj_player_functions)) instance_destroy();

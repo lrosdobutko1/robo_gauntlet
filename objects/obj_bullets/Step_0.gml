@@ -1,4 +1,5 @@
 
+step_counter ++;
 //destroy bullets when their timer expires
 if (life_timer > -1) {
 	life_timer --;
@@ -14,43 +15,77 @@ if (abs(x - px) > room_width/2 || abs(y - py) > room_height/2) {
 
 switch (current_bullet_type.bullet_name) {
 	case "Autocannon":
-		show_debug_message("autocannon");
-		break;
+	show_debug_message("autocannon");
+	break;
 	
 	case "Shotgun":
-		show_debug_message("shotgun");
-		break;
+	show_debug_message("shotgun");
+	break;
 		
 	case "Grenade":
-		show_debug_message("autocannon");
-		break;
+	speed += 0.1;
+	if (speed >= 5) speed = 5;
+	break;
 	
 	case "Laser":
-		show_debug_message("shotgun");
-		break;
+	show_debug_message("shotgun");
+	break;
 		
 	case "Blaster":
-		show_debug_message("autocannon");
-		break;
+	show_debug_message("autocannon");
+	break;
 	
 	case "Flamer":
-	image_speed = 0.25;
-	image_angle ++;
-		show_debug_message("shotgun");
-		break;
+	image_scale +=0.05;
+	if (image_scale >= 1) image_scale = 1;
+	hspeed = h_speed + obj_player_collision.h_speed;
+	vspeed = v_speed + obj_player_collision.v_speed;
+	image_xscale = image_scale;
+	image_yscale = image_scale;
+
+	break;
 		
-	case "Rockets":
-		show_debug_message("shotgun");
-		break;
+	case "Rocket":
+	//speed -= 0.1;
+	//if (speed <= 0) speed = 0;
+	
+	image_speed = 1;
+	direction = image_angle;
+	
+	instance_create_layer(x,y,layer,obj_rocket_smoke);
+	if (instance_exists(obj_obstacle))
+	{
+		target = instance_nearest(x,y, obj_obstacle);
+		var angle_diff = angle_difference(image_angle, point_direction(x,y,target.x,target.y));
+		image_angle -= min(abs(angle_diff), turn_radius) * sign(angle_diff);
+		turn_radius += 0.01;
+		if (turn_radius >=20) turn_radius = 20;
+	}
+	image_xscale = image_scale;
+	image_yscale = image_scale;
+	break;
 		
 	case "Muzzle Flash":
-		show_debug_message("autocannon");
-		break;
+	if (obj_player_functions.current_primary_weapon.weapon_name != "Blaster") {
+		if (image_index >= 7) image_index = 0;
+	}
+	else {
+		if (image_index >= 11) image_index = 8;	
+	}
+	break;
 	
 	case "Shell Casing":
-		show_debug_message("shotgun");
-		break;		
+	speed -= 0.05;
+	image_xscale = 0.5;
+	image_yscale = 0.5;
+	image_index = 0;
+	image_speed = 0;
+	if (speed <= 0) speed = 0;
+
+	break;		
 }
+
+
 
 //if (current_bullet_type.bullet_name != "Muzzle Flash") {
 
