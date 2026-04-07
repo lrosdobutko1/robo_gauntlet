@@ -84,7 +84,7 @@ function weapon_base(
 ) {
     return {
         weapon_name:            _weapon_name,
-        damage:                 _base_dmg,
+        base_damage:          _base_dmg,
         weapon_level:           _weapon_level,
         num_bullets:            _num_bullets,
         firing_speed:           _firing_speed,
@@ -97,15 +97,15 @@ function weapon_base(
 
 
 bullet_types = {
-    autocannon:   create_bullet_types("Autocannon",   1,  6,  -1,  spr_player_bullet_cannon),
-    shotgun:      create_bullet_types("Shotgun",      1,  8,  -1,  spr_player_bullet_shot),
-    grenade:      create_bullet_types("Grenade",      5,  5,  -1,  spr_player_bullet_grenade),
-    laser:        create_bullet_types("Laser",        10, 6,  -1,  spr_player_bullet_laser),
-    blaster:      create_bullet_types("Blaster",      2,  6,  -1,  spr_player_bullet_blaster),
-    flamer:       create_bullet_types("Flamer",       1,  4,  20,  spr_player_bullet_flame),
-	rocket:		  create_bullet_types("Rocket",       1,  4,  -1,  spr_player_rocket),
-	muzzle_flash: create_bullet_types("Muzzle Flash", 0,  0,  3,  spr_muzzle_flash),
-	shell_casing: create_bullet_types("Shell Casing", 0,  1, -1,  spr_bullet_casing),
+    autocannon:   create_bullet_types(id, "Autocannon",   1,   6,  -1,  spr_player_bullet_cannon),
+    shotgun:      create_bullet_types(id, "Shotgun",      2,   8,  -1,  spr_player_bullet_shot),
+    grenade:      create_bullet_types(id, "Grenade",      4,   5,  -1,  spr_player_bullet_grenade),
+    laser:        create_bullet_types(id, "Laser",        1,   6,  -1,  spr_player_bullet_laser),
+    blaster:      create_bullet_types(id, "Blaster",      2,   6,  -1,  spr_player_bullet_blaster),
+    flamer:       create_bullet_types(id, "Flamer",       0.5, 4,  20,  spr_player_bullet_flame),
+	rocket:		  create_bullet_types(id, "Rocket",       5,   4,  -1,  spr_player_rocket),
+	muzzle_flash: create_bullet_types(id, "Muzzle Flash", 0,   0,   3,  spr_muzzle_flash),
+	shell_casing: create_bullet_types(id, "Shell Casing", 0,   1,  -1,  spr_bullet_casing),
 };
 
 
@@ -119,7 +119,7 @@ player_weapons = {
 	rockets:	weapon_base("Rockets",		1, 1, 1, 40,  0.5, 0, bullet_types.rocket,     spr_player_rocket)
 };
 
-weapon_slots = [
+primary_weapon_slots = [
     noone, // index 0 unused
     player_weapons.autocannon,
     player_weapons.shotgun,
@@ -129,8 +129,10 @@ weapon_slots = [
     player_weapons.flamer
 ];
 
-//*****replace current_weapon later*****//
-current_weapon = weapon_slots[1];
+
+
+//*****replace current_primary_weapon later*****//
+current_primary_weapon = primary_weapon_slots[1];
 current_secondary_weapon = player_weapons.rockets;
 #endregion
 
@@ -151,10 +153,10 @@ firing = false;
 firing_rockets = false;
 firing_angle = image_angle;
 can_animate_guns = true;
-anim_guns_counter = current_weapon.firing_speed;
+anim_guns_counter = current_primary_weapon.firing_speed;
 weapon_anim_frame_number = 0;
 
-firing_speed_cooldown = current_weapon.firing_speed;
+firing_speed_cooldown = current_primary_weapon.firing_speed;
 
 player_rocket_cooldown = 2400;
 player_rocket_timer = player_rocket_cooldown;

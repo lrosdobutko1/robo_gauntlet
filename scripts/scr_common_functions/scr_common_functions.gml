@@ -24,16 +24,6 @@ function find_gun_create_coordinates(coords, radius, spread_angle)
 }
 
 
-function create_bullet_types(_name, _damage, _speed, _timer, _sprite){
-    return {
-        bullet_name: _name,
-        damage: _damage,
-		bullet_speed: _speed,
-		life_timer: _timer,
-        sprite: _sprite
-    };
-}
-
 
 /// @function shoot_bullets
 /// @description Shoots a bullet of a given type, to be chosen dynamically
@@ -45,18 +35,59 @@ function create_bullet_types(_name, _damage, _speed, _timer, _sprite){
 /// @param {real}	_firing_angle_offset	The angle to fire multiple bullets at
 /// @param {real}	_num_bullets			The number of bullets to create and fire
 /// @param {real}	_damage					The damage each bullet does on collision
+//function shoot_bullets(
+//_creator,
+//_gun_barrel_x, 
+//_gun_barrel_y,
+//_bullet_type,
+//_firing_angle,
+//_firing_angle_offset,
+//_num_bullets,
+//_damage,
+//_bullet_speed
+//)
+//{
+//	var half = (_num_bullets - 1) / 2;
+
+//	for (var i = 0; i < _num_bullets; i++)
+//	{
+//	    var angle_offset = (i - half) * _firing_angle_offset;
+
+//	    create_bullet(
+//	        _creator,
+//	        _gun_barrel_x,
+//	        _gun_barrel_y,
+//			_firing_angle,
+//	        angle_offset,
+//	        _bullet_type,
+//	        _damage,
+//			_bullet_speed
+//	    );
+//	}
+//}
+
+
+function create_bullet_types(_creator, _name, _bullet_damage, _speed, _timer, _sprite){
+    return {
+		creator:	   _creator,
+        bullet_name:   _name,
+		bullet_damage: _bullet_damage,
+		bullet_speed:  _speed,
+		life_timer:    _timer,
+        sprite:	       _sprite
+    };
+}
+
 function shoot_bullets(
-_creator,
+_bullet_type,
 _gun_barrel_x, 
 _gun_barrel_y,
-_bullet_type,
-_firing_angle,
-_firing_angle_offset,
 _num_bullets,
-_damage,
-_bullet_speed
+_firing_angle,
+_firing_angle_offset
 )
 {
+	
 	var half = (_num_bullets - 1) / 2;
 
 	for (var i = 0; i < _num_bullets; i++)
@@ -64,32 +95,29 @@ _bullet_speed
 	    var angle_offset = (i - half) * _firing_angle_offset;
 
 	    create_bullet(
-	        _creator,
+	        _bullet_type,
 	        _gun_barrel_x,
 	        _gun_barrel_y,
-			_firing_angle,
-	        angle_offset,
-	        _bullet_type,
-	        _damage,
-			_bullet_speed
+			_firing_angle + angle_offset
 	    );
+		
 	}
+	
 }
 
 
-function create_bullet(
-_creator, 
+
+function create_bullet( 
+_bullet_type,
 _x_coord, 
-_y_coord, 
-_firing_angle,
-_firing_angle_offset, 
-_bullet_type, 
-_damage,
-_bullet_speed)
+_y_coord,
+_firing_angle
+
+)
 {
 	
 	// Prevent trying to use a non-existent creator
-    if (!instance_exists(_creator)) return;
+    //if (!instance_exists(_bullet_type.creator)) return;
 	
 	var bullets = instance_create_layer(
     _x_coord,
@@ -97,15 +125,17 @@ _bullet_speed)
     layer,
     obj_bullets,
 	{
-        creator:		_creator,
+        creator:		_bullet_type.creator,
         bullet_type:	_bullet_type,
-        angle_offset:	_firing_angle_offset,
-        damage:			_damage,
+        bullet_damage:	_bullet_type.bullet_damage,
 		direction:		_firing_angle,
 		image_angle:    _firing_angle,
-		speed:			_bullet_speed
+		speed:			_bullet_type.bullet_speed,
+		bullet_sprite:	_bullet_type.sprite
 		}
+		
 	);
+	show_debug_message(_firing_angle);
 	
 }
 

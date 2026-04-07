@@ -1,14 +1,1 @@
-//stop animation of flamer sprite
-if (image_index >= image_number - 1) image_index = image_number - 1;
-
-draw_sprite_ext(
-current_bullet_type.sprite , 
-image_index, 
-x, 
-y, 
-image_xscale, 
-image_yscale, 
-image_angle+rotation,
-c_white, 
-1
-);
+draw_sprite_ext(bullet_sprite,0,x,y,1,1,image_angle,c_white,1);
