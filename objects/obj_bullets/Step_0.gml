@@ -46,21 +46,42 @@ switch (current_bullet_type.bullet_name) {
 	break;
 		
 	case "Rocket":
-	//speed -= 0.1;
-	//if (speed <= 0) speed = 0;
+	
+	if (rockets_launching) rockets_launching_timer --;
+	
+	if (rockets_launching_timer <= 0) { 
+		rockets_launching = false;
+		turn_radius = 5;
+		rockets_launching_timer = 20;
+	}
+	
 	
 	image_speed = 1;
 	direction = image_angle;
 	
+	//smoke trails
 	instance_create_layer(x,y,layer,obj_rocket_smoke);
-	if (instance_exists(obj_obstacle))
-	{
-		target = instance_nearest(x,y, obj_obstacle);
-		var angle_diff = angle_difference(image_angle, point_direction(x,y,target.x,target.y));
-		image_angle -= min(abs(angle_diff), turn_radius) * sign(angle_diff);
-		turn_radius += 0.01;
-		if (turn_radius >=20) turn_radius = 20;
+	
+	//targeting
+	if (point_distance(x, y, rocket_target_x, rocket_target_y) < 50) {
+	
+		if (instance_exists(obj_obstacle))
+		{
+			
+			target = instance_nearest(rocket_target_x,rocket_target_y, obj_obstacle);
+			rocket_target_x = target.x;
+			rocket_target_y = target.y;
+		}
+	
 	}
+
+	if (has_target) {
+		var angle_diff = angle_difference(image_angle, point_direction(x,y,rocket_target_x,rocket_target_y));
+		image_angle -= min(abs(angle_diff), turn_radius) * sign(angle_diff);
+		if (turn_radius >=40) turn_radius = 40;
+	}
+	
+	turn_radius += 0.02;
 	image_xscale = image_scale;
 	image_yscale = image_scale;
 	break;

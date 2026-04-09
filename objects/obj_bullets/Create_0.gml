@@ -93,12 +93,18 @@ switch (current_bullet_type.bullet_name) {
 		break;
 		
 	case "Rocket":
-	turn_radius = 8;
+	has_target = true;
+	rockets_launching = true;
+	rockets_launching_timer = 20;
+	rocket_target_range = 200;
+	rocket_target_x = obj_player_functions.x + lengthdir_x(rocket_target_range,obj_player_functions.rotation_angle + irandom_range(-5,5));
+	rocket_target_y = obj_player_functions.y + lengthdir_y(rocket_target_range,obj_player_functions.rotation_angle + irandom_range(-5,5));
+	turn_radius = 20;
 	image_scale = 0.3;
 	//image_angle -= 90 + random_range(-45,45);
 	image_xscale = image_scale;
 	image_yscale = image_scale;
-		break;
+	break;
 		
 	case "Muzzle Flash":
 	image_speed = 1;

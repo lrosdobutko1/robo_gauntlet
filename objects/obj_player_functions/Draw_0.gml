@@ -53,4 +53,4 @@ if (health_state != PLAYER_HEALTH_STATE.DEAD && health_state != PLAYER_HEALTH_ST
 	c_white,1);
 }
 
-draw_triangle(x,y, casings_eject[0], casings_eject[1], casings_eject[2], casings_eject[3], 1);
+

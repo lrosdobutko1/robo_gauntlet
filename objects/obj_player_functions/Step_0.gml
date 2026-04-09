@@ -160,7 +160,7 @@ obj_player_gui.power_triangle.left[1]
 			        rocket_launchers[0],
 					rocket_launchers[1],
 					current_secondary_weapon.num_bullets,
-					rotation_angle-150+random_range(-10,20),
+					rotation_angle-150+random_range(-10,30),
 					current_secondary_weapon.bullet_angle
 			    );
 				rocket_counter --;
@@ -176,7 +176,7 @@ obj_player_gui.power_triangle.left[1]
 			        rocket_launchers[2],
 					rocket_launchers[3],
 					current_secondary_weapon.num_bullets,
-					rotation_angle+150+random_range(-20,10),
+					rotation_angle+150+random_range(-30,10),
 					current_secondary_weapon.bullet_angle
 			    );
 				rocket_counter --;
@@ -199,7 +199,6 @@ obj_player_gui.power_triangle.left[1]
 			rockets_ready = true;
 		}
 	}
-	show_debug_message(player_rocket_timer);
 
 	//fire primary
 	if (mouse_check_button(1))
