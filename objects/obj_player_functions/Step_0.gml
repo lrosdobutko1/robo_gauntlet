@@ -284,7 +284,7 @@ obj_player_gui.power_triangle.left[1]
 	else {
 		if (current_primary_weapon != player_weapons.shotgun) firing = false; 
 		}
-	show_debug_message(draw_muzzle_flash_left);
+
 }
 
 if (draw_muzzle_flash_left) draw_muzzle_flash_left_counter --;
@@ -316,7 +316,7 @@ if (firing_speed_cooldown > 0)
 firing_speed_cooldown --;
 
 
-
+show_debug_message(rotation_angle);
 
 
 

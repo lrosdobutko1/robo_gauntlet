@@ -7,38 +7,8 @@ bullet_sprite
 */
 
 
-
-
-
-////speed = 0;
-////image_index = 0;
-
-//life_time = 150;
-//activate_timer = 40;
-////image_size = 0.25;
-////image_xscale = 1;
-////image_yscale = 1;
-
-//////image_speed = 0;
-////image_index = 0;
-
-//active = false;
-//launch_speed = random_range(1,2);
-//turn_radius = 2;
-////speed = launch_speed;
-
-//if (instance_exists(obj_enemy_parent))
-//{
-//	target = instance_nearest(x,y, obj_enemy_parent);
-//}
-//else target = noone;
-
-//alive = true;
-//explode_anim = 0;
-//damage = 10;
-//hit = false;
-
 step_counter = 0;
+sprite_index = bullet_sprite;
 
 life_timer = bullet_type.life_timer;
 collision_timer = 6;
@@ -66,6 +36,8 @@ if (creator != obj_player_functions.id) {
 switch (current_bullet_type.bullet_name) {
 	
 	case "Autocannon": {
+		h_speed = hspeed;
+		v_speed = vspeed;
 		show_debug_message("autocannon");
 		break;
 	}
@@ -118,14 +90,6 @@ switch (current_bullet_type.bullet_name) {
 		break;
 	}
 	
-	//	case "Muzzle Flash": {
-	//		image_speed = 1;
-	//		if (obj_player_functions.current_primary_weapon.weapon_name != "Blaster")
-	//		image_index = irandom(7);
-	//		else image_index = irandom_range(8, 11);
-	//		break;
-	//}
-	
 	case "Shell Casing": {
 		if (obj_player_functions.current_primary_weapon.weapon_name == "Flamethrower") {
 			h_speed = hspeed;
@@ -141,13 +105,11 @@ switch (current_bullet_type.bullet_name) {
 	}
 }
 
-
-function resolve_x_collision(_dx, _obj)
+function resolve_x_collision(_dy, _obj)
 {
-    if (_dx == 0) return noone;
+    if (_dy == 0) return noone;
 
-
-    return instance_place(x + _dx, y, _obj);
+    return instance_place(x + _dy, y , _obj);
 }
 
 function resolve_y_collision(_dy, _obj)
@@ -156,5 +118,3 @@ function resolve_y_collision(_dy, _obj)
 
     return instance_place(x, y + _dy, _obj);
 }
-
-

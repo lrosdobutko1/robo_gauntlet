@@ -1,1 +1,1 @@
-draw_line(x,y,x_length,y_length);
+draw_sprite(spr_obstacle,0,x,y);
