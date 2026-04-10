@@ -104,7 +104,7 @@ bullet_types = {
     blaster:      create_bullet_types(id, "Blaster",      2,   6,   -1,  spr_player_bullet_blaster),
     flamer:       create_bullet_types(id, "Flamer",       0.5, 4,   15,  spr_player_bullet_flame),
 	rocket:		  create_bullet_types(id, "Rocket",       5,   6,   400, spr_player_rocket),
-	muzzle_flash: create_bullet_types(id, "Muzzle Flash", 0,   0,    3,  spr_muzzle_flash),
+	//muzzle_flash: create_bullet_types(id, "Muzzle Flash", 0,   0,    3,  spr_muzzle_flash),
 	shell_casing: create_bullet_types(id, "Shell Casing", 0,   1,   -1,  spr_bullet_casing),
 };
 
@@ -169,10 +169,16 @@ rocket_offset_cd = 60;
 rocket_offset = rocket_offset_cd;
 
 gun_barrels = array_create(4);
-
 casings_eject = array_create(4);
-
 rocket_launchers = array_create(4);
+
+muzzle_flash_counters = round(current_primary_weapon.firing_speed/3);
+draw_muzzle_flash_left  = false;
+draw_muzzle_flash_left_counter = muzzle_flash_counters;
+
+draw_muzzle_flash_right = false;
+draw_muzzle_flash_right_counter = muzzle_flash_counters;
+
 muzzle_flash_frame = 0;
 
 can_shoot = false;

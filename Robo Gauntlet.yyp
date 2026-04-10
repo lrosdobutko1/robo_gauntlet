@@ -400,6 +400,7 @@
     {"id":{"name":"spr_player_health_orb","path":"sprites/spr_player_health_orb/spr_player_health_orb.yy",},},
     {"id":{"name":"spr_player_health_spinner","path":"sprites/spr_player_health_spinner/spr_player_health_spinner.yy",},},
     {"id":{"name":"spr_player_legs","path":"sprites/spr_player_legs/spr_player_legs.yy",},},
+    {"id":{"name":"spr_player_rocket_tick","path":"sprites/spr_player_rocket_tick/spr_player_rocket_tick.yy",},},
     {"id":{"name":"spr_player_rocket","path":"sprites/spr_player_rocket/spr_player_rocket.yy",},},
     {"id":{"name":"spr_player_shield_bar","path":"sprites/spr_player_shield_bar/spr_player_shield_bar.yy",},},
     {"id":{"name":"spr_player_torso","path":"sprites/spr_player_torso/spr_player_torso.yy",},},

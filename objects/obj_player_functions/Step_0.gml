@@ -80,42 +80,48 @@ if (gun_select_keys != prev_gun)
 }
 
 switch (current_primary_weapon) {
-	case player_weapons.autocannon:
-	{
+	case player_weapons.autocannon: {
 		
 		if (firing)gun_anim += 0.5;	
 		break;
 	}
-	case player_weapons.shotgun:
-{
-    if (firing)
-    {
-        if (can_animate_guns)
-        {
-            gun_anim += 0.25;
+	
+	case player_weapons.shotgun: {
+	    if (firing)
+	    {
+	        if (can_animate_guns)
+	        {
+	            gun_anim += 0.25;
 
-            if (gun_anim >= weapon_anim_frame_number)
-            {
-                gun_anim = weapon_anim_frame_number;
-                can_animate_guns = false;
-                anim_guns_counter = 0;
-            }
-        }
-        else
-        {
-            anim_guns_counter++;
+	            if (gun_anim >= weapon_anim_frame_number)
+	            {
+	                gun_anim = weapon_anim_frame_number;
+	                can_animate_guns = false;
+	                anim_guns_counter = 0;
+	            }
+	        }
+	        else
+	        {
+	            anim_guns_counter++;
 
-            if (anim_guns_counter >= current_primary_weapon.firing_speed)
-            {
-                can_animate_guns = true;
-                gun_anim = 0; // restart animation
-				firing = false;
-            }
-        }
-    }
+	            if (anim_guns_counter >= current_primary_weapon.firing_speed)
+	            {
+	                can_animate_guns = true;
+	                gun_anim = 0; // restart animation
+					firing = false;
+	            }
+	        }
+	    }
 
-    break;
-}
+	    break;
+	}
+	
+		case player_weapons.blaster: {
+		
+		if (firing)gun_anim += 0.1;	
+		break;
+	}
+	
 }
 	
 	
@@ -186,7 +192,7 @@ obj_player_gui.power_triangle.left[1]
 					firing_rockets = false;
 						
 				}
-			}	
+			} 
 		}
 	}
 
@@ -215,7 +221,6 @@ obj_player_gui.power_triangle.left[1]
 	    {
 			
 			//shell casings
-			if (current_primary_weapon.weapon_name != "Flamethrower")
 			shoot_bullets(
 	            bullet_types.shell_casing,
 	            casings_eject[0],
@@ -225,14 +230,7 @@ obj_player_gui.power_triangle.left[1]
 				0
 	        );
 			//muzzle flash
-			shoot_bullets(
-		        bullet_types.muzzle_flash,
-		        gun_barrels[0],
-				gun_barrels[1],
-				1,
-				rotation_angle,
-				0
-		    );
+			draw_muzzle_flash_right = true;
 			
 			//shoot_bullets(
 			shoot_bullets(
@@ -244,36 +242,14 @@ obj_player_gui.power_triangle.left[1]
 				current_primary_weapon.bullet_angle
 	        );
 			
-	        //    id,
-	        //    gun_barrels[0],
-	        //    gun_barrels[1],
-	        //    bullet_types.muzzle_flash,
-			//	rotation_angle,
-	        //    0,
-	        //    1,
-	        //    0,
-			//	current_primary_weapon.bullet_type.bullet_speed
-	        //);
-			////bullet
-	        //shoot_bullets(
-	        //    id,
-	        //    gun_barrels[0],
-	        //    gun_barrels[1],
-	        //    current_primary_weapon.bullet_type,
-			//	rotation_angle,
-	        //    current_primary_weapon.bullet_angle,
-	        //    current_primary_weapon.num_bullets,
-	        //    current_primary_weapon.damage,
-			//	current_primary_weapon.bullet_type.bullet_speed
-	        //);
 
 	        firing_speed_cooldown = round(current_primary_weapon.firing_speed / max_weapon_modifier);
 	    }
 
+
 	    if (firing_speed_cooldown == round(current_primary_weapon.firing_speed / max_weapon_modifier * current_primary_weapon.firing_speed_offset))
 	    {
 			//shell casings
-			if (current_primary_weapon.weapon_name != "Flamethrower")
 			shoot_bullets(
 	            bullet_types.shell_casing,
 	            casings_eject[2],
@@ -283,14 +259,15 @@ obj_player_gui.power_triangle.left[1]
 				0
 	        );
 			//muzzle flash
-			shoot_bullets(
-	            bullet_types.muzzle_flash,
-	            gun_barrels[2],
-				gun_barrels[3],
-				1,
-				rotation_angle,
-				0
-	        );
+			draw_muzzle_flash_left = true;
+			//shoot_bullets(
+	        //    bullet_types.muzzle_flash,
+	        //    gun_barrels[2],
+			//	gun_barrels[3],
+			//	1,
+			//	rotation_angle,
+			//	0
+	        //);
 			//shoot_bullets(
 			shoot_bullets(
 	            current_primary_weapon.bullet_type,
@@ -301,47 +278,25 @@ obj_player_gui.power_triangle.left[1]
 				current_primary_weapon.bullet_angle
 	        );
 			
-			//shell casings
-			//shoot_bullets(
-	        //    id,
-	        //    casings_eject[2],
-	        //    casings_eject[3],
-	        //    bullet_types.shell_casing,
-			//	rotation_angle + 90 + angle_variance_2,
-	        //    current_primary_weapon.bullet_angle,
-	        //    1,
-	        //    0,
-			//	bullet_types.shell_casing.bullet_speed + speed_variance_2 
-	        //);
-			////muzzle flash
-			//shoot_bullets(
-	        //    id,
-	        //    gun_barrels[2],
-	        //    gun_barrels[3],
-	        //    bullet_types.muzzle_flash,
-			//	rotation_angle,
-	        //    current_primary_weapon.bullet_angle,
-	        //    1,
-	        //    0,
-			//	current_primary_weapon.bullet_type.bullet_speed
-	        //);
-			////bullet
-	        //shoot_bullets(
-	        //    id,
-	        //    gun_barrels[2],
-	        //    gun_barrels[3],
-	        //    current_primary_weapon.bullet_type,
-			//	rotation_angle,
-	        //    current_primary_weapon.bullet_angle,
-	        //    current_primary_weapon.num_bullets,
-	        //    current_primary_weapon.damage,
-			//	current_primary_weapon.bullet_type.bullet_speed
-	        //);
 	    }
 	}
+	
 	else {
 		if (current_primary_weapon != player_weapons.shotgun) firing = false; 
 		}
+	show_debug_message(draw_muzzle_flash_left);
+}
+
+if (draw_muzzle_flash_left) draw_muzzle_flash_left_counter --;
+if (draw_muzzle_flash_left_counter <= 0) {
+	draw_muzzle_flash_left = false;
+	draw_muzzle_flash_left_counter = muzzle_flash_counters;
+}
+
+if (draw_muzzle_flash_right) draw_muzzle_flash_right_counter --;
+if (draw_muzzle_flash_right_counter <= 0) {
+	draw_muzzle_flash_right = false;
+	draw_muzzle_flash_right_counter = muzzle_flash_counters;
 }
 
 else can_shoot = false;

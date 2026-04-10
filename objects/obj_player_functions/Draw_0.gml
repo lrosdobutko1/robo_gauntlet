@@ -53,4 +53,9 @@ if (health_state != PLAYER_HEALTH_STATE.DEAD && health_state != PLAYER_HEALTH_ST
 	c_white,1);
 }
 
+//draw muzzle flashes
+var index = irandom(7);
+if (current_primary_weapon.weapon_name == "Blaster") index = irandom_range(8,10);
+if (draw_muzzle_flash_right) draw_sprite_ext(spr_muzzle_flash,index,gun_barrels[0], gun_barrels[1],1,1,rotation_angle,c_white,1);
+if (draw_muzzle_flash_left) draw_sprite_ext(spr_muzzle_flash,index,gun_barrels[2], gun_barrels[3],1,1,rotation_angle,c_white,1);
 

@@ -20,7 +20,10 @@ if (instance_exists(player)) {
 
 }
 
-var _rotation_offset = 1 - (obj_player_functions.current_hp / obj_player_functions.max_hp);
+
+
+
+var _rotation_offset = 1 - (player.current_hp / player.max_hp);
 rotation = (rotation > 359) ? 0 : rotation + (1.5 * _rotation_offset);
 
 current_hp = player.current_hp;
@@ -103,7 +106,7 @@ draw_set_font(fnt_hyper_oxide_16);
 draw_text_colour(
 gui_position.weapon_label_x,
 gui_position.weapon_label_y,
-obj_player_functions.current_primary_weapon.weapon_name,
+player.current_primary_weapon.weapon_name,
 c_white, 
 c_white, 
 c_white, 
@@ -112,6 +115,12 @@ c_white,
 
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
+
+//draw secondary weapon ticks
+for (var i = 0; i < player.rocket_counter; i++) {
+	draw_sprite(spr_player_rocket_tick,0, gui_position.self_x + 110 + 14*i, gui_position.self_y + 50);
+}
+
 
 var weapons_color = get_value_from_length(p_t_w_line_length, max_p_t_line_length);
 var shields_color = get_value_from_length(p_t_s_line_length, max_p_t_line_length);
