@@ -35,6 +35,17 @@ function create_bullet_types(_creator, _name, _bullet_damage, _speed, _timer, _s
     };
 }
 
+
+
+/// @function shoot_bullets
+/// @description runs through a loop to create bullet objects using the create_bullet function
+/// @param {struct} _bullet_type The type of bullet to create, and it's traits
+/// @param _gun_barrel_x		{real} The x coordinate to create the bullet at.
+/// @param _gun_barrel_y		{real} The y coordinate to create the bullet at.
+/// @param _num_bullets			{real} The number of bullets to create at once.
+/// @param _firing_angle		{real} The direction in which the bullet will fire.
+/// @param _firing_angle_offset {real} The offset of a fired bullet direction, if multiple bullets are created.
+/// @returns void
 function shoot_bullets(
 _bullet_type,
 _gun_barrel_x, 

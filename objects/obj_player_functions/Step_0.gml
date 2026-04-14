@@ -316,7 +316,6 @@ if (firing_speed_cooldown > 0)
 firing_speed_cooldown --;
 
 
-show_debug_message(rotation_angle);
 
 
 

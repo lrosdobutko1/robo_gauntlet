@@ -57,7 +57,8 @@ switch (current_bullet_type.bullet_name) {
 	
 		if (rockets_launching_timer <= 0) { 
 			rockets_launching = false;
-			turn_radius = 5;
+			has_target = false;
+			turn_radius = 2;
 			rockets_launching_timer = 20;
 		}
 	
@@ -72,7 +73,7 @@ switch (current_bullet_type.bullet_name) {
 	
 			if (instance_exists(obj_enemy_parent))
 			{
-			
+				has_target = true;
 				target = instance_nearest(rocket_target_x,rocket_target_y, obj_enemy_parent);
 				rocket_target_x = target.x;
 				rocket_target_y = target.y;
@@ -122,7 +123,21 @@ switch (current_bullet_type.bullet_name) {
 var hit_wall = resolve_x_collision(hspeed, obj_obstacle)
 
 if (hit_wall == noone) hit_wall = resolve_y_collision(vspeed, obj_obstacle)
-if (hit_wall != noone) instance_destroy();
+if (hit_wall != noone) {
+	if (current_bullet_type.bullet_name != "Flamer")
+	{
+		instance_destroy();
+	}
+	else
+	{
+	    collision_timer--;
+	    if (collision_timer <= 0) {
+			hspeed = 0;
+			vspeed = 0;
+			instance_destroy(); 
+			}
+	}	
+}
 
 #endregion
 
@@ -143,7 +158,11 @@ if (hit_enemy != noone) {
 	else
 	{
 	    collision_timer--;
-	    if (collision_timer <= 0) instance_destroy();
+	    if (collision_timer <= 0) {
+			instance_destroy();
+			hspeed = 0;
+			vspeed = 0;
+		}
 	}
 }
 	

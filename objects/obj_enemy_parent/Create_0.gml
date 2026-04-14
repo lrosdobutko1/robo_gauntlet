@@ -46,8 +46,26 @@ search_timer = 0;
 predicted_x = 0;
 predicted_y = 0;
 
-player_previous_x = obj_player_functions.x;
-player_previous_y = obj_player_functions.y;
+if(instance_exists(obj_player_functions)) {
+	
+	player_current_x = obj_player_collision.x;
+	player_current_y = obj_player_collision.y;
+
+	previous_player_x = obj_player_collision.x;
+	previous_player_y = obj_player_collision.y;
+
+
+}
+else {
+	player_current_x = x;
+	player_current_y = y;
+
+	previous_player_x = x;
+	previous_player_y = y;
+}
+
+
+player_moved = ((player_current_x != previous_player_x) || (player_current_y != previous_player_y));
 
 ////movement info
 previous_x = x;
@@ -87,6 +105,10 @@ shooting_cooldown_timer = 120;
 base_damage = 2;
 base_damage = base_damage * power(level,2);
 damage = base_damage * power(level,2);
+
+enemy_bullets = {
+    default_bullet_type: create_bullet_types(id, "Default", 1, 8, -1, spr_player_bullet_cannon),
+	}
 
 enum ENEMY_HEALTH_STATE
 {
@@ -173,7 +195,7 @@ function choose_torso_angle(prediction_multiplier)
 	var max_time = 80; // Maximum prediction frames
 	var max_distance = 400; // Distance at which max_time applies
 	var prediction_time = prediction_multiplier * (min_time + (max_time - min_time) * (distance_to_player / (distance_to_player + max_distance)));
-	var player_moving = (player_previous_x != obj_player_collision.x || player_previous_y != obj_player_collision.y)
+	var player_moving = (previous_player_x != obj_player_collision.x || previous_player_y != obj_player_collision.y)
 
 	var player_direction = point_direction(x,y,obj_player_collision.x,obj_player_collision.y)-90;
 	var player_lead_direction = point_direction(x,y, predicted_x, predicted_y);
@@ -221,13 +243,7 @@ pathfinding = pathfinding_cooldown;
 
 walk_speed = 0.8;
 
-player_current_x = obj_player_collision.x;
-player_current_y = obj_player_collision.y;
 
-previous_player_x = obj_player_collision.x;
-previous_player_y = obj_player_collision.y;
-
-player_moved = ((player_current_x != previous_player_x) || (player_current_y != previous_player_y));
 
 created = true;
 

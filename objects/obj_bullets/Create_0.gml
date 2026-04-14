@@ -11,7 +11,6 @@ step_counter = 0;
 sprite_index = bullet_sprite;
 
 life_timer = bullet_type.life_timer;
-collision_timer = 6;
 
 h_speed = hspeed;
 v_speed = vspeed;
@@ -19,9 +18,10 @@ image_scale = 0;
 
 enemy = (creator.object_index == obj_player_functions) ? obj_enemy_parent : obj_player_functions;
 
+
 enemy_bullets = {
     default_bullet: create_bullet_types(id, "Default", 1, 8, -1, spr_player_bullet_cannon),
-	}
+}
 
 // Resolve bullet type (enemy vs player)
 if (creator != obj_player_functions.id) {
@@ -68,11 +68,9 @@ switch (current_bullet_type.bullet_name) {
 		image_scale = .25;
 		image_xscale = image_scale;
 		image_yscale = image_scale;
-
-		show_debug_message("I am a flamer");
-
-		break;
+		collision_timer = 3;
 	
+		break;
 	}
 		
 	case "Rocket": {
@@ -118,3 +116,4 @@ function resolve_y_collision(_dy, _obj)
 
     return instance_place(x, y + _dy, _obj);
 }
+

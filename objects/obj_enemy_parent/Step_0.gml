@@ -115,10 +115,23 @@ if (instance_exists(obj_player_functions))
 			shooting_time --;
 			if (health_state != ENEMY_HEALTH_STATE.DEAD || health_state != ENEMY_HEALTH_STATE.DESTROYED)
 			{
-				if (firing_speed == 1) shoot_bullets(id, gun_barrels[0],gun_barrels[1],noone,0,1,5);
+				if (firing_speed == 1) shoot_bullets(
+				enemy_bullets.default_bullet_type, 
+				gun_barrels[0],
+				gun_barrels[1],
+				1,
+				rotation_angle,
+				0
+				);
 					
-				if (firing_speed = round(firing_speed_cooldown / 2)) shoot_bullets(id, gun_barrels[2],gun_barrels[3],noone,0,1,5);
-				
+				if (firing_speed = round(firing_speed_cooldown / 2)) shoot_bullets(
+				enemy_bullets.default_bullet_type, 
+				gun_barrels[2],
+				gun_barrels[3],
+				1,
+				rotation_angle,
+				0
+				);
 			}
 			if (shooting_time <= 0)
 			{
