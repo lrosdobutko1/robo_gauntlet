@@ -1,17 +1,28 @@
 
-level = 1;
+current_level = 1;
+max_level = 99;
 
-experience_points = 0;
+base_xp_for_next_level = 100;
+
+//0.17*(level*level) + (0.22*level) + 300
+// 50 * sqrt(i) + 100
+for (var i = max_level; i > 0; i--) {
+	xp_needed_for_next_level[i] = round(1.7*(i*i) + (50*i)) - 7;
+}
+
+current_experience_points = 0;
+experience_points_to_next_level = xp_needed_for_next_level[current_level+1];
+
 enemy_kills = 0;
 
 base_hp = 40;
-max_hp = (base_hp * level) + power(level,level);
+max_hp = (base_hp * current_level) + power(current_level,current_level);
 current_hp = max_hp;
 
-base_shields = 20 + level;
+base_shields = 20 + current_level;
 max_shields = (base_shields + max_hp/2);
 current_shields = max_shields;
-shield_absorb_rate = 0.25 + level*0.03;
+shield_absorb_rate = 0.25 + current_level*0.03;
 shield_recharge_rate = 0.005;
 max_shield_recharge_cooldown = 240;
 shield_recharge_cooldown = 0;
@@ -26,6 +37,14 @@ enum PLAYER_HEALTH_STATE
 	DEAD,
 	DESTROYED
 }
+
+enum PLAYER_SPECIAL_STATE
+{
+	NONE,
+	LEVEL_UP,	
+}
+
+special_state = PLAYER_SPECIAL_STATE.NONE;
 
 health_state = PLAYER_HEALTH_STATE.FULL;
 explode_anim = 0;
@@ -97,20 +116,20 @@ function weapon_base(
 
 // _creator, _name, _bullet_damage, _speed, _timer, _sprite
 bullet_types = {
-    autocannon:   create_bullet_types(id, "Autocannon",   1,   6,   -1,  spr_player_bullet_cannon),
+    autocannon:   create_bullet_types(id, "Autocannon",   2,   6,   -1,  spr_player_bullet_cannon),
     shotgun:      create_bullet_types(id, "Shotgun",      2,   8,   -1,  spr_player_bullet_shot),
     grenade:      create_bullet_types(id, "Grenade",      4,  .5,   -1,  spr_player_bullet_grenade),
     laser:        create_bullet_types(id, "Laser",        1,   6,   -1,  spr_player_bullet_laser),
     blaster:      create_bullet_types(id, "Blaster",      2,   6,   -1,  spr_player_bullet_blaster),
     flamer:       create_bullet_types(id, "Flamer",       0.5, 4,   15,  spr_player_bullet_flame),
-	rocket:		  create_bullet_types(id, "Rocket",       5,   6,   400, spr_player_rocket),
+	rocket:		  create_bullet_types(id, "Rocket",       8,   6,   400, spr_player_rocket),
 	shell_casing: create_bullet_types(id, "Shell Casing", 0,   1,   -1,  spr_bullet_casing),
 };
 
 
 player_weapons = {
     autocannon: weapon_base("AutoCannon",	1, 1, 1, 20,  0.5, 0, bullet_types.autocannon, spr_player_guns_autocannon),
-    shotgun:    weapon_base("Shotgun",		1, 1, 3, 120, 1, 9,   bullet_types.shotgun,    spr_player_guns_shotgun),
+    shotgun:    weapon_base("Shotgun",		1, 1, 3, 60, 1, 9,   bullet_types.shotgun,    spr_player_guns_shotgun),
     grenade:    weapon_base("Grenades",		5, 1, 1, 160, 0.5, 0, bullet_types.grenade,    spr_player_guns_grenade),
     laser:      weapon_base("Laser",		5, 1, 1, 1,   1, 0,   bullet_types.laser,      spr_player_guns_laser),
     blaster:    weapon_base("Blaster",		5, 1, 1, 50,  1, 0,   bullet_types.blaster,    spr_player_guns_blaster),
@@ -144,7 +163,7 @@ if (instance_exists(obj_player_gui)) {
 	max_engine_modifier = 1.5 - (obj_player_gui.p_t_e_line_length / obj_player_gui.max_p_t_line_length);
 }
 
-damage_scale_modifier = 1 + (level * 0.5);
+damage_scale_modifier = 1 + (current_level * 0.5);
 
 gun_anim = 0;
 
@@ -182,10 +201,20 @@ muzzle_flash_frame = 0;
 
 can_shoot = false;
 
+function level_up_player(_current_level, _current_xp) {
+	return {
+		player_current_level: _current_level++,
+		player_current_xp:    _current_xp = 0,
+	}
+}
 
 
 
+player_level_up = {
+player_current_level: current_level,
+player_current_xp: current_experience_points,
 
+};
 
 
 

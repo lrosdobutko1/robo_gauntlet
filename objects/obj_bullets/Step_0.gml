@@ -7,11 +7,16 @@ if (life_timer > -1) {
 }
 
 // destroy bullets if they get too far out of the room.
-var px = creator.x;
-var py = creator.y;
+if (instance_exists(creator)) {
+	px = creator.x;
+	py = creator.y;
+}
+
 if (abs(x - px) > room_width/2 || abs(y - py) > room_height/2) {
 	instance_destroy();
 }
+
+
 
 switch (current_bullet_type.bullet_name) {
 	case "Autocannon": {
@@ -157,6 +162,7 @@ if (hit_enemy != noone) {
 	}
 	else
 	{
+		calculate_damage(hit_enemy, current_bullet_type.bullet_damage)
 	    collision_timer--;
 	    if (collision_timer <= 0) {
 			instance_destroy();

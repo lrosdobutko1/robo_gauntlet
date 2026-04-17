@@ -14,8 +14,15 @@ current_shield = 0;
 max_shields = 0;
 shield_percent = 1;
 
-max_bar_length = 345 * shield_percent;
-current_bar_length = max_bar_length;
+max_shield_bar_length = 345 * shield_percent;
+current_shield_bar_length = max_shield_bar_length;
+
+current_xp = 0
+max_xp = 0;
+xp_percent = 1;
+
+max_xp_bar_length = 100 * xp_percent;
+current_xp_bar_length = 0;
 
 took_damage = false;
 
@@ -40,15 +47,19 @@ shield_bar_end_color = make_colour_rgb(
 	max_color * (1-shield_color_offset)
 );
 
-
+//draw_sprite_ext(bar,0,gui_position.self_x+618,gui_position.self_y+57,100,0.30,0,c_white,1);
 function GuiPositions(_x, _y){
 	return {
-		self_x: _x,
-		self_y: _y,
-		offset_x: 5,
-		offset_y: 10,
+		self_x:			_x,
+		self_y:			_y,
+		offset_x:		5,
+		offset_y:		10,
 		weapon_label_x: _x+685,
 		weapon_label_y: _y-50,
+		xp_bar_x:  _x+618,
+		xp_bar_y:  _y+57,
+		level_label_x:  _x+510,
+		level_label_y:  _y+50
 	};
 }
 gui_position = GuiPositions(120, 120);

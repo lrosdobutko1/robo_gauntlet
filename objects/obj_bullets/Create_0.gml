@@ -16,6 +16,11 @@ h_speed = hspeed;
 v_speed = vspeed;
 image_scale = 0;
 
+//x position to check for to determine when "off screen" happens for bullet destruction
+px = 0;
+py = 0;
+/* ******************** */
+
 enemy = (creator.object_index == obj_player_functions) ? obj_enemy_parent : obj_player_functions;
 
 

@@ -36,7 +36,6 @@ function create_bullet_types(_creator, _name, _bullet_damage, _speed, _timer, _s
 }
 
 
-
 /// @function shoot_bullets
 /// @description runs through a loop to create bullet objects using the create_bullet function
 /// @param {struct} _bullet_type The type of bullet to create, and it's traits
@@ -124,6 +123,7 @@ function camera_shake()
 function calculate_damage(_target, _damage_amount) {
 
 	var shield_damage = _damage_amount;
+	
 	
 	if (_target == obj_player_functions) {
 			shield_damage = _damage_amount / _target.max_shield_modifier;

@@ -1,3 +1,4 @@
+player = obj_player_functions;
 created = true;
 level = 1;
 
@@ -46,13 +47,13 @@ search_timer = 0;
 predicted_x = 0;
 predicted_y = 0;
 
-if(instance_exists(obj_player_functions)) {
+if(instance_exists(player)) {
 	
-	player_current_x = obj_player_collision.x;
-	player_current_y = obj_player_collision.y;
+	player_current_x = player.x;
+	player_current_y = player.y;
 
-	previous_player_x = obj_player_collision.x;
-	previous_player_y = obj_player_collision.y;
+	previous_player_x = player.x;
+	previous_player_y = player.y;
 
 
 }
@@ -78,7 +79,6 @@ moving = false;
 pathfinding_cooldown = 60;
 pathfinding_timer = 0;
 
-
 //shooting
 enum SHOOTING_STATE
 {
@@ -102,12 +102,15 @@ shooting_time_reset = fire_gun_offset * 4;
 shooting_time = shooting_time_reset;
 shooting_cooldown_timer = 120;
 
-base_damage = 2;
-base_damage = base_damage * power(level,2);
-damage = base_damage * power(level,2);
+firing_speed_cooldown = 40;
+firing_speed = firing_speed_cooldown;
+firing_offset = firing_speed*0.5;
+
+base_damage = 5;
+damage = base_damage + (2 * level);
 
 enemy_bullets = {
-    default_bullet_type: create_bullet_types(id, "Default", 1, 8, -1, spr_player_bullet_cannon),
+    default_bullet_type: create_bullet_types(id, "Default", damage, 6, -1, spr_player_bullet_cannon),
 	}
 
 enum ENEMY_HEALTH_STATE
@@ -121,8 +124,8 @@ enum ENEMY_HEALTH_STATE
 	DESTROYED,
 }
 
-base_hp = 80;
-starting_hp = (base_hp * level) + power(level,level);
+base_hp = 0.17*(level*level) + (0.22*level) + 20;
+starting_hp = base_hp + irandom(base_hp*2);
 current_hp = starting_hp;
 
 base_shields = 20 + level;
@@ -132,7 +135,6 @@ shield_absorb_rate = 0.1 + level*0.03;
 shield_recharge_rate = 0.001;
 max_shield_recharge_cooldown = 480;
 shield_recharge_cooldown = 0;
-
 
 if (current_hp == starting_hp) health_state = ENEMY_HEALTH_STATE.MAX;
 
@@ -242,8 +244,6 @@ pathfinding_cooldown = 20;
 pathfinding = pathfinding_cooldown;
 
 walk_speed = 0.8;
-
-
 
 created = true;
 
@@ -377,38 +377,6 @@ function chase_player(player_current_x, player_current_y, player_moved, created,
     }
 }
 
-firing_speed_cooldown = 40;
-firing_speed = firing_speed_cooldown;
-firing_offset = firing_speed*0.5;
-
-//function shoot_enemy_bullets(
-//gun_barrel_coords, 
-//right_angle,
-//left_angle,
-//firing_speed, 
-//firing_offset, 
-//damage
-//)
-//{
-//	find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
-//	//find_enemy_gun_create_coordinates(casings_eject, 15, 170);
-
-//	var creator = id;
-//	var target_player = point_direction(gun_barrel_coords[0], gun_barrel_coords[1], obj_player_collision.x,obj_player_collision.y)+90;
-
-	
-//	if(firing_speed == firing_speed_cooldown)
-//	{
-//		create_bullet(creator, gun_barrel_coords[0], gun_barrel_coords[1], right_angle, 0, damage);
-
-//	}
-
-//	else if(firing_speed == firing_offset)
-//	{
-//		create_bullet(creator, gun_barrel_coords[2], gun_barrel_coords[3], left_angle, 0, damage);
-//	}
-//}
-
 
 function random_search_rotation(is_rotating, rotation_cool_down, rotation_angle)
 {
@@ -440,40 +408,9 @@ function random_search_rotation(is_rotating, rotation_cool_down, rotation_angle)
 
 
 
-
-//function basic_chase_player(point_x, point_y, move_speed)
-//{
-//	var target_x = obj_player_collision.x;
-//	var target_y = obj_player_collision.y;
-//	var dx = path_get_point_x(path, 1);
-//	var dy = path_get_point_y(path, 1);
-
-//	// Delete the current path and make a fresh one
-//	path_delete(path);
-//	path = path_add();
-
-//	// Generate an initial path to the player
-//	if (mp_grid_path(global.grid, path, x, y, target_x, target_y, true))
-//	{
-//		var point_count = path_get_number(path);
-
-//		// If path has at least 2 points, we can modify the second point
-//		if (point_count > 1)
-//		{
-//			dx = path_get_point_x(path, 1);
-//			dy = path_get_point_y(path, 1);
-
-//			// Add a random offset
-//			dx += point_x;
-//			dy += point_y;
-
-//			// Delete and recreate the path using the new offset as target
-//			path_delete(path);
-//			path = path_add();
-//			mp_grid_path(global.grid, path, x, y, dx, dy, true);
-//		}
-//	}
-
-//	// Start moving along the (possibly offset) path
-//	//path_start(path, move_speed, path_action_stop, true);
-//}
+function give_player_xp(_level, _intelligent) {
+	var base_xp = 15 + (5 * (2/3) * _level)
+	var int_bonus = _intelligent * (5 + _level)
+	var xp = base_xp + int_bonus
+	if (instance_exists(player)) player.current_experience_points += xp;
+}

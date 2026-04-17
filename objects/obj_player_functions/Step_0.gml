@@ -14,7 +14,19 @@ if (current_hp <= max_hp * 0.10 && current_hp > 0) health_state = PLAYER_HEALTH_
 if (current_hp <= 0) health_state = PLAYER_HEALTH_STATE.DEAD;
 if (explode_anim >= (sprite_get_number(spr_explode1) - 1)) health_state = PLAYER_HEALTH_STATE.DESTROYED;
 
-
+//leveling up the player
+if (current_experience_points >= experience_points_to_next_level) special_state = PLAYER_SPECIAL_STATE.LEVEL_UP;
+if (special_state = PLAYER_SPECIAL_STATE.LEVEL_UP) {
+	current_experience_points -= xp_needed_for_next_level[current_level+1];
+	current_level++;
+	max_hp = (base_hp * current_level) + power(current_level,current_level);
+	current_hp = max_hp;
+	max_shields = (base_shields + max_hp/2);
+	current_shields = max_shields;
+	experience_points_to_next_level = xp_needed_for_next_level[current_level+1];
+	
+	special_state = PLAYER_SPECIAL_STATE.NONE;
+}
 
 switch (health_state)
 {
@@ -316,11 +328,10 @@ if (firing_speed_cooldown > 0)
 firing_speed_cooldown --;
 
 
+debug = $"current level: {current_level}current XP: {current_experience_points}level up XP: {xp_needed_for_next_level[current_level + 1]}" +
+$"\ncurrent max HP: {max_hp}, current max shields: {max_shields}"
 
-
-
-
-
+show_debug_message(debug);
 
 
 

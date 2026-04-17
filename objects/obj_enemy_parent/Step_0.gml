@@ -45,6 +45,7 @@ if (instance_exists(obj_player_functions))
 		case ENEMY_HEALTH_STATE.DESTROYED:
 		{
 			global.shaking = false;
+			give_player_xp(1,0);
 			instance_destroy();
 			break;
 		}
@@ -161,8 +162,8 @@ if (instance_exists(obj_player_functions))
 		{
 			if (shooting_state != SHOOTING_STATE.SHOOTING)
 			{
-				if (instance_exists(obj_player_functions))
-				chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
+				if (instance_exists(obj_player_functions)) {}
+				//chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
 				else
 				{
 					if(path_exists(path)) path_delete(path);
