@@ -15,6 +15,7 @@ life_timer = bullet_type.life_timer;
 h_speed = hspeed;
 v_speed = vspeed;
 image_scale = 0;
+exploding = false;
 
 //x position to check for to determine when "off screen" happens for bullet destruction
 px = 0;
@@ -79,6 +80,9 @@ switch (current_bullet_type.bullet_name) {
 	}
 		
 	case "Rocket": {
+		explode_sprites = [spr_explode1,spr_explode2];
+		explosion_sprite = explode_sprites[choose(0,1)];
+		//explosion_length = explosion_sprite.image_number;
 		has_target = true;
 		rockets_launching = true;
 		rockets_launching_timer = 20;
@@ -100,11 +104,15 @@ switch (current_bullet_type.bullet_name) {
 			image_index = 1;	
 			image_scale = 1
 			life_timer = 40;
+			image_angle = random(359);
+
 		}
 		else image_index = 0;
-	
-			speed += random_range(-1,1);
-			break;		
+		
+		moving = true;
+		rotation_direction = random_range(-5,5);	
+		speed += random_range(-1,1);
+		break;		
 	}
 }
 

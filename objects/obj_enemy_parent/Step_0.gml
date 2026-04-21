@@ -39,6 +39,7 @@ if (instance_exists(obj_player_functions))
 		}
 		case ENEMY_HEALTH_STATE.DEAD:
 		{
+			mask_index = -1;
 			camera_shake();
 			break;
 		}

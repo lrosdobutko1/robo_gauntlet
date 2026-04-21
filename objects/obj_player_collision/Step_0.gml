@@ -37,7 +37,7 @@ if (diag_mov > 0) {
 
 health_multiplier = obj_player_functions.current_hp/obj_player_functions.max_hp;
 
-h_speed = h_move * walk_speed * health_multiplier * obj_player_functions.max_engine_modifier * global.delta_multiplier;
+h_speed = h_move * walk_speed * clamp(health_multiplier,0.5,1) * obj_player_functions.max_engine_modifier * global.delta_multiplier;
 v_speed = v_move * walk_speed * health_multiplier * obj_player_functions.max_engine_modifier * global.delta_multiplier;
 
 var next_x = x + h_speed;

@@ -6,6 +6,8 @@ orb = spr_player_health_orb;
 spinner = spr_player_health_spinner;
 bar = spr_player_shield_bar;
 
+mask_index = bg;
+
 current_hp = 0;
 max_hp = 0;
 hp_percent = 1;
@@ -63,6 +65,8 @@ function GuiPositions(_x, _y){
 	};
 }
 gui_position = GuiPositions(120, 120);
+x = gui_position.self_x;
+y = gui_position.self_y;
 	
 uUv          = shader_get_uniform(sdr_gradient, "uUv");
 uOffset      = shader_get_uniform(sdr_gradient, "uOffset");

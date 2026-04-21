@@ -148,16 +148,9 @@ switch (current_primary_weapon) {
 var mouse_gui_x = device_mouse_x_to_gui(0);
 var mouse_gui_y = device_mouse_y_to_gui(0);
 
-if (!point_in_triangle(
-mouse_gui_x,
-mouse_gui_y,
-obj_player_gui.power_triangle.top[0],
-obj_player_gui.power_triangle.top[1],
-obj_player_gui.power_triangle.right[0],
-obj_player_gui.power_triangle.right[1],
-obj_player_gui.power_triangle.left[0],
-obj_player_gui.power_triangle.left[1]
-))
+var collision_with_gui = position_meeting(mouse_gui_x,mouse_gui_y,obj_player_gui)
+
+if (!collision_with_gui)
 {
 	can_shoot = true;
 	
@@ -331,7 +324,7 @@ firing_speed_cooldown --;
 debug = $"current level: {current_level}current XP: {current_experience_points}level up XP: {xp_needed_for_next_level[current_level + 1]}" +
 $"\ncurrent max HP: {max_hp}, current max shields: {max_shields}"
 
-show_debug_message(debug);
+//show_debug_message(debug);
 
 
 

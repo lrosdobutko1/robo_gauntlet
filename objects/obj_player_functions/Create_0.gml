@@ -123,7 +123,7 @@ bullet_types = {
     blaster:      create_bullet_types(id, "Blaster",      2,   6,   -1,  spr_player_bullet_blaster),
     flamer:       create_bullet_types(id, "Flamer",       0.5, 4,   15,  spr_player_bullet_flame),
 	rocket:		  create_bullet_types(id, "Rocket",       8,   6,   400, spr_player_rocket),
-	shell_casing: create_bullet_types(id, "Shell Casing", 0,   1,   -1,  spr_bullet_casing),
+	shell_casing: create_bullet_types(id, "Shell Casing", 0,   1,   500,  spr_bullet_casing),
 };
 
 

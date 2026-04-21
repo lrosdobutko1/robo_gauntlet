@@ -24,9 +24,6 @@ if (instance_exists(player)) {
 var _rotation_offset = 1 - (player.current_hp / player.max_hp);
 rotation = (rotation > 359) ? 0 : rotation + (1.5 * _rotation_offset);
 
-
-
-draw_sprite_ext(bar,0,x+100,y+100,1,2,0,c_white,1)
 current_hp = player.current_hp;
 max_hp = player.max_hp;
 hp_percent = (current_hp / max_hp);
@@ -64,7 +61,7 @@ max_xp = player.experience_points_to_next_level;
 xp_percent = current_xp / max_xp;
 
 current_xp_bar_length = max_xp_bar_length * xp_percent;
-draw_sprite_ext(bar,0,gui_position.xp_bar_x,gui_position.xp_bar_y,100,0.30,0,c_white,1);
+draw_sprite_ext(bar,0,gui_position.xp_bar_x,gui_position.xp_bar_y,current_xp_bar_length,0.30,0,c_white,1);
 draw_text_ext_transformed(gui_position.level_label_x,gui_position.level_label_y,$"Level      {player.current_level}",1,200,.75,.75,0);
 
 #endregion
@@ -283,7 +280,6 @@ draw_text(p_t_left[0]-45, p_t_left[1]-28, "engines");
 draw_text(p_t_right[0]-45, p_t_right[1]+7, "shields");
 
 #endregion
-
 
 
 

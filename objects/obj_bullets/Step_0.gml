@@ -58,6 +58,7 @@ switch (current_bullet_type.bullet_name) {
 	}
 		
 	case "Rocket": {
+		depth = -10000;
 		if (rockets_launching) rockets_launching_timer --;
 	
 		if (rockets_launching_timer <= 0) { 
@@ -71,7 +72,7 @@ switch (current_bullet_type.bullet_name) {
 		direction = image_angle;
 	
 		//smoke trails
-		instance_create_layer(x,y,layer,obj_rocket_smoke);
+		if (!exploding) instance_create_layer(x,y,"player_bullets",obj_rocket_smoke);
 	
 		//targeting
 		if (point_distance(x, y, rocket_target_x, rocket_target_y) < 50) {
@@ -93,8 +94,10 @@ switch (current_bullet_type.bullet_name) {
 		}
 	
 		turn_radius += 0.02;
-		image_xscale = image_scale;
-		image_yscale = image_scale;
+		if (!exploding) {
+			image_xscale = image_scale;
+			image_yscale = image_scale;
+		}
 		break;
 	}
 	
@@ -107,17 +110,21 @@ switch (current_bullet_type.bullet_name) {
 			image_scale += 0.1;
 			image_xscale = image_scale;
 			image_yscale = image_scale;
+			
 			life_timer --;
 		}
 		else {
+	
 			image_index = 0;
 			image_xscale = 0.5;
 			image_yscale = 0.5;
 		}
-	
+		image_angle += rotation_direction;
+		rotation_direction -= sign(rotation_direction)*0.02;
 		speed -= 0.05;
 		image_speed = 0;
 		if (speed <= 0) speed = 0;
+		if (speed == 0 && rotation_direction == 0) moving = false;
 
 		break;		
 	}
@@ -129,9 +136,15 @@ var hit_wall = resolve_x_collision(hspeed, obj_obstacle)
 
 if (hit_wall == noone) hit_wall = resolve_y_collision(vspeed, obj_obstacle)
 if (hit_wall != noone) {
-	if (current_bullet_type.bullet_name != "Flamer")
+	if (current_bullet_type.bullet_name != "Flamer" && current_bullet_type.bullet_name != "Rocket")
 	{
 		instance_destroy();
+	}
+	else if (current_bullet_type.bullet_name == "Rocket")
+	{
+		exploding = true;
+		sprite_index = explosion_sprite;
+		speed = 0;
 	}
 	else
 	{
@@ -144,6 +157,7 @@ if (hit_wall != noone) {
 	}	
 }
 
+
 #endregion
 
 #region collision with enemies
@@ -155,13 +169,9 @@ if (hit_enemy == noone) hit_enemy = resolve_y_collision(vspeed, enemy);
 
 if (hit_enemy != noone) {
 	
-	if (current_bullet_type.bullet_name != "Flamer")
+	if (current_bullet_type.bullet_name == "Flamer")
 	{
-		calculate_damage(hit_enemy, current_bullet_type.bullet_damage)
-	    instance_destroy();
-	}
-	else
-	{
+		
 		calculate_damage(hit_enemy, current_bullet_type.bullet_damage)
 	    collision_timer--;
 	    if (collision_timer <= 0) {
@@ -170,8 +180,26 @@ if (hit_enemy != noone) {
 			vspeed = 0;
 		}
 	}
+	else if(current_bullet_type.bullet_name != "Rocket")
+	{
+		calculate_damage(hit_enemy, current_bullet_type.bullet_damage)
+	    instance_destroy();
+	}
+	else {
+		exploding = true;
+		sprite_index = explosion_sprite;
+		calculate_damage(hit_enemy, current_bullet_type.bullet_damage)
+		speed = 0;
+		show_debug_message("I am doing damage");
+	}
 }
-	
+
+if (exploding) {
+	image_xscale = 1;
+	image_yscale = 1;
+	if (image_index >= image_number -1) instance_destroy();
+}
+
 
 #endregion
 
