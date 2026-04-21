@@ -24,9 +24,9 @@ if (active)
 	else speed = 0;
 	
 	if(alive) instance_create_layer(x,y,layer,obj_rocket_smoke);
-	if (instance_exists(obj_enemy_1))
+	if (instance_exists(obj_enemy_basic_gunner))
 	{
-		target = instance_nearest(x,y, obj_enemy_1);
+		target = instance_nearest(x,y, obj_enemy_basic_gunner);
 		var angle_diff = angle_difference(image_angle, point_direction(x,y,target.x,target.y));
 		image_angle -= min(abs(angle_diff), turn_radius) * sign(angle_diff);
 		turn_radius += 0.01;

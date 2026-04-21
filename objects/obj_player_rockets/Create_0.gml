@@ -13,9 +13,9 @@ turn_radius = 2;
 speed = launch_speed;
 target = noone;
 
-if (instance_exists(obj_enemy_1))
+if (instance_exists(obj_enemy_basic_gunner))
 {
-	target = instance_nearest(x,y, obj_enemy_1);
+	target = instance_nearest(x,y, obj_enemy_basic_gunner);
 }
 
 alive = true;

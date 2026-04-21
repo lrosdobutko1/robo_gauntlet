@@ -1,13 +1,15 @@
 {
   "$GMObject":"",
-  "%Name":"obj_enemy_1",
-  "eventList":[],
+  "%Name":"obj_enemy_basic_gunner",
+  "eventList":[
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+  ],
   "managed":true,
-  "name":"obj_enemy_1",
+  "name":"obj_enemy_basic_gunner",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"enemy_objects",
+    "path":"folders/Objects/enemy_objects.yy",
   },
   "parentObjectId":{
     "name":"obj_enemy_parent",

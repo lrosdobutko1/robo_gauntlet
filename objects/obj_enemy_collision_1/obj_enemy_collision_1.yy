@@ -11,8 +11,8 @@
   "name":"obj_enemy_collision_1",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"enemy_objects",
+    "path":"folders/Objects/enemy_objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,

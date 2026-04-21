@@ -2,6 +2,7 @@ player = obj_player_functions;
 created = true;
 level = 1;
 
+
 suicidal = false;
 
 ////sprite info
@@ -54,8 +55,6 @@ if(instance_exists(player)) {
 
 	previous_player_x = player.x;
 	previous_player_y = player.y;
-
-
 }
 else {
 	player_current_x = x;
@@ -108,6 +107,7 @@ firing_offset = firing_speed*0.5;
 
 base_damage = 5;
 damage = base_damage + (2 * level);
+contact_damage = (level * level) * damage;
 
 enemy_bullets = {
     default_bullet_type: create_bullet_types(id, "Default", damage, 6, -1, spr_player_bullet_cannon),
