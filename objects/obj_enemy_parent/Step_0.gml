@@ -195,7 +195,7 @@
 //	previous_x = x;
 //	previous_y = y;
 
-//	pathfinding_timer -= global.delta_multiplier;
+
 
 //	//movement animation
 //	var next_x = path_get_x(path, 1); // Get the next node's X position

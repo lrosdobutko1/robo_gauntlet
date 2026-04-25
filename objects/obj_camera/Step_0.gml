@@ -6,6 +6,11 @@ if (instance_exists(follow))
 	y_to = follow.y;
 }
 
+else { 
+	x_to = x;
+	y_to = y;
+}
+
 x += (x_to - x)/10;
 y += (y_to - y)/10;
 
@@ -16,3 +21,4 @@ camera_set_view_pos(cam,x-(cam_w_half),y-(cam_h_half));
 
 layer_x(background,x/2);
 layer_y(background,y/2);
+

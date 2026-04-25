@@ -12,7 +12,7 @@ if (current_hp <= max_hp * 0.75 && current_hp > max_hp * 0.25) health_state = PL
 if (current_hp <= max_hp * 0.25 && current_hp > max_hp * 0.10) health_state = PLAYER_HEALTH_STATE.LOW;
 if (current_hp <= max_hp * 0.10 && current_hp > 0) health_state = PLAYER_HEALTH_STATE.CRITICAL;
 if (current_hp <= 0) health_state = PLAYER_HEALTH_STATE.DEAD;
-if (explode_anim >= (sprite_get_number(spr_explode1) - 1)) health_state = PLAYER_HEALTH_STATE.DESTROYED;
+if (player_is_dead) health_state = PLAYER_HEALTH_STATE.DESTROYED;
 
 //leveling up the player
 if (current_experience_points >= experience_points_to_next_level) special_state = PLAYER_SPECIAL_STATE.LEVEL_UP;
@@ -58,11 +58,20 @@ switch (health_state)
 	
 	case PLAYER_HEALTH_STATE.DEAD:
 	{
+		show_debug_message("Player is about to die!");
+		explode_sprite = Sprite18;
+
+		image_xscale = 2;
+		image_yscale = 2;
+		sprite_index = explode_sprite;
+		image_speed = .25;
+		if (image_index >= image_number-1) player_is_dead = true;
 		break;
 	}
 	
 		case PLAYER_HEALTH_STATE.DESTROYED:
 	{
+		show_debug_message("player is destroyed");
 		instance_destroy();
 		break;
 	}
@@ -136,15 +145,9 @@ switch (current_primary_weapon) {
 	
 }
 	
-	
-	
 
 
-
-//if (gun_anim >= weapon_anim_frame_number-1) gun_anim = 0;
-
-
-#region assume mouse is not within the power triangle area to be able to shoot
+#region assume mouse is not within the HUD
 var mouse_gui_x = device_mouse_x_to_gui(0);
 var mouse_gui_y = device_mouse_y_to_gui(0);
 
@@ -265,15 +268,6 @@ if (!collision_with_gui)
 	        );
 			//muzzle flash
 			draw_muzzle_flash_left = true;
-			//shoot_bullets(
-	        //    bullet_types.muzzle_flash,
-	        //    gun_barrels[2],
-			//	gun_barrels[3],
-			//	1,
-			//	rotation_angle,
-			//	0
-	        //);
-			//shoot_bullets(
 			shoot_bullets(
 	            current_primary_weapon.bullet_type,
 	            gun_barrels[2],
@@ -313,19 +307,8 @@ if (current_shields < max_shields && shield_recharge_cooldown <= 0 ) {
 }
 
 
-
 if (shield_recharge_cooldown > 0)
 shield_recharge_cooldown -= 1 * max_shield_modifier;
 
 if (firing_speed_cooldown > 0)
 firing_speed_cooldown --;
-
-
-debug = $"current level: {current_level}current XP: {current_experience_points}level up XP: {xp_needed_for_next_level[current_level + 1]}" +
-$"\ncurrent max HP: {max_hp}, current max shields: {max_shields}"
-
-//show_debug_message(debug);
-
-
-
-

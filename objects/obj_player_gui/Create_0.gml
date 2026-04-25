@@ -41,8 +41,6 @@ shield_bar_start_color = make_colour_rgb(
 	max_color * shield_color_offset
 );
 
-
-
 shield_bar_end_color = make_colour_rgb(
 	max_color * (1-shield_color_offset), 
 	max_color * (1-shield_color_offset), 

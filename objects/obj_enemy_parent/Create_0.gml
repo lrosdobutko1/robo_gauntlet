@@ -2,7 +2,6 @@ player = obj_player_functions;
 created = true;
 level = 1;
 
-
 suicidal = false;
 
 ////sprite info
@@ -19,6 +18,7 @@ explode_sprite = explosion_sprites[irandom(array_length(explosion_sprites)-1)];
 explode_rotation = irandom_range(0,359);
 
 torso = spr_enemy1_torso;
+
 rotation_cooldown = irandom_range(120, 1200);
 rotating = false;
 rotation_accel = 0;
@@ -26,6 +26,8 @@ new_rotation = 0;
 starting_rotation = irandom_range(0,360);
 rotation_angle = starting_rotation;
 current_angle = rotation_angle;
+legs_angle = 0;
+leg_anim = 0;
 target_angle = angle_difference(rotation_angle,current_angle);
 
 alive = true;
@@ -38,6 +40,7 @@ is_smart = false;
 vis_dist = 500;
 sight_line_length = get_sight_line(x,y,rotation_angle, vis_dist, obj_obstacle);
 sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle+90);
+update_pathfinding = false;
 
 spotted_player = false;
 leading_player = false;
@@ -73,10 +76,7 @@ previous_y = y;
 
 moving = false;
 
-////pathfinding
-//initial_path = true;
-pathfinding_cooldown = 60;
-pathfinding_timer = 0;
+
 
 //shooting
 enum SHOOTING_STATE
@@ -237,9 +237,10 @@ function find_enemy_gun_create_coordinates(coords, radius, spread_angle, rotatio
 	coords[3] = y_fixed + lengthdir_y(radius, angle2);
 }
 
-
+////pathfinding
 path = path_add();
 
+pathfinding_timer = 0;
 pathfinding_cooldown = 20;
 pathfinding = pathfinding_cooldown;
 
@@ -336,46 +337,34 @@ function move_away_from_ally(min_distance_to_ally)
 }
 
 
-function chase_player(player_current_x, player_current_y, player_moved, created, move_x, move_y) {
-    var target_x = player_current_x;
-    var target_y = player_current_y;
-    var distance_to_player = point_distance(x, y, player_current_x, player_current_y);
 
-    // Determine if a new path should be calculated
-    var should_update_path = false;
+function chase_the_player(_update) {
 
-    if (distance_to_player > 104)
-	{
-        if (created || player_moved || !path_exists(path)) 
-		{
-            should_update_path = true;
-            // Add randomness to the target position
-            target_x += irandom_range(-50, 50);
-            target_y += irandom_range(-50, 50);
-        }
-    } 
-	else 
-	{
-        // Always update path when close to the player
-        should_update_path = true;
-    }
+	path_delete(path);
+	path = path_add();
 
-    // Adjust target to avoid other enemies
-    target_x += move_x;
-    target_y += move_y;
+	mp_grid_path(obj_pathfinding.grid, path, x, y, player.x, player.y, true);
+	
 
-    if (should_update_path) {
-        // Delete existing path if it exists
-        if (path_exists(path)) {
-            //path_delete(path);
-        }
-        path = path_add();
+	var px = path_get_point_x(path, 1);
+	var py = path_get_point_y(path, 1);
 
-        if (mp_grid_path(global.grid, path, x, y, target_x, target_y, true)) {
-            path_start(path, walk_speed, path_action_stop, true);
-        }
-    }
+	vx = lengthdir_x(walk_speed, point_direction(x, y, px, py));
+	vy = lengthdir_y(walk_speed, point_direction(x, y, px, py));
+
+	previous_x = x;
+	previous_y = y;
+
+	if (place_meeting(x + vx, y, obj_enemy_parent)) vx = 0;
+	if (place_meeting(x, y + vy, obj_enemy_parent)) vy = 0;
+
+	x += vx;
+	y += vy;
+
+	current_vx = x - previous_x;
+	current_vy = y - previous_y;
 }
+
 
 
 function random_search_rotation(is_rotating, rotation_cool_down, rotation_angle)

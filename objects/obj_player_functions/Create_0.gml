@@ -27,6 +27,8 @@ shield_recharge_rate = 0.005;
 max_shield_recharge_cooldown = 240;
 shield_recharge_cooldown = 0;
 
+player_is_dead = false;
+
 enum PLAYER_HEALTH_STATE
 {
 	FULL,
@@ -50,7 +52,7 @@ health_state = PLAYER_HEALTH_STATE.FULL;
 explode_anim = 0;
 
 explosion_sprites = [spr_explode1, spr_explode2];
-explode_sprite = explosion_sprites[irandom(array_length(explosion_sprites)-1)];
+explode_sprite = spr_spark; //explosion_sprites[irandom(array_length(explosion_sprites)-1)];
 
 image_scale = 1;
 

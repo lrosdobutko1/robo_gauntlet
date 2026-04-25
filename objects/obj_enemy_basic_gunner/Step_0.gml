@@ -1,6 +1,6 @@
 // Inherit the parent event
 event_inherited();
-
+mask_index = spr_player_collision;
 
 if (instance_exists(obj_player_functions))
 {
@@ -162,27 +162,15 @@ if (instance_exists(obj_player_functions))
 
 	if (shooting_state != SHOOTING_STATE.SHOOTING)
 	{
-		if (pathfinding <= 0)
-		{
-			if (shooting_state != SHOOTING_STATE.SHOOTING)
-			{
-				if (instance_exists(obj_player_functions)) 
-				chase_player(player_current_x,player_current_y,player_moved,created, move_away.px-x, move_away.py-y);
-				else
-				{
-					if(path_exists(path)) path_delete(path);
-					chase_player(xstart,ystart,true,created, move_away.px-x, move_away.py-y);
-				}
-			}
-
-			created = false;
-			pathfinding = irandom_range(pathfinding_cooldown / 2, pathfinding_cooldown);
+		chase_the_player(update_pathfinding)
+		
+		if (player_moved) update_pathfinding = true;
+		else if (pathfinding_timer <= 0) { 
+			update_pathfinding = true;
+			pathfinding_timer = irandom_range(pathfinding_cooldown/2, pathfinding_cooldown*1.5);
 		}
-	}
+		else update_pathfinding = false;
 
-	else 
-	{
-		if(path_exists(path)) path_delete(path);
 	}
 
 
@@ -198,20 +186,23 @@ if (instance_exists(obj_player_functions))
 	previous_x = x;
 	previous_y = y;
 
-	pathfinding_timer -= global.delta_multiplier;
+	
 
 	//movement animation
 	var next_x = path_get_x(path, 1); // Get the next node's X position
 	var next_y = path_get_y(path, 1); // Get the next node's Y position
 	var travel_angle = point_direction(x, y, next_x, next_y);
-	var angle_diff = angle_difference(image_angle, travel_angle);
+	var angle_diff = angle_difference(legs_angle, travel_angle);
+	
 
-	if (moving == true)
+	if (moving)
 	{
 		image_speed = 0.8;
+		leg_anim += 0.20;
+		if leg_anim >= sprite_get_number(spr_enemy1_legs_1) leg_anim = 0;
 	
 	    //face toward the next node instead of the player
-		image_angle -= min(abs(angle_diff), 5) * sign(angle_diff);
+		legs_angle -= min(abs(angle_diff), 5) * sign(angle_diff);
 	}
 	else
 	{
@@ -241,9 +232,15 @@ if (instance_exists(obj_player_functions))
 	}
 	
 }
-
 else 
 {
 	if(path_exists(path)) path_delete(path);
+	
 } 
 
+if (!instance_exists(player)) {
+	moving = false;
+	show_debug_message("The player is dead");	
+}
+
+pathfinding_timer -= global.delta_multiplier;
