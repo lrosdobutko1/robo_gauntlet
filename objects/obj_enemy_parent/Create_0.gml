@@ -40,7 +40,7 @@ is_smart = false;
 vis_dist = 500;
 sight_line_length = get_sight_line(x,y,rotation_angle, vis_dist, obj_obstacle);
 sight_cone = get_sight_cone(x,y,60,sight_line_length,rotation_angle+90);
-update_pathfinding = false;
+
 
 spotted_player = false;
 leading_player = false;
@@ -208,9 +208,10 @@ function find_enemy_gun_create_coordinates(coords, radius, spread_angle, rotatio
 ////pathfinding
 path = path_add();
 
-pathfinding_timer = 0;
+update_pathfinding = true;
+
 pathfinding_cooldown = 20;
-pathfinding = pathfinding_cooldown;
+pathfinding_timer = 0;
 
 walk_speed = 0.8;
 
@@ -313,19 +314,15 @@ function chase_the_player(_update) {
 	vx = lengthdir_x(walk_speed, point_direction(x, y, px, py));
 	vy = lengthdir_y(walk_speed, point_direction(x, y, px, py));
 
-	previous_x = x;
-	previous_y = y;
+	//if (place_meeting(x + vx, y, obj_enemy_parent)) vx = 0;
+	//if (place_meeting(x, y + vy, obj_enemy_parent)) vy = 0;
+	
+	return {vx, vy};
 
-	if (place_meeting(x + vx, y, obj_enemy_parent)) vx = 0;
-	if (place_meeting(x, y + vy, obj_enemy_parent)) vy = 0;
+	//x += vx;
+	//y += vy;
 
-	x += vx;
-	y += vy;
-
-	current_vx = x - previous_x;
-	current_vy = y - previous_y;
 }
-
 
 
 function random_search_rotation(is_rotating, rotation_cool_down, rotation_angle)

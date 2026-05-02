@@ -49,10 +49,6 @@ if (touching_counter <= 0) touching_counter = touching_cooldown;
 chase_the_player(target_x, target_y);
 
 
-show_debug_message(touching_counter);
-
-
-
 if (point_in_rectangle(mouse_x, mouse_y, bbox_left, bbox_top, bbox_right, bbox_bottom)) {
 	if (mouse_check_button(1)) {
 		x = mouse_x;

@@ -1,6 +1,6 @@
 ds_list_clear(list_of_nearby_allies);
 
-var count = collision_circle_list(x, y, nearby_radius, test_object, 0, 1, list_of_nearby_allies, 0);
+var count = collision_circle_list(x, y, nearby_radius, test_object_1, 0, 1, list_of_nearby_allies, 0);
 
 var closest_ally = noone;
 var nearest_distance = nearby_radius;
@@ -24,7 +24,7 @@ for (var i = 0; i < count; i++) {
 	_away_y = lengthdir_y(100, _dir);
 }
 
-
+if (instance_exists(closest_ally))
 draw_line(x, y, closest_ally.x, closest_ally.y);
 
 

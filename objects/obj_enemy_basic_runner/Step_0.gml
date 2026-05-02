@@ -68,13 +68,20 @@ if (instance_exists(obj_player_functions))
 
 	var sight_line = collision_line(x,y,player_current_x,player_current_y,obj_obstacle,false,true);
 
+	if (update_pathfinding)
+	move_xy = chase_the_player(update_pathfinding);
+	
+	if (place_meeting(x + vx, y, obj_enemy_parent)) move_xy.vx = 0;
+	if (place_meeting(x, y + vy, obj_enemy_parent)) move_xy.vy = 0;
+	x += move_xy.vx;
+	y += move_xy.vy;
+
 	if (pathfinding_timer <= 0) { 
-		if (player_moved) update_pathfinding = true;
+			update_pathfinding = true;
 			pathfinding_timer = irandom_range(pathfinding_cooldown/2, pathfinding_cooldown*1.5);
 		}
 	else update_pathfinding = false;
-		
-	chase_the_player(update_pathfinding)
+
 
 	if (previous_x != x || previous_y != y) 
 	{

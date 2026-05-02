@@ -174,6 +174,7 @@ if (instance_exists(obj_player_functions))
 		else update_pathfinding = false;
 		
 		chase_the_player(update_pathfinding)
+		
 
 	}
 

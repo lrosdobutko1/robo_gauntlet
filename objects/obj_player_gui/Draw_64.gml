@@ -282,3 +282,13 @@ if (instance_exists(player)) {
 
 
 }
+
+if (draw_timer <= 0) {
+	fps_text = string(round(fps_real));
+	draw_timer = draw_timer_cooldown;
+}
+draw_timer --;
+
+draw_text(1200, 10, $"FPS: {fps_text}");
+var _num_instances = instance_number(obj_enemy_basic_runner);
+draw_text(1200, 30, $"Instanes: {_num_instances}");

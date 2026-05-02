@@ -24,24 +24,14 @@ else if (health_state == ENEMY_HEALTH_STATE.DEAD)
 }
 
 
-if (path_exists(path))
-draw_path(path,x,y,true);
-	
-draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,1);
-
-
 //temp health bars
+
 var x1 = x - 25;
 var y1 = y - 30;
 var x2 = x1 + max(0,(50 * (current_hp/starting_hp)));
 var y2 = y1;
 
+if (current_hp != starting_hp)
 draw_line_width(x1, y1, x2, y2, 10);
 
-//draw a line pointing directly away from the player for knock-back purposes
-var _dir = point_direction(x,y, player.x,player.y)-180;
-var _knock_back_magnitude = 4;
-var _kbx = lengthdir_x(_knock_back_magnitude, _dir);
-var _kby = lengthdir_y(_knock_back_magnitude, _dir);
-
-draw_line(x, y, x + _kbx, y + _kby);
+//if(path_exists(path)) draw_path(path, x, y, 1);

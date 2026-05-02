@@ -1,5 +1,9 @@
 player = obj_player_functions;
 
+draw_timer_cooldown = 120;
+draw_timer = draw_timer_cooldown;
+fps_text = "";
+
 bg = spr_player_health_background;
 border = spr_player_health_border;
 orb = spr_player_health_orb;

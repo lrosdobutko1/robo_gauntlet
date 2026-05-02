@@ -201,7 +201,7 @@ if (hit_enemy != noone) {
 			ds_list_find_value(aoe_damage_list, i).x, 
 			ds_list_find_value(aoe_damage_list, i).y) / aoe_radius;
 			calculate_damage(ds_list_find_value(aoe_damage_list, i), ((current_bullet_type.bullet_damage * damage_scale)/2))
-			show_debug_message($"{i+1}: {ds_list_find_value(aoe_damage_list, i)} - Took {current_bullet_type.bullet_damage * damage_scale} damage");
+			
 		}
 		
 		calculate_damage(hit_enemy, current_bullet_type.bullet_damage)
