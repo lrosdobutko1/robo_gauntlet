@@ -118,13 +118,13 @@ function weapon_base(
 
 // _creator, _name, _bullet_damage, _speed, _timer, _sprite
 bullet_types = {
-    autocannon:   create_bullet_types(id, "Autocannon",   2,   6,   -1,  spr_player_bullet_cannon),
+    autocannon:   create_bullet_types(id, "Autocannon",   4,   6,   -1,  spr_player_bullet_cannon),
     shotgun:      create_bullet_types(id, "Shotgun",      2,   8,   -1,  spr_player_bullet_shot),
     grenade:      create_bullet_types(id, "Grenade",      4,  .5,   -1,  spr_player_bullet_grenade),
     laser:        create_bullet_types(id, "Laser",        1,   6,   -1,  spr_player_bullet_laser),
     blaster:      create_bullet_types(id, "Blaster",      2,   6,   -1,  spr_player_bullet_blaster),
     flamer:       create_bullet_types(id, "Flamer",       0.5, 4,   15,  spr_player_bullet_flame),
-	rocket:		  create_bullet_types(id, "Rocket",       8,   6,   400, spr_player_rocket),
+	rocket:		  create_bullet_types(id, "Rocket",       4,   6,   400, spr_player_rocket),
 	shell_casing: create_bullet_types(id, "Shell Casing", 0,   1,   500,  spr_bullet_casing),
 };
 

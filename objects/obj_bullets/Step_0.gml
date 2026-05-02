@@ -20,12 +20,13 @@ if (abs(x - px) > room_width/2 || abs(y - py) > room_height/2) {
 
 switch (current_bullet_type.bullet_name) {
 	case "Autocannon": {
-
+		
+		
 		break;
 	}
 	
 	case "Shotgun": {
-		show_debug_message("shotgun");
+
 		break;
 	}
 		
@@ -36,12 +37,12 @@ switch (current_bullet_type.bullet_name) {
 	}
 	
 	case "Laser": {
-		show_debug_message("shotgun");
+
 		break;
 	}
 		
 	case "Blaster": {
-		show_debug_message("autocannon");
+
 		break;
 	}
 	
@@ -131,7 +132,6 @@ switch (current_bullet_type.bullet_name) {
 }
 
 #region Collision with walls
-
 var hit_wall = resolve_x_collision(hspeed, obj_obstacle)
 
 if (hit_wall == noone) hit_wall = resolve_y_collision(vspeed, obj_obstacle)
@@ -142,6 +142,7 @@ if (hit_wall != noone) {
 	}
 	else if (current_bullet_type.bullet_name == "Rocket")
 	{
+		ds_list_add(global.explosion_list, self.id);
 		exploding = true;
 		sprite_index = explosion_sprite;
 		speed = 0;
@@ -171,7 +172,6 @@ if (hit_enemy != noone) {
 	
 	if (current_bullet_type.bullet_name == "Flamer")
 	{
-		
 		calculate_damage(hit_enemy, current_bullet_type.bullet_damage)
 	    collision_timer--;
 	    if (collision_timer <= 0) {
@@ -186,19 +186,60 @@ if (hit_enemy != noone) {
 	    instance_destroy();
 	}
 	else {
+		//add self to list of entities calling the shake_camera() function
 		exploding = true;
+		ds_list_add(global.explosion_list, self.id);
 		sprite_index = explosion_sprite;
+		
+		//find all enemies to do damage to
+		collision_circle_list(x, y, aoe_radius, enemy, 0, 1, aoe_damage_list, 0)
+		
+		for (var i = 0; i < ds_list_size(aoe_damage_list); i++) {
+			var damage_scale = 1 - point_distance(
+			x, 
+			y, 
+			ds_list_find_value(aoe_damage_list, i).x, 
+			ds_list_find_value(aoe_damage_list, i).y) / aoe_radius;
+			calculate_damage(ds_list_find_value(aoe_damage_list, i), ((current_bullet_type.bullet_damage * damage_scale)/2))
+			show_debug_message($"{i+1}: {ds_list_find_value(aoe_damage_list, i)} - Took {current_bullet_type.bullet_damage * damage_scale} damage");
+		}
+		
 		calculate_damage(hit_enemy, current_bullet_type.bullet_damage)
 		speed = 0;
-		show_debug_message("I am doing damage");
 	}
+	
+	if (apply_knock_back) {
+		show_debug_message("I have knockback");
+			
+		var _dir = point_direction(x,y, enemy.x, enemy.y)-180;
+		var _knock_back_magnitude = -4;
+		var _kbx = lengthdir_x(_knock_back_magnitude, _dir);
+		var _kby = lengthdir_y(_knock_back_magnitude, _dir);
+			
+		hit_enemy.x += _kbx;
+		hit_enemy.y += _kby;
+	}
+	
 }
 
 if (exploding) {
 	image_xscale = 1;
 	image_yscale = 1;
-	if (image_index >= image_number -1) instance_destroy();
+	camera_shake();
+	
+	if (image_index >= image_number -1) {
+		//find the number of units causing a camera shake
+		var index = ds_list_find_index(global.explosion_list, id);
+		if (index != -1)
+		{
+		    ds_list_delete(global.explosion_list, index);
+		}
+		
+		instance_destroy();
+	}
 }
+
+
 
 
 #endregion

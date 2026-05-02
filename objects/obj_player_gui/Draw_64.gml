@@ -217,7 +217,6 @@ if (instance_exists(player)) {
 	//cycle_power_triangle(p_t_points, p_t_center_coords_index);
 	if keyboard_check_pressed(ord("C")) {
 		p_t_current_center = [p_t_points[p_t_center_coords_index][0], p_t_points[p_t_center_coords_index][1]]
-		show_debug_message(p_t_center_coords_index);
 		p_t_center_coords_index ++;
 		
 		if (p_t_center_coords_index > array_length(p_t_points)-1) {

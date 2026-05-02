@@ -69,7 +69,6 @@ if (instance_exists(obj_player_functions)) {
 }
 
 if (!instance_exists(obj_player_functions)) {
-	show_debug_message("legs are destroyed");
 	instance_destroy();
 	
 }

@@ -22,3 +22,4 @@ camera_set_view_pos(cam,x-(cam_w_half),y-(cam_h_half));
 layer_x(background,x/2);
 layer_y(background,y/2);
 
+

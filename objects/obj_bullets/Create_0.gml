@@ -6,8 +6,8 @@ bullet_damage,
 bullet_sprite
 */
 
-
-step_counter = 0;
+apply_knock_back = false;
+knock_back_magnitude = 4;
 sprite_index = bullet_sprite;
 
 life_timer = bullet_type.life_timer;
@@ -23,7 +23,6 @@ py = 0;
 /* ******************** */
 
 enemy = (creator.object_index == obj_player_functions) ? obj_enemy_parent : obj_player_functions;
-
 
 enemy_bullets = {
     default_bullet: create_bullet_types(id, "Default", 1, 8, -1, spr_player_bullet_cannon),
@@ -44,27 +43,27 @@ switch (current_bullet_type.bullet_name) {
 	case "Autocannon": {
 		h_speed = hspeed;
 		v_speed = vspeed;
-		show_debug_message("autocannon");
+
 		break;
 	}
 	
 	case "Shotgun": {
-		show_debug_message("shotgun");
+
 		break;
 	}
 
 	case "Grenade": {
-		show_debug_message("autocannon");
+		
 		break;
 	}
 	
 	case "Laser": {
-		show_debug_message("shotgun");
+
 		break;
 	}
 		
 	case "Blaster": {
-		show_debug_message("autocannon"); 
+
 		break;
 }
 	
@@ -96,6 +95,8 @@ switch (current_bullet_type.bullet_name) {
 		//image_angle -= 90 + random_range(-45,45);
 		image_xscale = image_scale;
 		image_yscale = image_scale;
+		aoe_radius = 50;
+		aoe_damage_list = ds_list_create();
 		break;
 	}
 	

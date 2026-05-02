@@ -9,3 +9,4 @@ image_angle,
 c_white,
 1);
 
+if (current_bullet_type.bullet_name == "Rocket") draw_circle(x,y, aoe_radius,1);

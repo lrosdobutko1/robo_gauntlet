@@ -58,7 +58,6 @@ switch (health_state)
 	
 	case PLAYER_HEALTH_STATE.DEAD:
 	{
-		show_debug_message("Player is about to die!");
 		explode_sprite = Sprite18;
 
 		image_xscale = 2;
@@ -71,7 +70,6 @@ switch (health_state)
 	
 		case PLAYER_HEALTH_STATE.DESTROYED:
 	{
-		show_debug_message("player is destroyed");
 		instance_destroy();
 		break;
 	}

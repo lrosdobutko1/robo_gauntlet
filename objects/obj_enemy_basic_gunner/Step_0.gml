@@ -1,6 +1,8 @@
 // Inherit the parent event
 event_inherited();
-mask_index = spr_player_collision;
+
+torso = spr_basic_gunner_torso;
+legs = spr_basic_gunner_legs;
 
 if (instance_exists(obj_player_functions))
 {
@@ -11,7 +13,6 @@ if (instance_exists(obj_player_functions))
 	if (current_hp <= starting_hp * 0.25 && current_hp < starting_hp * 0.10) health_state = ENEMY_HEALTH_STATE.CRITICAL;
 	if (current_hp <= 0) health_state = ENEMY_HEALTH_STATE.DEAD;
 	if (explode_anim >= (sprite_get_number(explode_sprite) - 1)) health_state = ENEMY_HEALTH_STATE.DESTROYED;
-
 
 	switch (health_state)
 	{
@@ -43,12 +44,20 @@ if (instance_exists(obj_player_functions))
 		case ENEMY_HEALTH_STATE.DEAD:
 		{
 			mask_index = -1;
+			
+			if (!exploding) ds_list_add(global.explosion_list,self.id)
+			exploding = true;
 			camera_shake();
 			break;
 		}
 		case ENEMY_HEALTH_STATE.DESTROYED:
 		{
-			global.shaking = false;
+			var index = ds_list_find_index(global.explosion_list, id);
+
+			if (index != -1)
+			{
+				ds_list_delete(global.explosion_list, index);
+			}
 			give_player_xp(1,0);
 			instance_destroy();
 			break;
@@ -66,11 +75,7 @@ if (instance_exists(obj_player_functions))
 	sight_cone[2],
 	sight_cone[3]);
 
-	get_list_of_nearest_allies();
-	var move_away = move_away_from_ally(min_distance_to_ally);
-
 	//pathfinding
-	pathfinding --;
 	player_current_x = obj_player_collision.x;
 	player_current_y = obj_player_collision.y;
 
@@ -121,7 +126,7 @@ if (instance_exists(obj_player_functions))
 			if (health_state != ENEMY_HEALTH_STATE.DEAD || health_state != ENEMY_HEALTH_STATE.DESTROYED)
 			{
 				if (firing_speed == 1) shoot_bullets(
-				enemy_bullets.default_bullet_type, 
+				current_bullet_type, 
 				gun_barrels[0],
 				gun_barrels[1],
 				1,
@@ -162,17 +167,15 @@ if (instance_exists(obj_player_functions))
 
 	if (shooting_state != SHOOTING_STATE.SHOOTING)
 	{
-		chase_the_player(update_pathfinding)
-		
-		if (player_moved) update_pathfinding = true;
-		else if (pathfinding_timer <= 0) { 
-			update_pathfinding = true;
+		if (pathfinding_timer <= 0) { 
+			if (player_moved) update_pathfinding = true;
 			pathfinding_timer = irandom_range(pathfinding_cooldown/2, pathfinding_cooldown*1.5);
 		}
 		else update_pathfinding = false;
+		
+		chase_the_player(update_pathfinding)
 
 	}
-
 
 	if (previous_x != x || previous_y != y) 
 	{
@@ -186,20 +189,17 @@ if (instance_exists(obj_player_functions))
 	previous_x = x;
 	previous_y = y;
 
-	
-
 	//movement animation
 	var next_x = path_get_x(path, 1); // Get the next node's X position
 	var next_y = path_get_y(path, 1); // Get the next node's Y position
 	var travel_angle = point_direction(x, y, next_x, next_y);
 	var angle_diff = angle_difference(legs_angle, travel_angle);
 	
-
 	if (moving)
 	{
 		image_speed = 0.8;
 		leg_anim += 0.20;
-		if leg_anim >= sprite_get_number(spr_enemy1_legs_1) leg_anim = 0;
+		if leg_anim >= sprite_get_number(spr_basic_gunner_legs) leg_anim = 0;
 	
 	    //face toward the next node instead of the player
 		legs_angle -= min(abs(angle_diff), 5) * sign(angle_diff);
@@ -213,9 +213,6 @@ if (instance_exists(obj_player_functions))
 
 	//choose the angle at which the torso points
 	rotation_angle -= choose_torso_angle(prediction_multiplier);
-
-	player_previous_x = obj_player_collision.x;
-	player_previous_y = obj_player_collision.y;
 
 	player_moved = ((player_current_x != previous_player_x) || (player_current_y != previous_player_y));
 
@@ -232,15 +229,11 @@ if (instance_exists(obj_player_functions))
 	}
 	
 }
-else 
-{
-	if(path_exists(path)) path_delete(path);
-	
-} 
 
 if (!instance_exists(player)) {
 	moving = false;
-	show_debug_message("The player is dead");	
+	if(path_exists(path)) path_delete(path);
+	
 }
 
 pathfinding_timer -= global.delta_multiplier;

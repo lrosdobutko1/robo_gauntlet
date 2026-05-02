@@ -16,8 +16,8 @@ explode_anim = 0;
 explosion_sprites = [spr_explode1, spr_explode2];
 explode_sprite = explosion_sprites[irandom(array_length(explosion_sprites)-1)];
 explode_rotation = irandom_range(0,359);
+exploding = false;
 
-torso = spr_enemy1_torso;
 
 rotation_cooldown = irandom_range(120, 1200);
 rotating = false;
@@ -77,42 +77,6 @@ previous_y = y;
 moving = false;
 
 
-
-//shooting
-enum SHOOTING_STATE
-{
-	SHOOTING_IDLE,
-	PREPARING_TO_SHOOT,
-	SHOOTING,
-	SHOOTING_COOLDOWN,
-}
-
-shooting_state = SHOOTING_STATE.SHOOTING_IDLE;
-
-gun_barrels = array_create(4);
-find_enemy_gun_create_coordinates(gun_barrels, 20, 65,rotation_angle);
-
-gun_cooldown = 140;
-preparing_to_shoot_timer = gun_cooldown;
-shooting_range = vis_dist;
-gun_offset_counter = 0;
-fire_gun_offset = 40; 
-shooting_time_reset = fire_gun_offset * 4;
-shooting_time = shooting_time_reset;
-shooting_cooldown_timer = 120;
-
-firing_speed_cooldown = 40;
-firing_speed = firing_speed_cooldown;
-firing_offset = firing_speed*0.5;
-
-base_damage = 5;
-damage = base_damage + (2 * level);
-contact_damage = (level * level) * damage;
-
-enemy_bullets = {
-    default_bullet_type: create_bullet_types(id, "Default", damage, 6, -1, spr_player_bullet_cannon),
-	}
-
 enum ENEMY_HEALTH_STATE
 {
 	MAX,
@@ -135,6 +99,10 @@ shield_absorb_rate = 0.1 + level*0.03;
 shield_recharge_rate = 0.001;
 max_shield_recharge_cooldown = 480;
 shield_recharge_cooldown = 0;
+
+base_damage = 5;
+damage = base_damage + (2 * level);
+contact_damage = (level * level) * damage;
 
 if (current_hp == starting_hp) health_state = ENEMY_HEALTH_STATE.MAX;
 
@@ -248,93 +216,86 @@ walk_speed = 0.8;
 
 created = true;
 
-current_list_size = 0;
-nearest_ally = noone;
-min_dist = 99999999;
-
-ally_list = ds_list_create();
-previous_list_size = 0;
-
-min_distance_to_ally = 50;
 
 
 
-function get_list_of_nearest_allies()
-{
-	//collision with allies
-	ds_list_clear(ally_list);
-	current_list_size = 0;
-	nearest_ally = noone;
-	min_dist = 999; // Start with a large number
 
-	with (obj_enemy_parent) 
-	{
-	    if (id != other.id) 
-	    {
-	        ds_list_add(other.ally_list, id);
-	    }
-	}
+//function get_list_of_nearest_allies()
+//{
+//	//collision with allies
+//	ds_list_clear(ally_list);
+//	current_list_size = 0;
+//	nearest_ally = noone;
+//	min_dist = 999; // Start with a large number
 
-	current_list_size = ds_list_size(ally_list);
+//	with (obj_enemy_parent) 
+//	{
+//	    if (id != other.id) 
+//	    {
+//	        ds_list_add(other.ally_list, id);
+//	    }
+//	}
 
-	//only check if the list size has changed
-	if (current_list_size != previous_list_size) 
-	{
-	    for (var i = 0; i < ds_list_size(ally_list); i++) 
-	    {
-	        var output = ds_list_find_value(ally_list, i);
-	    }
-	}
+//	current_list_size = ds_list_size(ally_list);
 
-	for (var i = 0; i < ds_list_find_value(ally_list, i); i ++)
-	{
-		var ally_id = ds_list_find_value(ally_list, i);
-		var ally_instance = instance_exists(ally_id) ? ally_id : noone;
+//	//only check if the list size has changed
+//	if (current_list_size != previous_list_size) 
+//	{
+//	    for (var i = 0; i < ds_list_size(ally_list); i++) 
+//	    {
+//	        var output = ds_list_find_value(ally_list, i);
+//	    }
+//	}
+
+//	for (var i = 0; i < ds_list_find_value(ally_list, i); i ++)
+//	{
+//		var ally_id = ds_list_find_value(ally_list, i);
+//		var ally_instance = instance_exists(ally_id) ? ally_id : noone;
 		
-		if (ally_instance != noone)
-		{
-			var dist = point_distance(x,y, ally_instance.x, ally_instance.y);
-			if (dist < min_dist)
-			{
-				min_dist = dist;
-				nearest_ally = ally_instance;
-			}
-		}
-	}
+//		if (ally_instance != noone)
+//		{
+//			var dist = point_distance(x,y, ally_instance.x, ally_instance.y);
+//			if (dist < min_dist)
+//			{
+//				min_dist = dist;
+//				nearest_ally = ally_instance;
+//			}
+//		}
+//	}
 
-	previous_list_size = current_list_size;
-}
+//	previous_list_size = current_list_size;
+//}
 
 
-function move_away_from_ally(min_distance_to_ally)
-{
-	var distance;
-	var dir_away;
-	var line_length;
-	var point_x;
-	var point_y;
-	if (nearest_ally != noone) 
-	{
-	   distance = point_distance(x, y, nearest_ally.x, nearest_ally.y);
-	   dir_away = point_direction(x, y, nearest_ally.x, nearest_ally.y) + 180;
+//function move_away_from_ally(min_distance_to_ally)
+//{
+//	var distance;
+//	var dir_away;
+//	var line_length;
+//	var point_x;
+//	var point_y;
+//	if (nearest_ally != noone) 
+//	{
+//	   distance = point_distance(x, y, nearest_ally.x, nearest_ally.y);
+//	   dir_away = point_direction(x, y, nearest_ally.x, nearest_ally.y) + 180;
 
-	    line_length = clamp(min_distance_to_ally - distance, 0, min_distance_to_ally);
+//	    line_length = clamp(min_distance_to_ally - distance, 0, min_distance_to_ally);
 
-	    point_x = x + lengthdir_x(line_length, dir_away);
-	    point_y = y + lengthdir_y(line_length, dir_away);
-	}	
-	else
-	{
-		point_x = x;
-		point_y = y;
-	}
+//	    point_x = x + lengthdir_x(line_length, dir_away);
+//	    point_y = y + lengthdir_y(line_length, dir_away);
+//	}	
+//	else
+//	{
+//		point_x = x;
+//		point_y = y;
+//	}
 	
-	return 
-	({
-		px: point_x,
-		py: point_y
-	});
-}
+//	return 
+//	({
+//		px: point_x,
+//		py: point_y
+//	});
+//}
 
 
 

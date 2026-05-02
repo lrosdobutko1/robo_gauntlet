@@ -106,17 +106,14 @@ _firing_angle
 
 function camera_shake()
 {	
-	if (!global.shaking)
-	{
-
-	global.shaking = true;
 	
-	var shake_coefficient = max((1 - (distance_to_object(obj_player_collision) / 300)), 0.05);
-	var camera_shake_x = random_range(-10,10);
-	var camera_shake_y = random_range(-10,10);
-	obj_camera.x += camera_shake_x * shake_coefficient;
-	obj_camera.y += camera_shake_y * shake_coefficient;
-	}
+	var shake_distance_coefficient = max((1 - (distance_to_object(obj_player_collision) / 300)), 0.05);
+	var shake_number_coefficient = 1/max(1,ds_list_size(global.explosion_list));
+	var camera_shake_x = random_range(-5,5);
+	var camera_shake_y = random_range(-5,5);
+	obj_camera.x += camera_shake_x * shake_distance_coefficient * shake_number_coefficient;
+	obj_camera.y += camera_shake_y * shake_distance_coefficient * shake_number_coefficient;
+	
 
 }
 

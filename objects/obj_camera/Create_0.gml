@@ -11,10 +11,9 @@ x_to = xstart;
 y_to = ystart;
 
 
-global.shake_call_count = 0;
-global.shaking = false;
-
 if (layer_exists("Background"))
 {
 	background = layer_get_id("Background");
 }
+
+global.explosion_list = ds_list_create();
