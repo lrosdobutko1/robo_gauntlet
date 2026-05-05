@@ -59,3 +59,6 @@ if (current_primary_weapon.weapon_name == "Blaster") index = irandom_range(8,10)
 if (draw_muzzle_flash_right) draw_sprite_ext(spr_muzzle_flash,index,gun_barrels[0], gun_barrels[1],1,1,rotation_angle,c_white,1);
 if (draw_muzzle_flash_left) draw_sprite_ext(spr_muzzle_flash,index,gun_barrels[2], gun_barrels[3],1,1,rotation_angle,c_white,1);
 
+var triangle_coords = array_create(4);
+find_gun_create_coordinates(triangle_coords, 26, 50);
+draw_triangle(x,y, triangle_coords[0], triangle_coords[1], triangle_coords[2], triangle_coords[3], 1);

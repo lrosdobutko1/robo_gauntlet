@@ -221,7 +221,7 @@ if (!collision_with_gui)
 		var angle_variance_2 = random_range(-12,12);
 		var speed_variance_2 = random_range(-0.5,0.5);
 
-		find_gun_create_coordinates(gun_barrels, 26, 60);
+		find_gun_create_coordinates(gun_barrels, 26, 50);
 		find_gun_create_coordinates(casings_eject, 15, 190);
 		if (firing_speed_cooldown <= 0)
 	    {

@@ -16,7 +16,7 @@ colors = [c_white, c_green, c_blue, c_yellow, c_red, c_purple];
 sprite_color = colors[level];
 
 explode_anim = 0;
-shield_sprite = spr_player_health_orb;
+shield_sprite = spr_shield_bubble;
 explosion_sprites = [spr_explode1, spr_explode2];
 explode_sprite = explosion_sprites[irandom(array_length(explosion_sprites)-1)];
 explode_rotation = irandom_range(0,359);

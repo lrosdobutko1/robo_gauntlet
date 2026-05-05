@@ -36,4 +36,4 @@ draw_line_width(x1, y1, x2, y2, 4);
 
 //if(path_exists(path)) draw_path(path, x, y, 1);
 
-if (damaged && current_shields > 0) draw_sprite(shield_sprite, 0, x, y);
+if (damaged && current_shields > 0) draw_sprite_ext(shield_sprite, 0, x, y, image_scale*1.1,image_scale*1.1,0,c_white,1);
