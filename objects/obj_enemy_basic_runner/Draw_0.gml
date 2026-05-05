@@ -26,12 +26,14 @@ else if (health_state == ENEMY_HEALTH_STATE.DEAD)
 
 //temp health bars
 
-var x1 = x - 25;
+var x1 = x - 15;
 var y1 = y - 30;
-var x2 = x1 + max(0,(50 * (current_hp/starting_hp)));
+var x2 = x1 + max(0,(30 * (current_hp/starting_hp)));
 var y2 = y1;
 
 if (current_hp != starting_hp)
-draw_line_width(x1, y1, x2, y2, 10);
+draw_line_width(x1, y1, x2, y2, 4);
 
 //if(path_exists(path)) draw_path(path, x, y, 1);
+
+if (damaged && current_shields > 0) draw_sprite(shield_sprite, 0, x, y);

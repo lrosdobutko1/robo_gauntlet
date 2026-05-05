@@ -119,6 +119,7 @@ function camera_shake()
 
 function calculate_damage(_target, _damage_amount) {
 
+	_target.damaged = true;
 	var shield_damage = _damage_amount;
 	
 	
@@ -140,7 +141,6 @@ function calculate_damage(_target, _damage_amount) {
 	_target.current_shields = max(0, _target.current_shields - shield_damage);
 	_target.current_hp -= health_damage;
 	_target.shield_recharge_cooldown = _target.max_shield_recharge_cooldown;
-	
 
 }
 
@@ -179,6 +179,100 @@ function Change_Position_Of_Object_Origin()
 	    }
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

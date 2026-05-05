@@ -244,3 +244,9 @@
 //	if(path_exists(path)) path_delete(path);
 //} 
 
+if (damaged) damage_timer --;	
+if (damage_timer <= 0) {
+	damage_timer = damage_timer_cooldown;
+	damaged = false;
+}
+

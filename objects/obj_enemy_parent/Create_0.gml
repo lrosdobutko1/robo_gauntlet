@@ -4,6 +4,9 @@ level = 1;
 
 suicidal = false;
 
+has_loot = false;
+
+
 ////sprite info
 image_scale = 1.25;
 image_speed = 0;
@@ -13,6 +16,7 @@ colors = [c_white, c_green, c_blue, c_yellow, c_red, c_purple];
 sprite_color = colors[level];
 
 explode_anim = 0;
+shield_sprite = spr_player_health_orb;
 explosion_sprites = [spr_explode1, spr_explode2];
 explode_sprite = explosion_sprites[irandom(array_length(explosion_sprites)-1)];
 explode_rotation = irandom_range(0,359);
@@ -88,11 +92,11 @@ enum ENEMY_HEALTH_STATE
 	DESTROYED,
 }
 
-base_hp = 0.17*(level*level) + (0.22*level) + 20;
+base_hp = 0.17*(level*level) + (0.22*level) + 5;
 starting_hp = base_hp + irandom(base_hp*2);
 current_hp = starting_hp;
 
-base_shields = 20 + level;
+base_shields = 10 + level;
 max_shields = (base_shields + starting_hp/2);
 current_shields = max_shields;
 shield_absorb_rate = 0.1 + level*0.03;
@@ -103,6 +107,10 @@ shield_recharge_cooldown = 0;
 base_damage = 5;
 damage = base_damage + (2 * level);
 contact_damage = (level * level) * damage;
+
+damaged = false;
+damage_timer_cooldown = 20;
+damage_timer = damage_timer_cooldown;
 
 if (current_hp == starting_hp) health_state = ENEMY_HEALTH_STATE.MAX;
 

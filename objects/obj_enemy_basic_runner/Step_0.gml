@@ -51,23 +51,7 @@ if (instance_exists(obj_player_functions))
 		}
 	}
 
-	sight_cone = get_sight_cone(x,y,60,400,rotation_angle);
-	spotted_player = point_in_triangle(
-	obj_player_collision.x,
-	obj_player_collision.y,
-	x,
-	y,
-	sight_cone[0],
-	sight_cone[1],
-	sight_cone[2],
-	sight_cone[3]);
-
-	//pathfinding
-	player_current_x = obj_player_collision.x;
-	player_current_y = obj_player_collision.y;
-
-	var sight_line = collision_line(x,y,player_current_x,player_current_y,obj_obstacle,false,true);
-
+	#region pathfinding
 	if (update_pathfinding)
 	move_xy = chase_the_player(update_pathfinding);
 	
@@ -81,21 +65,18 @@ if (instance_exists(obj_player_functions))
 			pathfinding_timer = irandom_range(pathfinding_cooldown/2, pathfinding_cooldown*1.5);
 		}
 	else update_pathfinding = false;
+	
+	#endregion
 
-
-	if (previous_x != x || previous_y != y) 
-	{
-	    moving = true;
-	} 
-	else 
-	{
-	    moving = false;
-	}
-
+	#region movement animation
+	
+	if (previous_x != x || previous_y != y)  moving = true;
+	else moving = false;
+	
 	previous_x = x;
 	previous_y = y;
 
-	//movement animation
+	
 	var next_x = path_get_x(path, 1); // Get the next node's X position
 	var next_y = path_get_y(path, 1); // Get the next node's Y position
 	var travel_angle = point_direction(x, y, next_x, next_y);
@@ -114,16 +95,13 @@ if (instance_exists(obj_player_functions))
 	{
 		image_speed = 0;
 	}
+	
+	#endregion
 
 	//movement behavior
 
 	//choose the angle at which the torso points
 	rotation_angle -= choose_torso_angle(prediction_multiplier);
-
-	player_moved = ((player_current_x != previous_player_x) || (player_current_y != previous_player_y));
-
-	previous_player_x = obj_player_collision.x;
-	previous_player_y = obj_player_collision.y;
 
 	var hit_player = (instance_place(x,y, obj_player_functions))
 	{
@@ -142,4 +120,5 @@ if (!instance_exists(player)) {
 	if(path_exists(path)) path_delete(path);
 	
 }
+
 
