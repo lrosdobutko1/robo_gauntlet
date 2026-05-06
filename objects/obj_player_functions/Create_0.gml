@@ -105,7 +105,7 @@ function weapon_base(
 ) {
     return {
         weapon_name:            _weapon_name,
-        base_damage:          _base_dmg,
+        base_damage:			_base_dmg,
         weapon_level:           _weapon_level,
         num_bullets:            _num_bullets,
         firing_speed:           _firing_speed,
@@ -219,6 +219,16 @@ player_current_xp: current_experience_points,
 };
 
 
+
+
+function random_normal(_mean, _stddev) {
+    var u1 = random(1);
+    var u2 = random(1);
+    
+    var z0 = sqrt(-2 * ln(u1)) * cos(2 * pi * u2);
+    
+    return _mean + z0 * _stddev;
+}
 
 
 

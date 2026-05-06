@@ -144,7 +144,7 @@
     {"id":{"name":"draw_text_scribble","path":"scripts/draw_text_scribble/draw_text_scribble.yy",},},
     {"id":{"name":"scr_common_functions","path":"scripts/scr_common_functions/scr_common_functions.yy",},},
     {"id":{"name":"scr_create_enemies","path":"scripts/scr_create_enemies/scr_create_enemies.yy",},},
-    {"id":{"name":"scr_loot_handling","path":"scripts/scr_loot_handling/scr_loot_handling.yy",},},
+    {"id":{"name":"scr_loot_handler","path":"scripts/scr_loot_handler/scr_loot_handler.yy",},},
     {"id":{"name":"scr_UI_Button","path":"scripts/scr_UI_Button/scr_UI_Button.yy",},},
     {"id":{"name":"scr_UI_Canvas","path":"scripts/scr_UI_Canvas/scr_UI_Canvas.yy",},},
     {"id":{"name":"scr_UI_Checkbox","path":"scripts/scr_UI_Checkbox/scr_UI_Checkbox.yy",},},
