@@ -16,6 +16,8 @@ current_hp = 0;
 max_hp = 0;
 hp_percent = 1;
 
+money = 0;
+
 current_shield = 0;
 max_shields = 0;
 shield_percent = 1;
@@ -63,7 +65,9 @@ function GuiPositions(_x, _y){
 		xp_bar_x:  _x+618,
 		xp_bar_y:  _y+57,
 		level_label_x:  _x+510,
-		level_label_y:  _y+50
+		level_label_y:  _y+50,
+		money_label_x: _x+300,
+		money_label_y: _y-48
 	};
 }
 gui_position = GuiPositions(120, 120);

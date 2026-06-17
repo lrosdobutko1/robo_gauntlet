@@ -10,6 +10,16 @@ for (var i = max_level; i > 0; i--) {
 	xp_needed_for_next_level[i] = round(1.7*(i*i) + (50*i)) - 7;
 }
 
+//show the XP needed for each level if necessary
+/*
+show_debug_message("LEVEL | XP NEEDED");
+show_debug_message("-------------------");
+
+for (var i = 1; i <= max_level; i++) {
+    show_debug_message(string(i) + " | " + string(xp_needed_for_next_level[i]));
+}
+*/
+
 current_experience_points = 0;
 experience_points_to_next_level = xp_needed_for_next_level[current_level+1];
 
@@ -26,6 +36,8 @@ shield_absorb_rate = 0.25 + current_level*0.03;
 shield_recharge_rate = 0.005;
 max_shield_recharge_cooldown = 240;
 shield_recharge_cooldown = 0;
+
+money = 9999;
 
 player_is_dead = false;
 

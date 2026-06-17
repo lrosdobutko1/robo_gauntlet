@@ -1,3 +1,4 @@
+
 //draw the shield bar and health percentage readout
 if (instance_exists(player)) {
 	current_hp = player.current_hp;
@@ -65,6 +66,12 @@ if (instance_exists(player)) {
 	draw_text_ext_transformed(gui_position.level_label_x,gui_position.level_label_y,$"Level      {player.current_level}",1,200,.75,.75,0);
 
 	#endregion
+	
+	//money
+	draw_set_font(fnt_hyper_oxide_16);
+	draw_set_halign(fa_right);
+	money = player.money;
+	draw_text_ext_transformed(gui_position.money_label_x, gui_position.money_label_y, $"{money} credits",0,250,0.9,0.9,0);
 
 	set_gradient_shader(bar, shield_bar_start_color, shield_bar_end_color, 1);
 
@@ -282,6 +289,7 @@ if (instance_exists(player)) {
 
 
 }
+
 
 if (draw_timer <= 0) {
 	fps_text = string(round(fps_real));
